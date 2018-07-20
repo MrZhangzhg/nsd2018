@@ -8,7 +8,7 @@ def unix2dos(fname):
             for line in src_fobj:
                 line = line.rstrip() + '\r\n'
                 dst_fobj.write(line)
-    
+
 
 if __name__ == '__main__':
     unix2dos(sys.argv[1])
