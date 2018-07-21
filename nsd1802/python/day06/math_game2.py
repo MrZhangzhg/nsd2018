@@ -21,6 +21,8 @@ def exam():
         else:
             print('Wrong answer.')
             tries += 1
+    else:
+        print('%s%s' % (prompt, result))
 
 if __name__ == '__main__':
     while True:
