@@ -1,0 +1,9 @@
+1、编写程序，可能将文本文件转成linux文本格式和windows文本格式
+2、以OOP的方式编写
+
+class Convert:
+
+
+a = Convert('abc.txt')
+a.to_linux()  -> abc.linux   -> \n
+a.to_windows() -> abc.windows   -> \r\n
