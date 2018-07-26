@@ -1,0 +1,12 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+172.25.0.11  server0  server server0.example.com  webapp0.example.com  www0.example.com 
+172.25.0.10  desktop0  desktop  desktop0.example.com  smtp0.example.com
+172.25.254.254  classroom  content  classroom.example.com  content.example.com
+172.25.254.250  foundation0 foundation0.example.com rhgls.domain254.example.com
+192.168.4.1	node1.tedu.cn	node1
+192.168.4.2	node2.tedu.cn	node2
+192.168.4.3	node3.tedu.cn	node3
+192.168.4.4	node4.tedu.cn	node4
+192.168.4.5	node5.tedu.cn	node5
+192.168.4.6	node6.tedu.cn	node6
