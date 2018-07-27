@@ -1,0 +1,48 @@
+安装系统中不存在的模块，可以使用pip，相当于是yum
+1、安装gcc，有些软件包是C的源码
+# yum install -y gcc
+2、为了加速下载，可以使用国内开源镜像站点
+# mkdir ~/.pip
+# vim ~/.pip/pip.conf
+[global]
+index-url = http://pypi.douban.com/simple/
+[install]
+trusted-host=pypi.douban.com
+3、安装pymysql
+# pip3 install pymysql
+
+
+安装mariadb-server
+# yum install -y mariadb-server
+# systemctl start mariadb
+# systemctl enable mariadb
+# mysqladmin password tedu.cn
+
+规划数据库 tedu
+一、确定字段
+姓名、性别、出生日期、部门、职位、联系方式、基本工资、奖金、工资总和、发工资日期
+二、分析字段
+1、根据第一范式，要把一些字段进一步拆分
+所有的域都应该是原子性的，即数据库表的每一列都是不可分割的原子数据项，而不能是集合，数组，记录等非原子数据项
+联系方式要拆分：电话号码，email
+2、只有满足了1NF才能进行到2NF
+在1NF的基础上，非主属性必须完全依赖于候选键
+员工表：员工编号、姓名、性别、出生日期、部门ID、电话号码，email
+部门表：部门ID、部门名称
+工资表：auto_id、员工编号、日期、基本工资、奖金、工资总和
+3、3NF：任何非主属性不依赖于其它非主属性
+工资总和是基本工资加奖金，所以不能出现在表中
+三、创建数据库
+1、建库
+[root@room8pc16 day10]# mysql -uroot -ptedu.cn
+MariaDB [(none)]> CREATE DATABASE tedu DEFAULT CHARSET 'utf8';
+2、创建部门表
+MariaDB [(none)]> USE tedu;
+MariaDB [tedu]> CREATE TABLE departments(dep_id INT PRIMARY KEY, dep_name VARCHAR(20));
+3、创建员工表
+MariaDB [tedu]> CREATE TABLE employees (emp_id INT PRIMARY KEY, emp_name VARCHAR(20) NOT NULL, birth_date DATE, phone CHAR(11), email VARCHAR(50), dep_id INT, FOREIGN KEY(dep_id) REFERENCES departments(dep_id));
+4、创建工资表
+MariaDB [tedu]> CREATE TABLE salary(auto_id INT AUTO_INCREMENT PRIMARY KEY, date DATE, emp_id INT, basic INT, awards INT, FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
+
+
+
