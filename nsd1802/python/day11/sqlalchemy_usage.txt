@@ -1,0 +1,8 @@
+1、安装
+# pip3 install sqlalchemy
+
+2、为sqlalchemy创建数据库
+MariaDB [tedu]> CREATE DATABASE tarena DEFAULT CHARSET 'utf8';
+
+
+
