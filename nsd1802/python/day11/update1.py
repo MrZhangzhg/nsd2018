@@ -9,5 +9,3 @@ dev.dep_name = '开发部'
 
 session.commit()
 session.close()
-
-
