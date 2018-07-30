@@ -1,10 +1,10 @@
-from urllib.request import urlopen
-import json
+import requests
 
 def get_weather(city_code):
     url = 'http://www.weather.com.cn/data/sk/%s.html' % city_code
-    html = urlopen(url)
-    data = json.loads(html.read())
+    r = requests.get(url)
+    r.encoding = 'utf8'
+    data = r.json()
     output = '风向：%s, 风力: %s， 温度：%s, 湿度：%s' % (
         data['weatherinfo']['WD'],
         data['weatherinfo']['WS'],
@@ -12,8 +12,6 @@ def get_weather(city_code):
         data['weatherinfo']['SD']
     )
     return output
-
-
 
 if __name__ == '__main__':
     city_codes = { '0': '101010100', '1': '101121404'}
