@@ -42,6 +42,35 @@ replace wordpress/wp-mail.php? [y]es, [n]o, [A]ll, [N]one, [r]ename: A
 [root@node1 wordpress]# git tag 2.0
 
 
+二、将wordpress推送到gitlab
+1、配置gitlab，参见PPT
+2、推送
+[root@node1 wordpress]# pwd
+/opt/wordpress
+[root@node1 wordpress]# git remote rename origin old-origin
+[root@node1 wordpress]# git remote add origin http://gitlab/devops/wordpress.git
+[root@node1 wordpress]# cat /etc/hosts
+192.168.122.64	gitlab
+[root@node1 wordpress]# git push -u origin --all
+[root@node1 wordpress]# git push -u origin --tags
+
+在jenkins服务器上配置apache，把拉取下来的软件打包放到apache目录下，便于
+应用服务器进行下载
+[root@node3 ~]# yum install -y httpd
+[root@node3 ~]# systemctl start httpd
+[root@node3 ~]# systemctl enable httpd
+创建用于保存软件压缩包的目录
+[root@node3 ~]# mkdir -pv /var/www/html/deploy/packages
+[root@node3 ~]# chown -R jenkins.jenkins /var/www/html/deploy/
+
+
+
+
+
+
+
+
+
 
 
 
