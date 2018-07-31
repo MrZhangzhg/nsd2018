@@ -1,0 +1,48 @@
+虚拟机连接互联网：
+1、在虚拟机配置页面中，把第一块网卡的连接方式改为NAT
+2、将虚拟机的IP地址改为自动获得Automatic
+3、将虚拟机的virbr0网卡删除
+[root@node3 ~]# ifconfig virbr0 down
+[root@node3 ~]# brctl delbr virbr0
+
+CI/CD: 持续集成/持续交付
+
+# yum localinstall -y jenkins-2.121-1.1.noarch.rpm
+[root@node3 ~]# systemctl start jenkins
+[root@node3 ~]# systemctl enable jenkins
+# firefox访问虚拟机的8080端口，配置jenkins
+
+[root@room8pc16 day13]# scp -r -P 2222 /var/ftp/pub/phase5/wordpress/ root@192.168.122.64:/root
+
+
+流程：
+1、程序员在他/她的电脑上编写程序wordpress
+2、程序员将写好的代码推到git服务器
+3、运维工程师在jenkins上接取并测试git的代码，生成最终软件包
+4、运维工程师在应用服务器上将最终软件包下载并部署到生产服务器
+
+一、配置wordpress
+1、将wordpress压缩包拷贝到/opt
+[root@node1 opt]# unzip wordpress-4.8-zh_CN.zip
+[root@node1 opt]# cd wordpress/
+[root@node1 wordpress]# git init
+[root@node1 wordpress]# git add .
+[root@node1 wordpress]# git commit -m "wordpress init"
+2、给当前的wordpress打个1.0版本的tag
+[root@node1 wordpress]# git tag 1.0
+3、释放wordpress4.9
+[root@node1 wordpress]# cd ..
+[root@node1 opt]# unzip wordpress-4.9-zh_CN.zip
+replace wordpress/wp-mail.php? [y]es, [n]o, [A]ll, [N]one, [r]ename: A
+4、更新git仓库
+[root@node1 opt]# cd wordpress/
+[root@node1 wordpress]# git status
+[root@node1 wordpress]# git add .
+[root@node1 wordpress]# git commit -m 'wordpress version 2.0'
+[root@node1 wordpress]# git tag 2.0
+
+
+
+
+
+
