@@ -1,0 +1,29 @@
+1、在工作目录下创建模块目录
+[root@room8pc16 myansi]# mkdir library
+2、在模块目录下创建自己的模块remote_copy.py
+[root@room8pc16 myansi]# cd library
+[root@room8pc16 library]# vim remote_copy.py
+#!/usr/bin/env python
+
+import shutil
+from ansible.module_utils.basic import AnsibleModule
+
+def main():
+    module = AnsibleModule(
+        argument_spec=dict(
+            source=dict(required=True, type='str'),
+            dest=dict(required=True, type='str')
+        )
+    )
+    shutil.copy(module.params['source'], module.params['dest'])
+    module.exit_json(changed=True)
+
+if __name__ == '__main__':
+    main()
+
+3、设置ansible查找模块的路径
+[root@room8pc16 myansi]# export ANSIBLE_LIBRARY=./library
+4、测试
+[root@room8pc16 myansi]# ansible node2.tedu.cn -m remote_copy -a "source=/etc/passwd dest=/var/tmp/mima"
+
+
