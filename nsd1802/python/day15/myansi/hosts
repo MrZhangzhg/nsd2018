@@ -1,0 +1,6 @@
+[webservers]
+node2.tedu.cn
+node3.tedu.cn
+
+[dbservers]
+192.168.122.1

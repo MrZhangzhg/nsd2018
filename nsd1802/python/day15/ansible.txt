@@ -1,0 +1,66 @@
+http://mirrors.163.com
+# yum install -y ansible
+
+使用ansible
+1、创建工作目录
+[root@room8pc16 ~]# mkdir myansi
+[root@room8pc16 ~]# cd myansi
+2、创建配置文件。注意：不要把汉字写到ansible相关的文件中去
+[root@room8pc16 myansi]# vim ansible.cfg
+[defaults]
+inventory = hosts   # 记录远程服务器和组
+remote_user = root  # 管理远程服务器使用的用户
+3、创建主机清单文件
+[root@room8pc16 myansi]# vim hosts
+[webservers]
+node2.tedu.cn
+node3.tedu.cn
+
+[dbservers]
+192.168.122.1
+4、设置node2.tedu.cn和node3.tedu.cn的名称解析
+5、扫描、记录所有主机的密钥
+[root@room8pc16 myansi]# ssh-keyscan node{2,3}.tedu.cn 192.168.122.1 >> ~/.ssh/known_hosts
+6、测试ansible
+[root@room8pc16 myansi]# ansible all -m ping -k
+
+
+ad-hoc临时命令
+# ansible 主机 -m 模块 -a 选项
+[root@room8pc16 myansi]# ansible webservers -m yum -a "name=php state=latest" -k
+
+playbook
+1、playbook语法用的是yaml，为了方便书写，设置vim为如下格式
+[root@room8pc16 myansi]# vim ~/.vimrc
+set ai       # 自动缩进
+set ts=4     # 按tab键缩进4个空格
+set et       # 将tab键转换成空格
+autocmd FileType yaml setlocal sw=2 ts=2 et ai
+2、使用playbook将公钥发送给所有的被管端
+[root@room8pc16 myansi]# vim authkey.yml
+---
+- name: Set authorized key took from file
+  hosts: all
+  tasks:
+  - name: set ssh key
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+语法检查：
+[root@room8pc16 myansi]# ansible-playbook --syntax-check authkey.yml
+[root@room8pc16 myansi]# ansible-playbook authkey.yml -k
+3、编写playbook，实现web服务器安装好web相关软件，并启动服务
+数据库服务器也要装好相关软件，启动服务
+[root@room8pc16 myansi]# vim web_db.yml
+
+
+
+
+
+
+
+
+
+
+

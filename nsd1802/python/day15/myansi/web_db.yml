@@ -1,0 +1,33 @@
+---
+- name: configure web servers
+  hosts: webservers
+  tasks:
+  - name: install web package
+    yum:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - httpd
+      - php
+      - php-mysql
+
+  - name: start web server
+    service:
+      name: httpd
+      state: started
+      enabled: true
+
+
+- name: configure db servers
+  hosts: dbservers
+  tasks:
+  - name: install mariadb
+    yum:
+      name: mariadb-server
+      state: present
+  - name: start mariadb
+    service:
+      name: mariadb
+      state: started
+      enabled: true
+
