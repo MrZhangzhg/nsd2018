@@ -54,8 +54,22 @@ autocmd FileType yaml setlocal sw=2 ts=2 et ai
 数据库服务器也要装好相关软件，启动服务
 [root@room8pc16 myansi]# vim web_db.yml
 
+ansible开发官方文档URL
+https://docs.ansible.com
 
+python2交互解释器的自动补全
+[root@node2 ~]# vim /usr/local/bin/tab.py
+from rlcompleter import readline
 
+readline.parse_and_bind('tab: complete')
+[root@node2 ~]# vim ~/.bash_profile
+export PYTHONSTARTUP=/usr/local/bin/tab.py
+[root@node2 ~]# source ~/.bash_profile
+
+python2中，print不是函数
+>>> print 'hello world!'
+>>> print 10
+python2中，输入不采用input()，而是raw_input()
 
 
 
