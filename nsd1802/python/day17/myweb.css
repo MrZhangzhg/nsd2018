@@ -1,0 +1,36 @@
+.container{
+    margin: auto;
+    width: 800px;
+    background: #CCCCCC;
+}
+.header{
+    text-align: center;
+    height: 80px;
+    background: #BCB;
+}
+.nav{
+    height: 30px;
+    background: #339933;
+}
+.main{
+    height: 400px;
+}
+.left{
+    float: left;
+    width: 150px;
+    height: 400px;
+    background: #c49260;
+}
+.right{
+    margin-left: 150px;
+    width: 600px;
+}
+.footer{
+    text-align: center;
+    height: 50px;
+    background: #224ec4;
+}
+.bj{
+    font-size: larger;
+    font-style: italic;
+}

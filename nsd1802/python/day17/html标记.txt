@@ -1,0 +1,14 @@
+<br>: 回车
+<h1>: 标题
+<p>: 段落
+<body>: 主体，浏览器中能看到的部分
+<titlbe>: 标题，必须定义在<head>标签中
+<!--这是一个注释-->: 注释
+
+在线教程网址：http://www.runoob.com/html/html5-intro.html
+
+&copy; ->版权符号
+&nbsp; ->空格
+&lt;  ->小于号
+&gt;  ->大于号
+
