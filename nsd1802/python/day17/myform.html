@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>my form</title>
+</head>
+<body>
+<form action="">
+    <textarea name="suggest" id="suggest" cols="30" rows="10"></textarea>
+    <br><input type="submit">
+</form>
+
+<hr>
+<form action="">
+    <label>找到工作后去哪庆祝？</label><br>
+    <select name="fandian" id="">
+        <option value="street">街边</option>
+        <option value="duck">全聚德</option>
+        <option value="kfc">KFC</option>
+    </select>
+    <input type="submit" value="提交">
+</form>
+
+
+
+<hr>
+<form action="" enctype="multipart/form-data">
+    <input type="file">
+    <input type="submit" value="上传">
+</form>
+
+
+<hr>
+<form action="">
+    <label>找到工作后去哪庆祝？</label><br>
+    <input type="checkbox" name="choice1" value="street">街边花毛串啤<br>
+    <input type="checkbox" name="choice2" value="duck">全聚德<br>
+    <input type="checkbox" name="choice3" value="kfc">肯德基<br>
+    <input type="submit">
+</form>
+
+<hr>
+<form action="">
+    <label>找到工作后去哪庆祝？</label><br>
+    <input type="radio" name="fandian" value="street" id="street"><label for="street">街边花毛串啤</label><br>
+    <input type="radio" name="fandian" value="duck" id="duck"><label for="duck">全聚德</label><br>
+    <input type="radio" name="fandian" value="kfc" id="kfc"><label for="kfc">肯德基</label><br>
+    <input type="submit">
+</form>
+
+<hr>
+<form action="" method="post">
+    <label for="">姓名：</label>
+    <input type="text" placeholder="必填项" name="name" maxlength="4" value="bob" readonly><br>
+    <label for="">密码：</label>
+    <input type="password" placeholder="不能为空" name="pwd"><br>
+    <input type="submit" value="登陆">
+</form>
+</body>
+</html>
