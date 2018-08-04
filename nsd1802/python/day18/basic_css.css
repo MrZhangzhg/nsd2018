@@ -1,0 +1,44 @@
+body{
+    color: red;
+}
+
+a:link{
+    color: blue;
+}
+a:hover{
+    font-size: 30px;
+}
+a:visited{
+    color: red;
+}
+
+
+
+
+
+
+
+
+/*p{*/
+    /*color: blue;*/
+    /*font-size: 24px;*/
+    /*text-align: center;*/
+/*}*/
+
+#myid{
+    color: sienna;
+    font-size: 26px;
+}
+.c1{
+    text-align: left;
+}
+.important{
+    font-style: italic;
+}
+h2.important{
+    font-weight: bold;
+}
+.warning{
+    color: orange;
+}
+

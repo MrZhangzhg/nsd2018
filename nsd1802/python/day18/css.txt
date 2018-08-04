@@ -1,0 +1,8 @@
+1、样式表文件中p表示p元素，.myClass表示myClass类（组），#myform表示id是myform
+2、类名不能以数字开头
+3、元素可以属于多个类class
+4、样式可以叠加、可以继承
+5、在样式表文件中h2.important表示为h2标签中的important类设置属性
+6、在样式表文件中h2,.important表示为h2标签和important类设置属性
+
+

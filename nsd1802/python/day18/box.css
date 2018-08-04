@@ -1,0 +1,14 @@
+div.box{
+    width: 200px;   /* 内容的宽度 */
+    height: 100px;  /* 内容的高度 */
+    padding: 20px;  /* 内容到边框的填充，也称作内边距 */
+    margin: 40px;   /* 边框到外层元素的边距，也叫外边距 */
+    border: 10px solid black;  /* 边框的厚度、实线、黑色 */
+}
+.box2{
+    width: 200px;
+    height: 100px;
+    border: 2px solid black;
+    margin: 40px;
+}
+
