@@ -1,0 +1,48 @@
+.container{
+    margin: auto;
+    width: 800px;
+    /*border: 1px dashed black;*/
+    /*background: #CCCCCC;*/
+}
+.header{
+    background-image: url("./imgs/first.jpg");
+    height: 100px;
+}
+.nav{
+    margin: 0;
+    padding: 0;
+}
+.main{
+    background: #4CAF50;
+}
+p{
+    margin: 0;
+    padding: 10px;
+}
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+}
+li{
+    float: left;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;  /* 去除超链接默认的下划线 */
+}
+
+li a:hover {
+    background-color: #111;
+}
+.footer{
+    text-align: center;
+    background: #f1f1f1;
+}
+

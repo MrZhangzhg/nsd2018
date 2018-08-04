@@ -6,6 +6,7 @@ div.box{
     border: 10px solid black;  /* 边框的厚度、实线、黑色 */
 }
 .box2{
+    overflow: auto;
     width: 200px;
     height: 100px;
     border: 2px solid black;

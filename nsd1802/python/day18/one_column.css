@@ -1,6 +1,16 @@
+body{
+    /*background: #CCCCCC;*/
+    /*background-image: url("./imgs/star.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-repeat: repeat-x;*/
+    /*background-repeat: repeat-y;*/
+}
+
 .main{
     margin: auto;
     width: 90%;
-    background: #CCCCCC;
+    /*background: #CCCCCC;*/
+    font-variant: small-caps;
+    text-decoration: underline;
 }
 
