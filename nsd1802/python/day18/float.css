@@ -1,0 +1,12 @@
+.left{
+    width: 300px;
+    height: 200px;
+    background: darkgray;
+    float: left;
+}
+.right{
+    margin-left: 300px;  /* 元素的左外边距设置为300px */
+    width: 400px;
+    height: 300px;
+    background: bisque;
+}

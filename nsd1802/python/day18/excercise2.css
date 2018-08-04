@@ -1,26 +1,19 @@
+p,div,ul{
+    margin: 0;
+    padding: 0;
+}
+.right{
+    padding: 5px;
+}
 .container{
     margin: auto;
     width: 800px;
-    /*border: 1px dashed black;*/
-    /*background: #CCCCCC;*/
 }
 .header{
     background-image: url("./imgs/first.jpg");
     background-size: 100%;
     height: 200px;
 }
-.nav{
-    margin: 0;
-    padding: 0;
-}
-.main{
-    background: #4CAF50;
-}
-p{
-    margin: 0;
-    padding: 10px;
-}
-
 ul{
     list-style-type: none;
     margin: 0;
@@ -45,5 +38,16 @@ li a:hover {
 .footer{
     text-align: center;
     background: #f1f1f1;
+}
+.left{
+    width: 100px;
+    background: #CCCCCC;
+    float: left;
+}
+.right{
+    margin-left: 100px;
+}
+.clear{
+    clear: both;
 }
 
