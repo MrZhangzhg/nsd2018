@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bootstrap test</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+
+    <div role="alert" class="alert alert-success">
+        success成功！
+    </div>
+
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default">Left</button>
+        <button type="button" class="btn btn-default">Middle</button>
+        <button type="button" class="btn btn-default">Right</button>
+    </div>
+
+
+    <hr>
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        下拉菜单
+          <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#">主页</a></li>
+        <li><a href="#">新闻</a></li>
+        <li><a href="#">体育</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">天气</a></li>
+      </ul>
+    </div>
+    <hr>
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+        <!--<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>-->
+    </button>
+
+    <button type="button" class="btn btn-default btn-lg">
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
+    </button>
+    <hr>
+    <form action="" role="form">
+        <div class="form-group">
+            <lable for="name">姓名：</lable>
+            <input class="form-control" type="text" id="name">
+        </div>
+        <div class="form-group">
+            <lable for="age">年龄：</lable>
+            <input class="form-control" type="text" id="age">
+        </div>
+    </form>
+</div>
+
+<script src="static/scripts/jquery.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+</body>
+</html>

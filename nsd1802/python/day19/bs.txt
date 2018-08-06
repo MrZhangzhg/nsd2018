@@ -1,0 +1,5 @@
+1、将bootstrap解压，改名为static
+2、引入jquery
+[root@room8pc16 day19]# mkdir static/scripts/
+[root@room8pc16 day19]# cd static/scripts/
+[root@room8pc16 scripts]# wget http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js
