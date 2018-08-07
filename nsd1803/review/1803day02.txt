@@ -1,0 +1,93 @@
+IP地址分类：
+A：前8位是网络位，第一位必须是0
+B：前16位是网络位，前两位必须是10
+C：前24位是网络位，前三位必须是110
+D：用于组播（多播）
+E：保留
+
+设备识别IP地址，必须有子网掩码。
+子网掩码：将网络位全置1，主机位全置0。
+
+192.168.1.65/24   -> 192.168.1.0
+192.168.1.129/24  -> 192.168.1.0
+
+192.168.1.65/26   -> 192.168.1.64/255.255.255.192
+192.168.1.129/26  -> 192.168.1.128/255.255.255.192
+
+Linux本质上是内核
+《操作系统的革命》
+1、RHEL7的第一个进程是systemd，PID是1，以前是init
+2、分区sda5，sd表示磁盘，a表示第一块硬盘，5是分区号
+3、磁盘分区模式有：MBR、GPT。
+   MBR：只支持2.2T左右大小的磁盘，最多4个分区
+   GPT：可以支持大硬盘，128个主分区
+4、格式化：
+   EXT3/4：适合小文件
+   XFS：适合大文件
+5、分区：LINUX最少需要1个分区
+6、分区：应该分几个？/boot 500M  /  /var  /home?  
+7、命令行提示符由PS1定义
+[root@node2 ~]# PS1='\u@\h \t\$ '
+root@node2 19:32:30# PS1='[\u@\h \W]\$ '
+8、查看LINUX内核版本的命令：uname -r
+9、查看/etc/passwd中第5行内容
+[root@node2 ~]# head -5 /etc/passwd | tail -1
+10、LINUX系统执行命令时，命令查找顺序是
+函数 > 别名 > 内部命令 > 外部命令
+函数：
+lh() {
+    ls -lh $*
+}
+别名：
+alias ls='ls --color=auto'
+内部命令：好比是操作系统与生俱来的功能一样，不需要有程序文件，用enable可以查看所有的内部命令
+外部命令：有程序文件与之对应
+11、VIM的三种模式
+12、RPM：Redhat Package Management
+         RPM Package Management
+GNU: GNU is Not Unix
+# rpm -ihv 软件包路径
+# rpm -Uvh 软件包路径
+# rpm -q 软件名
+# rpm -e 软件名
+# yum install
+13、网络源
+（1）国内开源镜像站点
+http://mirrors.163.com/
+http://mirrors.aliyun.com/
+（2）EPEL：Extra Package for Enterprise Linux
+https://fedoraproject.org/wiki/EPEL/zh-cn
+14、网卡配置文件所在目录
+/etc/sysconfig/network-scripts/
+15、使用传统的方式命名网卡为ethX
+https://blog.csdn.net/feinifi/article/details/77883461
+16、重定向
+（1）> 标准输出重定向，>后的文件创建或被覆盖
+（2）>> 标准输出重定向，>>后的文件创建或追加内容
+（3）2> 标准错误重定向，2>后的文件创建或被覆盖
+（4）2>> 标准错误重定向，2>>后的文件创建或追加内容
+（5）< 标准输入重定向
+[root@node2 ~]# tr 'a-z' 'A-Z' < ~/.bashrc 
+[root@node2 ~]# cat ~/.bashrc | tr 'a-z' 'A-Z'
+（6）<< here document  设置结束标志
+[root@node2 ~]# vim gen_repo.sh
+#!/bin/bash
+
+cat <<EOF > /etc/yum.repos.d/server.repo
+[server]
+name=server
+baseurl=ftp://192.168.4.254/server
+enabled=1
+gpgcheck=0
+EOF
+[root@node2 ~]# bash gen_repo.sh
+17、find查找
+（1）按名称查找
+[root@node2 ~]# find /boot/ -name 'vmlinuz*'
+（2）按大小查
+[root@node2 ~]# find /boot/ -size +3M
+[root@node2 ~]# find /boot/ -size -3M
+（3）按修改日期查，如最近3天内改过的文件
+[root@node2 ~]# find /boot/ -mtime -3
+（4）把/boot下大于3M的文件拷贝到/var/tmp/下
+[root@node2 ~]# find /boot/ -size +3M -exec cp {} /var/tmp/ \;
