@@ -1,0 +1,31 @@
+一、python虚拟环境准备
+1、创建虚拟环境
+[root@room8pc16 nsd2018]# python3 -m venv /data/django_env
+2、激活虚拟环境
+[root@room8pc16 nsd2018]# source /data/django_env/bin/activate
+3、安装django到虚拟环境
+(django_env) [root@room8pc16 nsd2018]# pip install django==1.11.6
+
+二、使用django
+1、创建项目
+[root@room8pc16 day21]# django-admin startproject mysite
+2、启动项目，默认使用8000端口
+[root@room8pc16 day21]# cd mysite/
+[root@room8pc16 mysite]# python manage.py runserver
+3、访问
+http://127.0.0.1:8000
+4、允许所有主机访问
+[root@room8pc16 mysite]# python manage.py runserver 0:80
+5、访问后台管理界面
+http://127.0.0.1/admin
+6、生成数据库（django后台用户写到数据库中了）
+注意：django默认使用sqlite3文件数据库，如果不能使用，
+需要安装 sqlite-devel，然后重新编译python3
+[root@room8pc16 mysite]# python manage.py makemigrations
+[root@room8pc16 mysite]# python manage.py migrate
+7、创建后台管理员账号
+[root@room8pc16 mysite]# python manage.py createsuperuser
+8、启动django后，可以用第7步创建的管理员登陆后台了
+
+
+
