@@ -27,5 +27,55 @@ http://127.0.0.1/admin
 [root@room8pc16 mysite]# python manage.py createsuperuser
 8、启动django后，可以用第7步创建的管理员登陆后台了
 
+三、创建web应用
+1、新建应用
+(django_env) [root@room8pc16 mysite]# python manage.py startapp polls
+2、激活应用
+在settings.py中，加入以下内容：
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'polls',   # 新加入的应用
+]
+3、配置URLConf，希望访问http://server_ip/polls/路径的时候，有专门的路由
+# vim mysite/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^polls/', include('polls.urls')),
+]
+4、创建模块urls.py
+(django_env) [root@room8pc16 mysite]# touch polls/urls.py
+5、在urls中指定访问http://127.0.0.1/polls/时就是调用views.index函数
+# vim polls/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    # 当用户访问http://127.0.0.1/pools/就调用views.index函数
+    url(r'^$', views.index, name='index'),
+]
+6、创建views.index函数
+# vim polls/views.py
+from django.shortcuts import render
+
+def index(request):
+    # 把index.html网页发送给用户
+    return render(request, 'pools/index.html')
+7、创建网页文件
+# mkdir -p polls/templates/polls
+在polls/templates/polls创建名为index.html的网页
+
+
+
+
+
+
 
 
