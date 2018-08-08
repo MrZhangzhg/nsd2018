@@ -72,6 +72,8 @@ def index(request):
 # mkdir -p polls/templates/polls
 在polls/templates/polls创建名为index.html的网页
 
+8、练习：
+用户访问http://127.0.0.1/polls/hello，将返回Hello World!
 
 
 
