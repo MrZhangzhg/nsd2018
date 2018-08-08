@@ -1,0 +1,88 @@
+1、批量创建用户，可以指定用户数量，不指定，默认5个
+# addusers.sh 10
+参见addusers.sh脚本
+2、压缩、解压缩，根据扩展名自动识别压缩方式
+[root@node2 tmp]# tar caf security.tar.gz security/
+[root@node2 tmp]# tar caf security.tar.bz2 security/
+[root@node2 tmp]# tar caf security.tar.xz security/
+3、计划任务
+01 * * * * command  每小时的01分执行
+01 10 * * * command  每天的10：01执行
+01 10 3 * * command  每月的3号10：01执行
+01 10 3 8 ＊ command  每年8月3号10：01执行
+01 10 * * 1  command  每周一10：01执行
+*/5 10-18 * * 1,3,5 command  每周一三五从10点到18点，每5分钟执行
+4、文件权限是644，含义是属主有rw权限，属组和其他人都是r
+5、SUID：以属主的身份运行命令
+命令在执行期间是有身份的，即命令以某种身份运行。
+(1)
+[user1@node2 ~]$ /bin/ls /root  无权限
+[root@node2 tmp]# chmod u+s /bin/ls
+[user1@node2 ~]$ ls /root/
+(2)
+[user1@node2 ~]$ touch u1.txt
+[root@node2 tmp]# chmod u+s /bin/touch 
+[user1@node2 ~]$ touch u2.txt
+[user1@node2 ~]$ ll
+-rw-rw-r--. 1 user1 user1 0 8月   8 19:43 u1.txt
+-rw-rw-r--. 1 root  user1 0 8月   8 19:43 u2.txt
+6、SGID：继承所在目录的属组
+[root@node2 ~]# mkdir /tmp/demo
+[root@node2 ~]# chgrp user1 /tmp/demo
+[root@node2 ~]# ll -d /tmp/demo
+[root@node2 ~]# cp /etc/passwd /tmp/demo
+[root@node2 ~]# ll /tmp/demo  # demo/passwd属组是root
+[root@node2 ~]# chmod g+s /tmp/demo
+[root@node2 ~]# cp /etc/hosts /tmp/demo
+[root@node2 ~]# ll /tmp/demo  # demo/hosts属组是user1
+7、sticky bit：用户只能修改、删除自己的文件
+[root@node2 ~]# ll -d /tmp/ /var/tmp/
+8、ACL：访问控制列表，可以精确的控制权限
+9、LVM：LVM是逻辑卷管理。它是动态管理存储空间的方法。首先，将磁盘或分区转换成物理卷PV，再将1到多个PV组合成卷组VG，然后在VG上创建逻辑LV。LV可以像普通分区一样，进行格式化、挂载。如果LV空间不足，还可以实现在现扩容。
+10、脚本执行方式
+# bash xxx.sh   # fork子进程执行，明确用bash解释
+# ./xxx.sh  # fork子进程执行,根据第一行说明找到解释器
+# source xxx.sh  # 不产生子进程
+
+SELINUX:安全增强的Linux
+1、运行模式
+enforcing / permissive / disabled
+2、查看运行模式
+# getenforce
+3、修改运行模式
+# setenforce 0 | 1
+# vim /etc/selinux/config
+SELINUX=enforcing
+4、配置selinux
+（1）文件的上下文环境值,它相当于是给文件上锁
+[root@node2 ~]# echo 'hello world' > index.html
+[root@node2 ~]# mv index.html /var/www/html/
+访问http://192.168.4.2/没有出现index.html内容
+[root@node2 ~]# sealert -b
+[root@node2 ~]# ls -Z /var/www/html/
+[root@node2 ~]# ps xZ | grep httpd
+(2)布尔值：功能开关
+[root@node2 ~]# yum install -y vsftpd
+[root@node2 ~]# vim /etc/vsftpd/vsftpd.conf 
+anon_upload_enable=YES
+[root@node2 ~]# systemctl restart vsftpd
+[root@node2 ~]# mkdir -m 777 /var/ftp/incoming
+上传不成功，运行
+[root@node2 ~]# sealert -b
+[root@node2 ~]# chcon -t public_content_rw_t /var/ftp/incoming
+[root@node2 ~]# getsebool -a | grep ftp
+再次上传
+[root@room8pc16 review]# ftp 192.168.4.2
+Name (192.168.4.2:root): ftp
+ftp> cd incoming
+ftp> lcd /etc
+ftp> put hosts
+上传成功
+(3)端口
+[root@node2 ~]# vim /etc/httpd/conf/httpd.conf 
+Listen 8500
+[root@node2 ~]# systemctl restart httpd  # 失败
+[root@node2 ~]# sealert -b
+[root@node2 ~]# semanage port -l | grep http
+[root@node2 ~]# semanage port -a -t http_port_t -p tcp 8500
+[root@node2 ~]# systemctl restart httpd
