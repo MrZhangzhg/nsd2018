@@ -1,0 +1,72 @@
+django api使用
+1、进入python shell
+(django_env) [root@room8pc16 mysite]# python manage.py shell
+2、导入model的class
+>>> from polls.models import Question, Choice
+3、查看所有的问题，返回值是一个QuerySet
+>>> Question.objects.all()
+4、为了了解QuerySet包含了什么，可以将QuerySet转换为列表
+>>> list(Question.objects.all())
+列表中的每一项，是Question的一个实例
+5、取出一个实例
+>>> q = list(Question.objects.all())[0]
+6、查看q的属性
+>>> q.id
+>>> q.question_text
+>>> q.pub_date
+7、新建Question的实例
+>>> from django.utils import timezone
+>>> q = Question(question_text='你心仪的公司是哪家？', pub_date=timezone.now())
+>>> q.question_text
+>>> q.pub_date
+>>> print(q.id)   # 创建实例，没有写入数据库，没写数据库，就没有id
+8、将实例保存成数据库的记录
+>>> q.save()
+>>> q.id
+9、对实例属性重新赋值，保存后，可以修改数据库内容
+>>> q.question_text = '你期待哪家公司给你发offer？'
+>>> q.save()
+>>> q.question_text
+10、向Question中加入新的方法，用于判断问题是不是1天内发布的
+在Question类中加入方法
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - timedelta(days=1)
+11、通过关键字查询
+(django_env) [root@room8pc16 mysite]# python manage.py shell
+>>> from polls.models import Question, Choice
+>>> q = Question.objects.get(id=1)  # 返回Question的实例，id不存在引发异常
+>>> Question.objects.get(question_text='你计划在哪个城市找 工作？')
+12、通过主键查询
+>>> Question.objects.get(pk=2) # 返回Question的实例，主键不存在引发异常
+13、使用实例方法
+>>> q.was_published_recently()
+14、返回指定条件的实例查询集
+>>> Question.objects.filter(id=1)
+>>> Question.objects.filter(id__gt=1)
+15、在django中，数据的属性通过__来使用
+>>> Question.objects.filter(question_text__startswith='你')
+>>> Question.objects.filter(question_text__endswith='？')
+>>> from django.utils import timezone
+>>> curtime = timezone.now()
+>>> Question.objects.filter(pub_date__year=curtime.year)
+>>> Question.objects.filter(pub_date__day=curtime.day)
+16、向choice表写入数据
+>>> from polls.models import Choice
+>>> c1 = Choice(choice_text='阿里巴巴', votes=0, question_id=3)
+>>> c1.save()
+>>> q = Question.objects.get(id=3)
+>>> c2 = Choice(choice_text='达内', votes=0, question=q)
+>>> c2.save()
+>>> c2.question  # 通过Choice实例，反向查找Question对应的实例
+>>> q.choice_set.all()  # 返回问题所有答案的查询集
+17、另一种创建实例的方法
+# create方法，不需要调用save就直接写入数据库
+>>> Question.objects.create(question_text='中午订哪家的餐？', pub_date=timezone.now())
+>>> q = Question.objects.all()[3]
+通过问题直接创建choice
+>>> q.choice_set.create(choice_text='开封菜', votes=0)
+
+
+
+
+
