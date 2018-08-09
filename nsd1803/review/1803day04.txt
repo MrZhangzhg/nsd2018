@@ -1,0 +1,107 @@
+grub：开机引导程序
+1、自动生成开机菜单
+[root@node2 ~]# rm -f /boot/grub2/grub.cfg
+[root@node2 ~]# grub2-mkconfig -o /boot/grub2/grub.cfg
+2、grub配置文件
+/etc/grub.d/
+00_header：产生头部信息
+10_linux：用于生成linux菜单
+30_os-prober：用于探测位于其他分区上的操作系统
+40_custom：用户自定义菜单
+/etc/default/grub：可以在这里加上内核参数
+一般修改GRUB_CMDLINE_LINUX=，把新加的内核参数写到rhgb quiet之前
+修改完后，需要重新生成grub配置文件
+3、例，如果kvm虚拟机可以在物理主机上通过virsh console xxx访问，需要加上console=ttyS0参数
+[root@node2 ~]# vim /etc/default/grub 
+GRUB_CMDLINE_LINUX="rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap console=ttyS0 rhgb quiet"
+[root@node2 ~]# grub2-mkconfig -o /boot/grub2/grub.cfg 
+
+ipv6：只是一个能够容纳更多主机数的地址而已
+128位的二进制数，为了方便记忆，每16位换算成16进制数，共8段，用冒号分开，称作冒号分16进制数
+2001:00C0:0000:0000:0001:0000:0000:0001
+2001:C0:0:0:1:0:0:1
+2001:C0::1:0:0:1
+
+特殊的IPv6地址：
+::1  -> 相当于是127.0.0.1
+::   -> 相当于是0.0.0.0
+
+链路聚合:team，与网络知识中的EtherChannel以太通道类似
+RHEL7新增加了team，以前使用bonding
+bonding配置参考：
+https://www.cnblogs.com/geaozhang/p/6763876.html
+
+
+
+防火墙：
+1、防火墙有很多区域，这些区域相当于是进入系统前的检查站，符合安全规则的放行，否则拒绝
+2、数据包只会进入一个区域进行检查
+3、查看防火墙的状态
+[root@node2 ~]# firewall-cmd --state
+4、防火墙有哪些区域
+[root@node2 ~]# firewall-cmd --get-zones
+trusted:数据包如果能进入这个区域，默认全部放行
+block: 进入的数据包，默认全部拒绝
+drop: 进入的数据包，默认全部丢弃
+其他区域除明确允许的规则，默认全部拒绝
+5、查看处于生效状态的区域
+[root@node2 ~]# firewall-cmd --get-active-zones 
+6、查看默认区域
+[root@node2 ~]# firewall-cmd --get-default-zone 
+7、决定数据包进入哪个区域，按以下顺序进行
+（1）匹配源IP地址
+[root@node2 ~]# firewall-cmd --add-source=192.168.4.0/24 --zone=work
+（2）检查数据包是从哪块网卡收到的
+[root@node2 ~]# firewall-cmd --add-interface=eth1 --zone=dmz
+（3）进入默认区域
+8、查看work区域的规则
+[root@node2 ~]# firewall-cmd --list-all --zone=work
+9、明确允许work区域访问http服务
+[root@node2 ~]# firewall-cmd --add-service=http --zone=work
+10、明确允许work区域访问iscsi
+[root@node2 ~]# firewall-cmd --add-port=3260/tcp --zone=work
+
+
+samba：用于linux和Windows共享
+nfs：用于linux系统间共享，端口2049。注意它依赖于rpc服务，rhel7中rpc服务是rpcbind。
+不管是samba还是nfs还是ftp，都要注意，如果实现的是读写共享，既要注意本地权限，如755，又要设置配置文件中的权限
+
+
+iSCSI生产环境下用得不多，用的广泛的是FC SAN
+SAN：存储区域网络
+
+
+WEB虚拟主机
+1、基于IP地址
+2、基于端口
+3、基于域名
+
+源码编译安装，它也有依赖。如果编译的时候提示缺少openssl，但是本机已经安装了，原因是？缺少openssl-devel
+
+
+DNS：域名服务
+1、客户端解析域名的步骤
+（1）先查找本地缓存
+（2）查找hosts文件
+（3）本地域名服务器(/etc/resolv.conf中指定的服务器)
+（4）本地域名服务器访问根服务器，进行迭代查询
+2、DNS服务的资源记录
+A：名称解析为IP地址
+PTR：IP地址解析为名称
+SOA：起始授权、权威服务器
+NS：名称服务器，每个DNS服务器都对应一个NS，但只有一个是SOA
+CNAME：别名记录
+MX：邮件交换器
+
+查看qq.com域中有哪些邮件服务器
+[root@room8pc16 mysite]# nslookup 
+> set q=mx
+> qq.com
+查看DNS服务器有哪些
+> set q=ns
+> qq.com
+查看SOA权威服务器是哪台
+> set q=soa
+> qq.com
+
+CDN：内容分发网络，目标是让用户总是访问离他/她最近的缓存节点
