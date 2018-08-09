@@ -67,6 +67,13 @@ django api使用
 >>> q.choice_set.create(choice_text='开封菜', votes=0)
 
 
+在django模板中加入bootstrap
+1、把bootstrap解压到polls/static目录
+2、在模板文件，如detail.html最上方加入以下内容
+{% load staticfiles %}
+3、与bootstrap前面的应用一样，在head中加入link，在结尾加入脚本声明
+
+
 
 
 
