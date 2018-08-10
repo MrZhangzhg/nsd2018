@@ -1,0 +1,26 @@
+# django-admin startproject excercise
+# cd excercise/
+# vim excercise/settings.py
+ALLOWED_HOSTS = '*'
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+
+# vim excercise/urls.py
+from . import views
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index, {'name': 'bob'}, name='index'),
+]
+# vim excercise/views.py
+from django.shortcuts import HttpResponse
+def index(request, name):
+    return HttpResponse('Hello %s' % name)
+# python manage.py runserver 0:80
+访问127.0.0.1查看结果
+
+urls.py:
+url(r'^students/(?P<name>\w+)/(?P<age>\d+)', views.students),
+views.py:
+def students(request, name, age):
+    return HttpResponse('%s is %s years old.' % (name, age))
+
