@@ -1,0 +1,82 @@
+iptables：四张表代表了四种功能
+filter：防火墙功能
+nat：网络地址转换功能
+raw：状态跟踪功能
+mangle：流量着色、标记
+
+不同的表有不同的链，共5条链
+INPUT:数据包的目标地址就是linux本身
+OUTPUT:linux自己向外发送数据包
+FORWARD:一块网卡进、另一块网卡出。不会进入INPUT和OUTPUT
+PREROUTING: DNAT
+POSTROUTING: SNAT（将源地址改写，局域网访问外网）
+
+编写iptables规则
+一、保护WEB服务器
+1、清空filter表所有链的规则
+# iptables -F
+2、允许ssh
+# iptables -A INPUT -p tcp --dport 22 -s 192.168.4.0/24 -j ACCEPT
+3、默认规则设置DROP
+# iptables -P INPUT DROP
+4、允许所有的主机访问web服务
+# iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+二、iptables的连接状态
+1、NEW：TCP三次握手的第一个包
+2、ESTABLISHED：已建立连接
+3、RELATED：相关联的，如FTP的控制链路和数据链路
+4、INVALID：无效的
+5、UNTRACKED：未跟踪的
+
+
+常用端口号  /etc/services
+ftp  20/21
+ssh  22
+telnet  23
+smtp 25
+dns  53
+dhcp 67/68
+tftp 69
+http 80
+pop  110
+rpc  111
+ntp  123
+snmp 161/162
+https 443
+mysql 3306
+nfs  2049
+iscsi  3260
+
+端口号是16位的，所以范围是0－65535。
+< 254： well-known众所周知的端口号
+< 1024：传统上保留给unix系统服务
+> 1024：自定义软件端口
+
+PXE：搭建服务器批量部署平台
+1、安装不同版本的操作系统，如RHEL6/7，centos6/7
+2、服务器初始化
+描述：服务器启动后，没有操作系统，需要通过网络启动。通过网络启动就需要IP地址，所以需要搭建DHCP服务，为客户端提供网络参数。获得了IP地址之后，服务器还需要引导程序，所以PXE服务器需要配置TFTP，为客户端提供引导程序。服务器引导启动后，安装系统，需要软件包。PXE服务器使用VSFTPD搭建YUM服务器。在安装过程中，有很多问题需要回答，通过kickstart文件实现无人值守，自动应答。当服务器安装完成后，还可以执行初始化脚本。
+
+RAID：独立磁盘冗余阵列
+级别、性能、容错、构成、空间利用率
+RAID0：条带卷，性能最高，没有容错，2块以上，100％
+RAID1：镜像卷，性能无提升，容错级别最高，2块，50％
+RAID1E：增强的RAID1，3块以上
+RAID5：相当于RAID0和RAID1的折中，3块以上，(n-1)/n
+RAID6：提供两块校验盘
+RAID10：RAID1＋RAID0
+
+
+代理：主要作用就是缓存
+正向代理：靠近客户端，加速客户端的访问
+反向代理：靠近服务器，加速对服务器的访问
+
+
+监控：
+三个层次：
+1、数据采集层：公有数据（网络服务类）只需要通过命令就可以获得；私有数据的获得需要agent或SNMP
+2、数据存储层：数据存储到数据库里
+3、数据呈现层：往往是通过web页面呈现
+报警：邮件、短信SMS、钉钉机器人
+http://blog.51cto.com/m51cto/2051945
