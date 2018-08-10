@@ -1,0 +1,47 @@
+简单的ansible-cmdb实现
+1、安装，需要主机上已经安装了ansible
+# pip2 install ansible-cmdb
+2、收集被管主机的信息，将其信息放到out目录下
+# ansible -m setup --tree out/ all
+3、根所第2步生成的信息，生成web页面
+# ansible-cmdb out/ > overview.html
+
+
+在django模板中使用bootstrap
+1、pycharm配置
+File -> settings -> Languages & Frameworks -> Django设置正确的项目根路径
+2、在html页面最上方，加入
+{% load staticfiles %}
+3、在head标签中，加入
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+4、在html中，可以实现变量的补全、bootstrap样式的应用
+
+将ansible-cmdb集成到django
+1、主页是各主机的信息
+# vim mysite/urls.py
+from . import views
+urlpatterns = [
+    url(r'^$', views.mainpage, name='mainpage'),
+    ... ...
+]
+2、创建视图文件
+# vim mysite/views.py
+from django.shortcuts import render
+
+def mainpage(request):
+    return render(request, 'polls/mainpage.html')
+
+3、创建在templates/polls下创建ansible的主机文件hosts
+# vim /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/hosts
+[dbservers]
+192.168.122.1
+
+[webservers]
+node2.tedu.cn
+
+4、编写计划任务，每小时生成一次主页
+# crontab -e
+39 * * * * ansible -m setup --tree /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/out/ all
+40 * * * * ansible-cmdb /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/out/ > /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/mainpage.html
+
+5、访问http://127.0.0.1/即可

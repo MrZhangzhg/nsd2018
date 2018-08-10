@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票结果页</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>{{ q.question_text }}</h1>
+    <table class="table table-bordered">
+        <tr class="bg-primary">
+            <td>选项</td>
+            <td>票数</td>
+        </tr>
+        {% for c in q.choice_set.all %}
+            <tr>
+                <td>{{ c.choice_text }}</td>
+                    <td>{{ c.votes }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

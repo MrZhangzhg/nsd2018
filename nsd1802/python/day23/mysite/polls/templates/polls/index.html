@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>polls主页</title>
+</head>
+<body>
+{% if qlist %}
+    <ul>
+    {% for q in qlist %}
+        <li>
+            问题{{ q.id }}:{{ q.question_text }}
+            发布时间：{{ q.pub_date }}
+        </li>
+    {% endfor %}
+    </ul>
+    <table border="1px">
+        <tr>
+            <td>问题编号</td>
+            <td>问题内容</td>
+            <td>发布时间</td>
+        </tr>
+        {% for q in qlist %}
+            <tr>
+                <td>{{ q.id }}</td>
+                <td>{{ q.question_text }}</td>
+                <td>{{ q.pub_date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>尚无内容</p>
+{% endif %}
+</body>
+</html>
