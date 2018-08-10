@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^home/$', views.home, name='home'),
     url(r'^login/$', views.login, name='login'),
     url(r'^protected/$', views.protected, name='protected'),
+    url(r'^mytest/$', views.mytest, name='mytest')
 ]
 
 

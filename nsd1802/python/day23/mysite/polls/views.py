@@ -51,4 +51,9 @@ def protected(request):
         return HttpResponse('OK')
     return redirect('home')
 
-
+def mytest(request):
+    i = 10
+    alist = ['bob', 'alice']
+    adict = {'name': 'tom', 'age': 25}
+    context = {'i': i, 'alist': alist, 'adict': adict}
+    return render(request, 'polls/mytest.html', context)
