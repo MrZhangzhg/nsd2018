@@ -24,3 +24,92 @@ views.py:
 def students(request, name, age):
     return HttpResponse('%s is %s years old.' % (name, age))
 
+路径设计：RESTful架构风格
+http://www.runoob.com/w3cnote/restful-architecture.html
+
+信息提取
+1、创建url，返回info.html页面
+url(r'^info/', views.info),
+2、创建视图函数
+def info(request):
+    return render(request, 'info.html')
+3、在项目目录下创建模板目录,与manage.py在同一目录下
+# mkdir templates
+# touch templates/info.html
+4、声明模板目录
+# vim excercise/settings.py
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+......
+5、info.html中加入表单
+<form action="">
+    {% csrf_token %}
+    姓名：<input type="text" name="xm">
+    <input type="submit">
+</form>
+6、获取web传过来的参数
+(1)用户点提交按钮，将数据发送到http://127.0.0.1/submit/
+url(r'^submit/', views.submit),
+(2)编写submit函数
+def submit(request):
+    name = request.GET.get('xm')  # request.GET相当于是字典
+    return HttpResponse('收到姓名：%s' % name)
+(3)修改info.html表单的行为
+<form action="/submit/">
+
+7、将web提交的内容写入数据库
+(1)创建app
+# python manage.py startapp mydb
+(2)创建models.py
+# vim excercise/mydb/models.py
+from django.db import models
+
+class user(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+(3)注册mydb应用
+# vim excercise/settings.py
+    INSTALLED_APPS = [
+    .......
+    'mydb',
+]
+(4)生成数据库
+# python manage.py makemigrations
+# python manage.py migrate
+(5)创建超级用户
+# python manage.py createsuperuser
+(6)把user注册到后台管理页面
+# vim mydb/admin.py
+from django.contrib import admin
+from .models import user
+
+admin.site.register(user)
+(7)修改submit函数，除在页面中显示，还要写入数据库
+from mydb.models import user
+def submit(request):
+    username = request.POST.get('xm')  # request.GET相当于是字典
+    u = user(name=username)
+    u.save()
+    return HttpResponse('收到姓名：%s' % username)
+
+8、通过脚本写入数据库
+（1）关闭csrf验证
+# vim excercise/settings.py
+MIDDLEWARE = [
+    ......
+    #'django.middleware.csrf.CsrfViewMiddleware',
+(2)编写脚本
+# vim writedb.py
+import requests
+
+url='http://127.0.0.1/submit/'
+data = {'xm': '王五'}
+r = requests.post(url, data=data)
+print(r.content.decode('utf8'))
+(3)运行脚本，后台管理界面可以看到添加进来的新用户
+
+
