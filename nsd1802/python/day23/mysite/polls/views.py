@@ -30,3 +30,25 @@ def vote(request, question_id):
     c.save()
     # 重定向到urls.py中定义的name='result'那个网址
     return redirect('result', question_id=question_id)
+
+# 登陆面面
+def home(request):
+    return render(request, 'polls/home.html')
+
+# 验证用户是否登陆成功
+def login(request):
+    username = request.POST.get('username')
+    password = request.POST.get('pwd')
+    if username == 'bob' and password == '123456':
+        request.session['IS_LOGIN'] = True
+        return redirect('index')
+    return redirect('home')
+
+# 已登陆用户可以访问，如果没有登陆，重定向到登陆页面
+def protected(request):
+    is_login = request.session.get('IS_LOGIN', False)
+    if is_login:
+        return HttpResponse('OK')
+    return redirect('home')
+
+
