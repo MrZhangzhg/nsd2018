@@ -71,6 +71,45 @@ admin.site.register(Host)
 
 访问http://127.0.0.1/admin
 
+设计url
+http://127.0.0.1/hosts/ -> 交给hosts应用处理
+# vim mysite/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^hosts/', include('hosts.urls')),
+]
+# vim hosts/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^add/$', views.add, name='add'),
+    url(r'^addhost/$', views.addhost, name='addhost'),
+]
+
+编写视图函数
+from django.shortcuts import render, redirect
+from .models import Host
+
+def add(request):
+    pass
+
+def addhost(request):
+    hostname = request.POST.get('hostname')
+    ip = request.POST.get('ipaddr')
+    group = request.POST.get('group')
+    host = Host(hostname=hostname, ip_addr=ip, group=group)
+    host.save()
+    return redirect('add')
+
+编写脚本，注册主机到数据库
+关闭csrf验证
+# vim mysite/settings.py
+注释掉MIDDLEWARE中的'django.middleware.csrf.CsrfViewMiddleware',
+# vim addhost.py
 
 
 
