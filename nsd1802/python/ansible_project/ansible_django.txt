@@ -57,11 +57,28 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^addhosts/$', views.addhosts, name='addhosts'),
-    url(r'^addmodule/$', views.addmodules, name='addmodules'),
+    url(r'^addmodules/$', views.addmodules, name='addmodules'),
     url(r'^tasks/$', views.tasks, name='tasks'),
 ]
 
-五、ansible的动态主机清单
+五、创建视图函数
+简单的把几个视图函数定义，主体为HttpResponse('xxxxx')
+
+六、创建模型
+# vim webansi/models.py
+参见models.py文件
+
+七、生成数据库
+[root@room8pc16 myansible]# python manage.py makemigrations
+[root@room8pc16 myansible]# python manage.py migrate
+
+八、创建管理员用户
+[root@room8pc16 myansible]# python manage.py createsuperuser
+
+
+
+
+、ansible的动态主机清单
 1、在与manage.py同级的目录下创建工作目录
 [root@room8pc16 myansible]# mkdir ansicfg
 [root@room8pc16 myansible]# cd ansicfg
