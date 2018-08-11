@@ -141,6 +141,21 @@ for data in hosts:
 >>> Host.objects.filter(hostname__iregex='node[0-3]')  # 正则匹配
 
 
+新建记录：不会重复创建
+Host.objects.get_or_create(hostname=hostname, ip_addr=ip, group=group)
+
+更新：
+（1）使用实例属性重新赋值
+>>> h1 = Host.objects.get(id=7)
+>>> h1.hostname = 'node7.tedu.cn'
+>>> h1.save()
+（2）使用查询集的update方法
+>>> h8 = Host.objects.filter(id=8)
+>>> h8.update(group='mailservers')
+
+删除
+>>> h8 = Host.objects.get(id=8)
+>>> h8.delete()
 
 
 
