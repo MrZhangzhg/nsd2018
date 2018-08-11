@@ -1,0 +1,80 @@
+一、准备工作
+1、安装django
+# pip2 install django==1.11.6
+2、如果没有python2的pip：
+(1) http://pypi.python.org上下载pip
+(2) 解压下载的pip.tar.gz
+(3) 进入解压后的目录，执行python setup.py install
+
+二、django+ansible实现的功能
+1、动态主机清单
+(1)不再使用静态的主机清单文件，将主机和组写到数据库中
+(2)编写动态主机清单脚本，执行脚本，输入主机和组的信息
+2、规划URL(http://127.0.0.1/)
+(1) http://127.0.0.1/  -> 主页、里面有到各个URL的超链接
+(2) /webansi/  -> 交给webansi应用处理
+(3) /webansi/addhosts/   -> 用于创建主机
+(4) /webansi/addmodules/  -> 用于添加模块
+(5) /webansi/tasks/  -> 用于显示任务
+(6) /webansi/  -> 显示所有服务器的信息
+
+
+三、创建项目
+1、初始化
+# django-admin startproject myansible
+# cd myansible/
+# python manage.py startapp webansi
+2、修改settings.py
+ALLOWED_HOSTS = '*'
+INSTALLED_APPS = [
+    ... ...
+    'webansi',
+]
+MIDDLEWARE = [
+    ... ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ... ...
+]
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+
+四、配置URL
+(1)设置入口分配
+# vim myansible/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^$', webansi.views.mainpage, name='mainpage'),
+    url(r'^webansi/', include('webansi.urls')),
+]
+(2) 编写应用的url
+# vim webansi/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^addhosts/$', views.addhosts, name='addhosts'),
+    url(r'^addmodule/$', views.addmodules, name='addmodules'),
+    url(r'^tasks/$', views.tasks, name='tasks'),
+]
+
+五、ansible的动态主机清单
+1、在与manage.py同级的目录下创建工作目录
+[root@room8pc16 myansible]# mkdir ansicfg
+[root@room8pc16 myansible]# cd ansicfg
+[root@room8pc16 ansicfg]# vim ansible.cfg
+[defaults]
+remote_user = root
+inventory = dhosts.py
+2、编写动态主机清单文件，这个文件要求有x权限，输出有固定格式，是json格式
+#
+
+
+
+
+
+
+
