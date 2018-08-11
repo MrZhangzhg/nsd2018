@@ -1,0 +1,69 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="{% url 'exec_tasks' %}" method="post">
+                {% csrf_token %}
+                <label class="control-label">主机：</label>
+                <select name="host" class="form-control" id="host">
+                    {% for h in hosts %}
+                        <option value="{{ h.host }}">{{ h.host }}</option>
+                    {% endfor %}
+                </select>
+                <table class="table table-bordered">
+                    {% for key,vals in module_dict.items %}
+                    <tr class="bg-info" >
+                        <td><input type="radio" name="module" value="{{ key }}">{{ key }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% for val in vals %}
+                                <input type="radio" name="args" value="{{ val }}">{{ val }} <br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <input type="submit" class="btn btn-primary center-block" value="执行">
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <form action="{% url 'exec_tasks' %}" method="post">
+                {% csrf_token %}
+                <label class="control-label">主机组：</label>
+                <select name="group" class="form-control" id="group">
+                    {% for g in group %}
+                        <option value="{{ g.group }}">{{ g.group }}</option>
+                    {% endfor %}
+                </select>
+                <table class="table table-bordered">
+                    {% for key,vals in module_dict.items %}
+                    <tr class="bg-info" >
+                        <td><input type="radio" name="module">{{ key }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% for val in vals %}
+                                <input type="radio" name="args">{{ val }} <br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <input type="submit" class="btn btn-primary center-block" value="执行">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

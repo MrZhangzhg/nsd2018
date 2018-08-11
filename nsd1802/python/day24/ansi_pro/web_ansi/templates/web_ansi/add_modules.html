@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加模块</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container">
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div class="form-control-static">{{ obj.as_p }}</div>
+
+        <input type="submit" value="确认" class="btn-primary">
+    </form>
+    <table class="table table-bordered">
+    <tr class="bg-info">
+            <td>模块</td>
+            <td>参数</td>
+    </tr>
+        {% for key,vals in module_dict.items %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>
+                {% for val in vals %}
+                    {{ val }} <br>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
