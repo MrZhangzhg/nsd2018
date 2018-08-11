@@ -110,6 +110,52 @@ def addhost(request):
 # vim mysite/settings.py
 注释掉MIDDLEWARE中的'django.middleware.csrf.CsrfViewMiddleware',
 # vim addhost.py
+import requests
+
+url = 'http://127.0.0.1/hosts/addhost/'
+hosts = [
+    {'hostname': 'node2.tedu.cn','ipaddr': '192.168.4.2','group': 'webservers',},
+    {'hostname': 'node3.tedu.cn','ipaddr': '192.168.4.3','group': 'webservers',},
+    {'hostname': 'node4.tedu.cn','ipaddr': '192.168.4.4','group': 'webservers',},
+    {'hostname': 'node5.tedu.cn','ipaddr': '192.168.4.5','group': 'dbservers',},
+    {'hostname': 'node6.tedu.cn','ipaddr': '192.168.4.6','group': 'dbservers',},
+]
+for data in hosts:
+    requests.post(url, data=data)
+
+
+查询数据库
+# python manage.py shell
+>>> from hosts.models import Host
+>>> Host.objects.all()  # 返回所有实例的查询集
+>>> h = Host.objects.get(hostname='node1.tedu.cn')  # 返回满足条件的实例
+>>> h.hostname
+>>> Host.objects.all()[:3]  # 返回前三个实例的查询集
+>>> Host.objects.order_by('group')  # 按Group排序
+>>> Host.objects.filter(group='dbservers')
+>>> Host.objects.filter(group__exact='dbservers')  # 严格匹配
+>>> Host.objects.filter(group__iexact='DBservers')  # 不区分大小写
+>>> Host.objects.filter(group__contains='server')  # 包含字符串
+>>> Host.objects.filter(group__icontains='server')  # 不区分大小写
+>>> Host.objects.filter(hostname__regex='node[0-3]')  # 正则匹配
+>>> Host.objects.filter(hostname__iregex='node[0-3]')  # 正则匹配
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
