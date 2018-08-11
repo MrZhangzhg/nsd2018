@@ -25,4 +25,53 @@ python技能描述
 4、可以实现新版本的上线、老版本的回滚
 
 
+创建mysite项目
+# django-admin startproject mysite
+# cd mysite/
+# vim mysite/settings.py
+ALLOWED_HOSTS = '*'
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+
+创建hosts应用
+# python manage.py startapp hosts
+# vim mysite/settings.py
+INSTALLED_APPS = [
+    ... ...
+    'hosts',
+]
+
+创建模型
+from django.db import models
+
+class Host(models.Model):
+    hostname = models.CharField(max_length=50)
+    ip_addr = models.CharField(max_length=15)
+    group = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.hostname
+
+生成数据库
+# python manage.py makemigrations
+# python manage.py migrate
+
+创建管理员用户
+# python manage.py createsuperuser
+
+将模型注册到后管理页面
+# vim hosts/admin.py
+from django.contrib import admin
+from .models import Host
+
+admin.site.register(Host)
+
+启动服务器
+(django_env) [root@room8pc16 mysite]# python manage.py runserver 0:80
+
+访问http://127.0.0.1/admin
+
+
+
+
 
