@@ -75,10 +75,19 @@ urlpatterns = [
 八、创建管理员用户
 [root@room8pc16 myansible]# python manage.py createsuperuser
 
+九、注册模型到后台管理
+# vim webansi/admin.py
+from django.contrib import admin
+from .models import Group, Host, Module, Args
+
+admin.site.register(Group)
+admin.site.register(Host)
+admin.site.register(Module)
+admin.site.register(Args)
 
 
 
-、ansible的动态主机清单
+十、ansible的动态主机清单
 1、在与manage.py同级的目录下创建工作目录
 [root@room8pc16 myansible]# mkdir ansicfg
 [root@room8pc16 myansible]# cd ansicfg
@@ -87,7 +96,22 @@ urlpatterns = [
 remote_user = root
 inventory = dhosts.py
 2、编写动态主机清单文件，这个文件要求有x权限，输出有固定格式，是json格式
-#
+# pip2 install sqlalchemy
+# vim ansicfg/dhosts.py
+详见dhosts.py文件
+注意：因为数据库已经存在了，所以要写ORM，先要分析数据库表和字段
+# sqlite3 db.sqlite3
+sqlite> .tables
+sqlite> .schema webansi_group
+3、执行测试
+[root@room8pc16 ansicfg]# chmod +x dhosts.py
+[root@room8pc16 ansicfg]# ./dhosts.py
+[root@room8pc16 ansicfg]# ansible webservers -m ping
+
+
+
+
+
 
 
 
