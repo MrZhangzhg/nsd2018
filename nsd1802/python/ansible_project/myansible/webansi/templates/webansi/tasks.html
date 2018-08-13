@@ -10,11 +10,71 @@
     <li><a href="#group" data-toggle="tab">主机组</a></li>
 </ul>
 <div class="tab-content" style="padding: 10px;">
-        <div class="tab-pane fade in active" id="hosts">
-            主机
-        </div>
-        <div class="tab-pane" id="group">
-            主机组
-        </div>
+    <div class="tab-pane fade in active" id="hosts">
+        <form action="" role="form" method="post">
+            <div class="form-group">
+                <select class="form-control" name="ipaddr">
+                    {% for host in hosts %}
+                        <option value="{{ host.ipaddr }}">
+                            {{ host.hostname }}: {{ host.ipaddr }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr class="bg-primary">
+                    <td>模块</td>
+                    <td>参数</td>
+                </tr>
+                </thead>
+                {% for mod, args in mod_info.items %}
+                    <tr>
+                        <td><input type="radio" name="module" value="{{ mod }}">{{ mod }}</td>
+                        <td>
+                            <ul>
+                                {% for a in args %}
+                                    <li><input type="radio" name="args" value="{{ a }}">{{ a }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" class="btn btn-primary" value="执行">
+        </form>
     </div>
+    <div class="tab-pane" id="group">
+        <form action="" role="form" method="post">
+            <div class="form-group">
+                <select name="group" id="group" class="form-control">
+                    {% for g in groups %}
+                        <option value="{{ g.group }}">{{ g.group }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr class="bg-primary">
+                    <td>模块</td>
+                    <td>参数</td>
+                </tr>
+                </thead>
+                {% for mod, args in mod_info.items %}
+                    <tr>
+                        <td><input type="radio" name="module" value="{{ mod }}">{{ mod }}</td>
+                        <td>
+                            <ul>
+                                {% for a in args %}
+                                    <li><input type="radio" name="args" value="{{ a }}">{{ a }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        <input type="submit" class="btn btn-primary" value="执行">
+        </form>
+    </div>
+</div>
 {% endblock %}

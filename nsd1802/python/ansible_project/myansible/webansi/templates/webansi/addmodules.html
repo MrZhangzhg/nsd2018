@@ -30,14 +30,16 @@
     </tr>
     </thead>
     {% for mod, args in mod_info.items %}
-        <td>{{ mod }}</td>
-        <td>
-            <ul>
-                {% for a in args %}
-                    <li>{{ a }}</li>
-                {% endfor %}
-            </ul>
-        </td>
+        <tr>
+            <td>{{ mod }}</td>
+            <td>
+                <ul>
+                    {% for a in args %}
+                        <li>{{ a }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
     {% endfor %}
 
     </table>
