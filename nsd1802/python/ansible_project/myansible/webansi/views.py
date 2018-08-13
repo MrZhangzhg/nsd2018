@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, HttpResponse
 
 def mainpage(request):
-    return HttpResponse('mainpage')
+    return render(request, 'webansi/mainpage.html')
 
 def index(request):
     return HttpResponse('index')

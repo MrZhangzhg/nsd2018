@@ -115,6 +115,11 @@ sqlite> .schema webansi_group
 # cp -r ../../day23/mysite/polls/static/ webansi/
 3、创建基础模板
 # touch webansi/templates/webansi/base.html
+4、创建图片文件的目录
+# mkdir webansi/static/imgs
+制作一个banner.jgp图片存在这个目录下
+
+十二、创建视图
 
 
 

@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .banner{
+            background-image: url("{% static 'imgs/banner.jpg' %}");
+            background-size: 100%;
+            height: 200px;
+        }
+        .footer{
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -14,7 +24,7 @@
     </div>
     <div class="footer">
         <a href="http://linux.tedu.cn" target="_blank">达内云计算学院</a>
-        客服电话：400-111-8989 邮箱：admin@tedu.cn
+        <b>客服电话：400-111-8989 邮箱：admin@tedu.cn</b>
     </div>
 </div>
 </body>
