@@ -108,6 +108,13 @@ sqlite> .schema webansi_group
 [root@room8pc16 ansicfg]# ./dhosts.py
 [root@room8pc16 ansicfg]# ansible webservers -m ping
 
+十一、创建模板
+1、创建模板目录
+# mkdir -p webansi/templates/webansi
+2、把bootstrap复制过来，叫static
+# cp -r ../../day23/mysite/polls/static/ webansi/
+3、创建基础模板
+# touch webansi/templates/webansi/base.html
 
 
 
