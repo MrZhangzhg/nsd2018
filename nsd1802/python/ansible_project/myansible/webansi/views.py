@@ -7,10 +7,10 @@ def mainpage(request):
     return render(request, 'webansi/mainpage.html')
 
 def index(request):
-    return HttpResponse('index')
+    return render(request, 'webansi/hostinfo.html')
 
 def addhosts(request):
-    return HttpResponse('addhosts')
+    return render(request, 'webansi/addhosts.html')
 
 def addmodules(request):
     return HttpResponse('addmodules')

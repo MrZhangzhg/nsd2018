@@ -5,5 +5,10 @@
 {% endblock %}
 
 {% block content %}
-this is a test.
+    <ur>
+        <li><a href="{% url 'index' %}" target="_blank">主机信息</a></li>
+        <li><a href="{% url 'addhosts' %}" target="_blank">添加主机</a></li>
+        <li><a href="{% url 'addmodules'%}" target="_blank">添加模板</a></li>
+        <li><a href="{% url 'tasks' %}" target="_blank">执行任务</a></li>
+    </ur>
 {% endblock %}

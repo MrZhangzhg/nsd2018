@@ -122,7 +122,13 @@ sqlite> .schema webansi_group
 十二、创建视图
 
 
-
+十三、把ansible-cmdb生成的信息保存，并生成web页面
+# ansible -i 主机清单文件 -m setup --tree 信息保存存的目录 all
+# ansible-cmdb 信息保存存的目录 > html文件
+并将上面两条命令写到计划任务
+如：
+# ansible -i /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/hosts -m setup --tree /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/out/ all
+# ansible-cmdb /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/out/ > /var/ftp/nsd2018/nsd1802/python/day23/mysite/polls/templates/polls/mainpage.html
 
 
 
