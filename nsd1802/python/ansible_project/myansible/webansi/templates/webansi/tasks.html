@@ -1,0 +1,20 @@
+{% extends 'webansi/base.html' %}
+
+{% block title %}
+执行任务
+{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#hosts" data-toggle="tab">主机</a></li>
+    <li><a href="#group" data-toggle="tab">主机组</a></li>
+</ul>
+<div class="tab-content" style="padding: 10px;">
+        <div class="tab-pane fade in active" id="hosts">
+            主机
+        </div>
+        <div class="tab-pane" id="group">
+            主机组
+        </div>
+    </div>
+{% endblock %}

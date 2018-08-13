@@ -52,4 +52,4 @@ def addmodules(request):
     return render(request, 'webansi/addmodules.html', {'mod_info': mod_info})
 
 def tasks(request):
-    return HttpResponse('tasks')
+    return render(request, 'webansi/tasks.html')
