@@ -32,7 +32,7 @@ def addhosts(request):
     return render(request, 'webansi/addhosts.html', {'host_info': host_info})
 
 def addmodules(request):
-    return HttpResponse('addmodules')
+    return render(request, 'webansi/addmodules.html')
 
 def tasks(request):
     return HttpResponse('tasks')
