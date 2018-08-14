@@ -70,7 +70,12 @@ error: 不能重命名配置小节 'remote.origin' 到 'remote.old-origin'
 [root@room8pc16 demo]# cd core_py/
 [root@room8pc16 core_py]# git pull
 
+7、如果使用http上传代码，可以
+[root@localhost devops]# git remote rm origin
+[root@localhost devops]# git remote add origin http://gitlab/devops/core_py.git
+[root@localhost devops]# git push -u origin --all
 
+网上资源：http://www.runoob.com/git/
 
 
 
