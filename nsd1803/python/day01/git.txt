@@ -1,0 +1,77 @@
+1、安装
+# yum install -y git
+2、配置作者信息
+[root@node1 ~]# git config --global user.name "Zhangzg"
+[root@node1 ~]# git config --global user.email "zzg@163.com"
+[root@node1 ~]# git config --global core.editor vim
+[root@node1 ~]# git config --list
+[root@node1 ~]# cat .gitconfig
+
+使用git
+1、初始化
+[root@node1 ~]# mkdir devops
+[root@node1 ~]# cd devops
+[root@node1 devops]# git init
+[root@node1 devops]# ls -a
+2、添加跟踪文件
+[root@node1 devops]# echo 'hello world' > hello.txt
+[root@node1 devops]# git add .
+3、查看暂存区
+[root@node1 devops]# git status
+[root@node1 devops]# git status -s
+4、确认文件到版本库
+[root@node1 devops]# git commit -m "add hello.txt"
+[root@node1 devops]# git status
+5、删除版本库中文件
+[root@node1 devops]# git ls-files
+[root@node1 devops]# git rm hello.txt
+[root@node1 devops]# git commit -m "rm hello.txt"
+6、把不想放到版本库中的文件写到.gitignore中
+[root@node1 devops]# vim .gitignore
+*.swp
+*.pyc
+
+搭建gitlab服务器，统一管理软件项目
+1、启动一台虚拟机，内存至少改为4G
+2、在虚拟机上配置docker
+[root@node1 docker]# yum install -y docker_pkgs/*rpm
+[root@node1 docker]# systemctl start docker
+[root@node1 docker]# systemctl enable docker
+[root@node1 docker]# docker load < images/gitlab_zh.tar
+3、因为，为了方便，gitlab需要占用22端口，将node1的ssh端口改为2222
+[root@node1 ~]# vim /etc/ssh/sshd_config
+Port 2222
+[root@node1 ~]# systemctl restart sshd
+[root@room8pc16 ~]# ssh -p2222 192.168.4.1
+[root@node1 ~]# docker run -d -h gitlab --name gitlab -p 80:80 -p 443:443 -p22:22 --restart always -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data gitlab_zh
+
+
+
+gitlab用户将代码上传到服务器
+1、使用ssh方式上传代码，生成密钥
+[root@localhost ~]# ssh-keygen -t rsa -C "zhangzhg@tedu.cn" -b 4096
+2、将公钥~/.ssh/id_rsa.pub内容复制粘贴到gitlab用户ssh密钥中
+3、将已存在版本库的项目上传
+[root@localhost devops]# git remote rename origin old-origin
+如果出现以下以下错误，可以忽略
+error: 不能重命名配置小节 'remote.origin' 到 'remote.old-origin'
+[root@localhost devops]# git remote add origin git@192.168.4.1:devops/core_py.git
+4、向远程服务器推送代码文件
+[root@localhost devops]# git push -u origin --all
+[root@localhost devops]# git push -u origin --tags
+5、以后再有新文件执行以下操作即可
+[root@localhost devops]# cp /etc/passwd .
+[root@localhost devops]# git add .
+[root@localhost devops]# git commit -m "add new file passwd"
+[root@localhost devops]# git push
+6、其他人下载
+[root@room8pc16 demo]# git clone http://192.168.4.1/devops/core_py.git
+如果已经下载，可以进入到目录中，执行
+[root@room8pc16 demo]# cd core_py/
+[root@room8pc16 core_py]# git pull
+
+
+
+
+
+
