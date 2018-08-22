@@ -15,3 +15,14 @@ with open('/etc/passwd', 'rb') as fobj:
 m = hashlib.md5(data)
 print(m.hexdigest())
 
+
+###########################
+import os
+
+for path, folders, files in os.walk('/tmp/security'):
+    for each_file in files:
+        print(os.path.join(path, each_file))
+
+
+
+
