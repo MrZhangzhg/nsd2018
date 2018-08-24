@@ -28,6 +28,13 @@ class TcpTimeServer:
                 break
             pid = os.fork()  # 创建子进程
             if pid:
+                while True:
+                    # 通过循环，处理所有的子进程，waitpid会优先处理僵尸进程
+                    # 正在运行的子进程返回(0,0)，则中断循环
+                    result = os.waitpid(-1, 1)
+                    # print(result)
+                    if result[0] == 0:
+                        break
                 cli_sock.close()  # 父进程只负责响应客户端，不用和客户通信
             else:
                 self.serv.close()  # 子进程只负责与客户通信，不负责建立连接
