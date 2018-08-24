@@ -7,9 +7,9 @@ def ping(host):
         shell=True
     )
     if result == 0:  # result的值就是ping命令的退出码，即$?
-        print('%s:up' % host)
-    else:
-        print('%s:down' % host)
+        print('%s' % host)
+    # else:
+    #     print('%s:down' % host)
 
 if __name__ == '__main__':
     ips = ['172.40.58.%s' % i for i in range(1, 255)]
