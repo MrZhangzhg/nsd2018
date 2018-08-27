@@ -1,0 +1,43 @@
+[root@localhost	~]#	mkdir ~/.pip/
+[root@localhost	~]#	vim	~/.pip/pip.conf
+[global]
+index-url=http://pypi.douban.com/simple/
+[install]
+trusted-host=pypi.douban.com
+
+[root@localhost	packages]#	pip3 install pymysql
+
+# yum install -y mariadb-server
+# systemctl start mariadb
+# systemctl enable mariadb
+# mysqladmin password tedu.cn
+# mysql -uroot -ptedu.cn
+
+发工资的数据库
+姓名、性别、出生年月、部门、联系方式、员工编号、发工资日期、基本工资、奖金、
+总工资
+第一范式（1NF）：所有的域都应该是原子性的，即数据库表的每一列都是不可分割的原子数据项
+联系方式应该拆分为：住址、电话号码、email等
+第二范式（2NF）：在1NF的基础上，非码属性必须完全依赖于候选码
+把字段放到不同的表里：
+员工表：员工编号、姓名、性别、出生年月、部门ID、电话号码、email
+部门表：部门ID、部门编号
+工资表：autoid、员工编号、发工资日期、基本工资、奖金、总工资
+第三范式（3NF）：在2NF基础上，任何非主属性不依赖于其它非主属性（在2NF基础上消除传递依赖）
+因为总工资是用基本工资和奖金算出来的，所以它不要出现在数据库表中
+
+MariaDB [(none)]> CREATE DATABASE tedu DEFAULT CHARSET='utf8';
+MariaDB [(none)]> use tedu;
+MariaDB [tedu]> CREATE TABLE departments (dep_id INT, dep_name VARCHAR(20), PRIMARY KEY(dep_id));
+MariaDB [tedu]> CREATE TABLE employees (emp_id INT, emp_name VARCHAR(20) NOT NULL, gender VARCHAR(6), email VARCHAR(50), dep_id INT, PRIMARY KEY(emp_id), FOREIGN KEY(dep_id) REFERENCES departments(dep_id));
+MariaDB [tedu]>  CREATE TABLE salary (auto_id INT AUTO_INCREMENT, date DATE, emp_id INT, basic INT, awards INT, PRIMARY KEY(auto_id), FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
+
+
+
+
+
+
+
+
+
+
