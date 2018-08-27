@@ -1,0 +1,11 @@
+# pip3 install sqlalchemy
+
+MariaDB [(none)]> CREATE DATABASE tarena DEFAULT CHARSET='utf8';
+
+
+[
+('zs', '110', 'zs@163.com'),
+('ls', '119', 'ls@qq.com')
+]
+
+

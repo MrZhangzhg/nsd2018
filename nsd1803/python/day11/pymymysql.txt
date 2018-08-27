@@ -28,9 +28,12 @@ trusted-host=pypi.douban.com
 
 MariaDB [(none)]> CREATE DATABASE tedu DEFAULT CHARSET='utf8';
 MariaDB [(none)]> use tedu;
-MariaDB [tedu]> CREATE TABLE departments (dep_id INT, dep_name VARCHAR(20), PRIMARY KEY(dep_id));
-MariaDB [tedu]> CREATE TABLE employees (emp_id INT, emp_name VARCHAR(20) NOT NULL, gender VARCHAR(6), email VARCHAR(50), dep_id INT, PRIMARY KEY(emp_id), FOREIGN KEY(dep_id) REFERENCES departments(dep_id));
-MariaDB [tedu]>  CREATE TABLE salary (auto_id INT AUTO_INCREMENT, date DATE, emp_id INT, basic INT, awards INT, PRIMARY KEY(auto_id), FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
+MariaDB [tedu]> CREATE TABLE departments
+(dep_id INT, dep_name VARCHAR(20), PRIMARY KEY(dep_id));
+MariaDB [tedu]> CREATE TABLE employees
+(emp_id INT, emp_name VARCHAR(20) NOT NULL, gender VARCHAR(6), email VARCHAR(50), dep_id INT, PRIMARY KEY(emp_id), FOREIGN KEY(dep_id) REFERENCES departments(dep_id));
+MariaDB [tedu]>  CREATE TABLE salary
+(auto_id INT AUTO_INCREMENT, date DATE, emp_id INT, basic INT, awards INT, PRIMARY KEY(auto_id), FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
 
 
 
