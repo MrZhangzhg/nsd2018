@@ -21,8 +21,8 @@ john = Employees(emp_id=2, emp_name='John', gender='male', birth_date='1992-06-2
 alice = Employees(emp_id=3, emp_name='Alice', gender='female', birth_date='1997-02-2', email='alice@tedu.cn', dep_id='2')
 jane = Employees(emp_id=4, emp_name='Jane', gender='female', birth_date='1988-09-23', email='jane@tedu.cn', dep_id='2')
 tom = Employees(emp_id=5, emp_name='Tom', gender='male', birth_date='1994-04-6', email='tom@tedu.cn', dep_id='3')
+
 session = Session()
 session.add_all([bob, john, alice, jane, tom])
-
 session.commit()
 session.close()
