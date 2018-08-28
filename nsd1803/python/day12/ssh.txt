@@ -1,0 +1,21 @@
+# pip3 install paramiko
+
+>>> import paramiko
+>>> ssh = paramiko.SSHClient()  # 可以认为创建了一个ssh客户端
+>>> ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())  # 意思是回答yes
+>>> ssh.connect('192.168.4.2', username='root', password='123456')
+>>> ssh.exec_command('mkdir /tmp/demo')  # 执行命令
+>>> result = ssh.exec_command('id zhangsan')
+>>> type(result)
+<class 'tuple'>
+>>> len(result)
+3
+执行命令后，返回值是一个元组，元组中的三项都是类文件对象，分别代表了
+标准输入、标准输出和标准错误
+>>> result[1].read()
+b''
+>>> result[2].read().decode('utf8')
+>>> ssh.close()
+
+
+
