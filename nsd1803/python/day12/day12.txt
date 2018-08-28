@@ -1,0 +1,5 @@
+# telnet www.baidu.com 80
+GET / HTTP/1.1
+HOST: www.baidu.com
+回车
+
