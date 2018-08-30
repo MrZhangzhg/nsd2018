@@ -1,0 +1,46 @@
+配置虚拟机可以连接互联网
+1、打开虚拟机的设置，将第一块网卡eth0连接方式改为NAT
+改为NAT后，物理机使用virbr0和虚拟机的eth0通信
+2、将虚拟机的virbr0关闭
+[root@node3 ~]# ifconfig virbr0 down
+3、把虚拟机的IP地址设置为自动获得
+4、禁用再激活eth0
+[root@node3 ~]# ifdown eth0; ifup eth0
+5、如果虚拟机经过设置还不能上网，把它关机再开机
+
+[root@node3 ~]# brctl delbr virbr0
+
+1、安装
+[root@node3 ~]# rpm -ihv jenkins-2.121-1.1.noarch.rpm
+[root@node3 ~]# systemctl start jenkins
+[root@node3 ~]# systemctl enable jenkins
+2、访问
+http://192.168.122.73:8080
+3、插件选自定义，只有git是必须要选的，其他都可以不安装
+
+
+在客户端编写程序
+# yum install -y git
+# git config --global user.name "zzg"
+# git config --global user.email "zzg@tedu.cn"
+# mkdir myproject
+# cd myproject
+# git init
+# echo 'Hello World!' > index.html
+# git commit -m "myproject version 1"
+# git tag 1.0         # 此时设置一个标记是1.0
+# echo '2nd version' >> index.html
+# git add .
+# git commit -m "myproject 2.0"
+# git tag 2.0
+
+
+
+
+
+
+
+
+
+
+
