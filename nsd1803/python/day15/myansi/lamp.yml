@@ -1,5 +1,5 @@
 ---
-- name: configure web serivce
+- name: configure web service
   hosts: webservers
   tasks:
     - name: install web app
@@ -23,7 +23,7 @@
       yum:
         name: mariadb-server
         state: latest
-    - name: config db serivce
+    - name: config db service
       service:
         name: mariadb
         state: started

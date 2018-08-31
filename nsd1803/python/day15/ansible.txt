@@ -69,7 +69,7 @@ ansible执行命令的两种方式
 在web服务器上配置httpd，在数据库服务器上配置mariadb
 # vim lamp.yml
 ---
-- name: configure web serivce
+- name: configure web service
   hosts: webservers
   tasks:
     - name: install web app
@@ -99,7 +99,8 @@ ansible执行命令的两种方式
         state: started
         enabled: yes
 
-
+https://docs.ansible.com/ansible/latest/index.html
+按ctrl+f，搜索api，找到python api
 
 
 
