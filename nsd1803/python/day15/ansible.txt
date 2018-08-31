@@ -1,0 +1,111 @@
+1、配置ansible应用环境
+# mkdir myansi
+# cd myansi
+[root@room8pc16 myansi]# vim ansible.cfg
+[defaults]
+inventory = hosts
+remote_user = root
+# vim hosts
+[dbservers]
+node1.tedu.cn
+
+[webservers]
+node2.tedu.cn
+node3.tedu.cn
+# vim /etc/hosts
+192.168.4.1 node1.tedu.cn   node1
+192.168.4.2 node2.tedu.cn   node2
+192.168.4.3 node3.tedu.cn   node3
+
+2、导入所有服务器的主机公钥
+# ssh-keyscan 192.168.4.{1..3} node{1..3} node{1..3}.tedu.cn >> ~/.ssh/known_hosts
+
+3、测试ansible到各服务器的连接
+# ansible all -m ping -k
+
+
+配置vim，按tab键缩进4个空格，如果是yml文件，缩2个空格
+# vim ~/.vimrc
+set ai  # 自动缩进
+set ts=4  # 4个空格
+set et   # 将tab转成空格
+autocmd FileType yaml setlocal sw=2 ts=2 et ai
+
+
+
+ansible执行命令的两种方式
+一、ad-hoc临时命令
+# ansible 主机(组) -m 模块 -a 参数
+# ansible node1.tedu.cn -m yum -a 'name=httpd state=present' -k
+# ansible all -a 'id zhangsan' -k
+二、playbook
+1、实现免密登陆
+# ansible-doc authorized_key
+# vim auth_key.yml
+---
+- name: configure authorized key
+  hosts: all
+  tasks:
+  - name: root key
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+# ansible-playbook --syntax-check auth_key.yml
+# ansible-playbook auth_key.yml -k
+# ansible all -m ping
+
+2、配置yum
+# mkdir files
+# cp /etc/yum.repos.d/server.repo files/
+# vim auth_key.yml 追加
+  - name: copy yum config file
+    copy:
+      src: files/server.repo  # 本机目录
+      dest: /etc/yum.repos.d/  # 远程目录
+# ansible-playbook auth_key.yml
+
+3、配置服务
+在web服务器上配置httpd，在数据库服务器上配置mariadb
+# vim lamp.yml
+---
+- name: configure web serivce
+  hosts: webservers
+  tasks:
+    - name: install web app
+      yum:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - httpd
+        - php
+        - php-mysql
+    - name: config web service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+- name: configure db service
+  hosts: dbservers
+  tasks:
+    - name: install db app
+      yum:
+        name: mariadb-server
+        state: latest
+    - name: config db serivce
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+
+
+
+
+
+
+
+
+
+

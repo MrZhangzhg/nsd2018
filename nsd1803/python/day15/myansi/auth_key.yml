@@ -1,0 +1,14 @@
+---
+- name: configure authorized key
+  hosts: all
+  tasks:
+  - name: root key
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+
+  - name: copy yum config file
+    copy:
+      src: files/server.repo  # 本机目录
+      dest: /etc/yum.repos.d/  # 远程目录
