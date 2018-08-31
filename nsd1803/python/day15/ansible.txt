@@ -104,9 +104,72 @@ https://docs.ansible.com/ansible/latest/index.html
 
 
 
+创建模块
+1、创建模块路径
+# mkdir mylib
+# export ANSIBLE_LIBRARY=$(pwd)/mylib
+2、创建模块，模块用于将管理机上的文件拷贝到目标主机的指定目录
+# vim mylib/rcopy.py
+#!/usr/bin/env python
+
+import shutil
+from ansible.module_utils.basic import AnsibleModule
+
+def main():
+    mokuai = AnsibleModule(
+        argument_spec=dict(
+            yuan=dict(required=True, type='str'),
+            mudi=dict(required=True, type='str')
+        )
+    )
+    shutil.copy(mokuai.params['yuan'], mokuai.params['mudi'])
+    mokuai.exit_json(change=True)
+
+if __name__ == '__main__':
+    main()
+3、验证
+# ansible dbservers -m rcopy -a "yuan=/etc/hosts mudi=/opt"
+
+
+ansible-cmdb
+1、安装
+# pip2 install ansible-cmdb
+如果pip没有python2版本，那么
+http://pypi.python.org搜索，然后下载tar包
+# tar xzf ansible-cmdb.xxxxx.tar.gz
+# cd ansible-cmdb
+# python setup.py install
+2、使用
+(1)将所有主机的信息用setup模块收集，并放到out目录中
+# ansible all -m setup --tree out/
+(2)根据out目录中收集到的信息，生成网页
+# ansible-cmdb out/ > overview.html
+# firefox overview.html
 
 
 
+zabbix
 
+class ZabbixAPI:
+    def __init__(self, username, password):
+        data = {}
+        r = requests.post()  # 取得令牌
+        self.token = 取出令牌
 
+    def list_hosts(self):
+        pass
 
+    def list_hostgroups(self):
+        pass
+
+    def list_templates(self):
+        pass
+
+    def create_host(self, hostname, group_id, template_id):
+        pass
+
+if __name__ == '__main__':
+    zabbix = ZabbixAPI('admin', 'zabbix')
+    zabbix.list_hostgroups()
+    zabbix.list_templates()
+    create_host('mylinux', '2', '10010')
