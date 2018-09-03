@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function login() {
+            alert('登陆成功')
+        }
+    </script>
+</head>
+<body>
+
+<form action="">
+    你最喜欢的体育项目有什么？
+    <select name="sports" id="tiyu">
+        <option value="football">足球</option>
+        <option value="basketball">蓝球</option>
+        <option value="batmiton">羽毛球</option>
+    </select>
+    <br>
+    <textarea name="content" id="ccc" cols="30" rows="5"></textarea>
+    <input type="submit">
+</form>
+
+<hr>
+
+<form action="">
+    你最喜欢的体育项目有什么？
+    <input type="radio" name="a" value="football">足球
+    <input type="radio" name="a" value="basketball">蓝球
+    <input type="radio" name="a" value="pingpong">乒乓球
+    <input type="submit">
+</form>
+
+<hr>
+
+<form action="">
+    你喜欢的体育项目有什么？
+    <label>
+        <input type="checkbox" name="ft" value="football"> 足球
+    </label>
+    <input type="checkbox" name="bt" value="basketball"> 蓝球
+    <input type="checkbox" name="pp" value="pingpong" id="tt">
+    <label for="tt">乒乓球</label>
+    <input type="submit">
+</form>
+
+<hr>
+
+<form action="">
+    username: <input type="text" name="user" value="bob" placeholder="用户名" maxlength="10">
+    <input type="submit">
+</form>
+
+<hr>
+<form action="">
+    username: <input type="text" name="user"><br>
+    password: <input type="password" name="pwd">
+    <input type="button" value="登陆" onclick="login()">
+    <input type="reset">
+</form>
+
+<hr>
+<form method="get" action="http://www.baidu.com/s" target="_blank">
+    查询：<input type="text" name="wd">
+    <input type="submit" value="百度搜索">
+</form>
+
+
+<hr>
+<ul>
+    <li>一级菜单
+        <ul>
+            <li><a href="http://www.baidu.com" target="_blank">百度</a></li>
+            <li>二级菜单</li>
+        </ul>
+    </li>
+    <li>一级菜单
+        <ul>
+            <li>二级菜单</li>
+            <li>二级菜单</li>
+        </ul>
+    </li>
+</ul>
+
+
+<hr>
+<ul>
+    <li>os</li>
+    <li>tarfile</li>
+    <li>hashlib</li>
+</ul>
+<ul type="circle">
+    <li>os</li>
+    <li>tarfile</li>
+    <li>hashlib</li>
+</ul>
+<ul type="square">
+    <li>os</li>
+    <li>tarfile</li>
+    <li>hashlib</li>
+</ul>
+<ol>
+    <li>network</li>
+    <li>linux</li>
+    <li>python</li>
+</ol>
+<ol type="I" start="3">
+    <li>network</li>
+    <li>linux</li>
+    <li>python</li>
+    <li>network</li>
+    <li>linux</li>
+    <li>python</li>
+</ol>
+</body>
+</html>
