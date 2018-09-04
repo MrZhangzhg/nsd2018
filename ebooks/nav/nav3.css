@@ -1,3 +1,7 @@
+body,p,h1,h2,h3,h4,h5,h6,pre{
+    margin: 0;
+}
+
 #container{
     width: 1024px;
     margin: 0 auto;
@@ -12,7 +16,7 @@
     height: 30px;
     margin: 0;
     padding: 0;
-    border-bottom: 2px solid #2788da;
+    border-bottom: 4px solid #2788da;
 }
 #nav li{
     float: left;
@@ -24,6 +28,7 @@
     text-align: center;
     text-decoration: none;
     color: #000;
+    font-weight: bold;
     height: 26px;
     padding-top: 4px;
     background-color: #ececec;
@@ -65,6 +70,13 @@
     background: #cccccc;
 }
 #primary{
-    margin-left: 124px;
-    padding: 2px;
+    margin-left: 120px;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.clean{
+    clear: both;
+}
+#footer{
+    text-align: center;
 }

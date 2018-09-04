@@ -1,0 +1,51 @@
+body,p,h1,h2,h3,h4,h5,h6,pre,div{
+    margin: 0;
+}
+/*body{*/
+    /*background-image: url("imgs/star.png");*/
+/*}*/
+.box{
+    width: 200px;
+    height: 100px;
+    padding: 20px;
+    margin: 40px auto;
+    border: 1px solid black;
+}
+
+.box2{
+    border: 2px solid black;
+    width: 400px;
+    height: 500px;
+    margin: 20px;
+}
+#d1{
+    padding: 20px;
+    text-align: center;
+    color: purple;
+    text-decoration: underline;
+    line-height: 30px;
+}
+
+.header{
+    margin: auto;
+    width: 800px;
+    height: 200px;
+    background-image: url("imgs/banner.jpg");
+    background-size: 100%;
+}
+
+p{
+    font-family: "Carlito";
+    font-size: 26px;
+    font-style: italic;
+    font-weight: bold;
+    font-variant: all-small-caps;
+}
+
+
+
+
+
+
+
+

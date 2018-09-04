@@ -8,7 +8,7 @@
     height: 100px;
     background: pink;
     padding: 0px 50px 15px 30px;
-    border: 2px solid black;
+    border: 2px dashed black;
     margin: 5px;
 }
 #bottom{
@@ -16,4 +16,10 @@
     height: 100px;
     background: cornsilk;
     margin: 5px;
+}
+.myclass{
+    width: 200px;
+    background: pink;
+    overflow: scroll;
+    /*overflow: hidden;*/
 }
