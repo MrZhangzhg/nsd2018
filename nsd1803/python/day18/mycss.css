@@ -1,0 +1,38 @@
+body{
+    background: silver;
+    color: blue;
+}
+hr{
+    color: red;
+}
+p{
+    font-size: 22px;
+}
+.warning{
+    color: red;
+}
+.important{
+    font-weight: bold;
+}
+
+h2.warning{
+    color: brown;
+}
+
+p .myclass{
+    color: green;
+}
+p, .myclass{
+    font-size: 40px;
+}
+
+#myh3{
+    font-size: 25px;
+}
+h3#yourh3{
+    font-size: 5px;
+}
+
+
+
+
