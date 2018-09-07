@@ -120,9 +120,44 @@ def polls_index(request):
 def polls_index(request):
     return render(request, 'polls/polls_index.html')
 
+7、添加boostrap样式
+将前面解压的bootstrap拷贝过来
+[root@room8pc16 mysite]# cp -r ../../day19/static/ polls/
+在模板文件polls_index.html中添加引用
+文件顶部增加一行：
+{% load staticfiles %}
+head标签中加入
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
 
+建立模型Model
+1、创建ORM映射类
+# vim polls/models.py
+from django.db import models
 
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    publish_date = models.DateTimeField()
 
+    def __str__(self):
+        return self.question_text
 
+class Choice(models.Model):
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+    question = models.ForeignKey(Question, models.CASCADE)
+2、生成数据库中的表
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+3、在数据库中show tables查看表名
+4、查看表中字段
+（1）django会在表中自动加入一列id，作为主键
+（2）表中的每个字段与类变量相同
+（3）外键是类变量名加上_id
+5、把模型注册到后台管理界面，修改polls/admin.py如下：
+from django.contrib import admin
+from .models import Question, Choice
 
+admin.site.register(Question)
+admin.site.register(Choice)
+6、访问http://127.0.0.1:8000/admin，在后台可以添加数据
