@@ -55,13 +55,53 @@ import pymysql
 pymysql.install_as_MySQLdb()
 6、启动服务
 (djenv) [root@room8pc16 mysite]# python manage.py runserver 0:8000
+7、生成数据库
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+8、创建后台管理员
+(djenv) [root@room8pc16 mysite]# python manage.py createsuperuser
+9、启动服务后，访问http://127.0.0.1:8000/admin
 
+django基础测试
+1、新建视图
+# vim mysite/views.py
+from django.shortcuts import HttpResponse
 
+def index(request):
+    return HttpResponse('<h1>Hello World!</h1>')
+2、修改urls.py，访问主页时，使用views模块的index函数响应
+from django.conf.urls import url
+from django.contrib import admin
+from . import views
 
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index, name='index'),  # name='index'是首页URL的名字
+]
 
+管理“投票”应用
+1、创建应用
+(djenv) [root@room8pc16 mysite]# python manage.py startapp polls
+2、在项目中注册应用，修改settings.py
+INSTALLED_APPS = [
+    ... ...
+    'polls',
+]
+3、规划url，polls应用下有很多个页面，但是每个页面访问时，都以
+http://127.0.0.1/polls开头，如http://127.0.0.1/polls/1
+polls应用有自己的URLConf，当访问到http://127.0.0.1/polls开头的网址
+都交给polls应用的urls.py
+# vim mysite/urls.py
+from django.conf.urls import url, include
+urlpatterns = [
+    ... ...
+    url(r'^polls/', include('polls.urls')),
+]
+# vim polls/urls.py
+from django.conf.urls import url
 
-
-
+urlpatterns = [
+    url(r'^$'),
+]
 
 
 
