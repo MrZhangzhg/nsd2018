@@ -1,3 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
-# Create your views here.
+def polls_index(request):
+    return HttpResponse('<h1>Polls index</h1>')

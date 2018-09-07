@@ -96,12 +96,21 @@ urlpatterns = [
     ... ...
     url(r'^polls/', include('polls.urls')),
 ]
+4、创建应用的url映射文件
 # vim polls/urls.py
 from django.conf.urls import url
+from . import views
 
 urlpatterns = [
-    url(r'^$'),
+    url(r'^$', views.polls_index, name='polls_index'),
 ]
+5、创建视图
+# vim polls/views.py
+from django.shortcuts import render, HttpResponse
+
+def polls_index(request):
+    return HttpResponse('<h1>Polls index</h1>')
+
 
 
 
