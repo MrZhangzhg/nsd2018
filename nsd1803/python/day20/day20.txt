@@ -1,0 +1,72 @@
+(djenv) [root@room8pc16 day20]# cat ~/.pip/pip.conf
+[global]
+index-url = http://pypi.douban.com/simple/
+[install]
+trusted-host=pypi.douban.com
+
+
+配置虚拟环境
+1、创建虚拟环境
+[root@room8pc16 day20]# mkdir -pv /opt/py3env
+[root@room8pc16 day20]# python3 -m venv /opt/py3env/djenv
+2、激活虚拟环境
+[root@room8pc16 day20]# source /opt/py3env/djenv/bin/activate
+激活之后，运行python默认是py3
+3、激活之后，安装django，就是安装在了虚拟环境下
+(djenv) [root@room8pc16 day20]# pip install django==1.11.6
+(djenv) [root@room8pc16 day20]# pip install pymysql
+
+
+查看当前环境安装的软件包
+# pip freeze
+# pip freeze > pkgs.txt
+下载
+# pip install --download /存储目录 pkgs.txt
+
+安装本地软件包
+# pip install 文件名
+
+DJANGO
+1、创建项目
+(djenv) [root@room8pc16 day20]# django-admin startproject mysite
+(djenv) [root@room8pc16 day20]# cd mysite/
+2、pycharm设置，使用虚拟环境
+file -> settings -> project xxx-> project interpreter -> 添加现有环境
+找到/opt/py3env/djenv/bin/python
+3、为django项目创建数据库
+(djenv) [root@room8pc16 mysite]# mysql -uroot -ptedu.cn
+MariaDB [(none)]> create database dj_tedu default charset utf8;
+4、修改django的设置 settings.py
+ALLOWED_HOSTS = '*'  # 允许所有客户端访问
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dj_tedu',
+        'USER': 'root',
+        'PASSWORD': 'tedu.cn',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+5、加载连接mysql的模块，在__init__.py中写入以下内容
+import pymysql
+pymysql.install_as_MySQLdb()
+6、启动服务
+(djenv) [root@room8pc16 mysite]# python manage.py runserver 0:8000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
