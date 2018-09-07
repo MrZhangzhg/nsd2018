@@ -111,7 +111,14 @@ from django.shortcuts import render, HttpResponse
 def polls_index(request):
     return HttpResponse('<h1>Polls index</h1>')
 
-
+6、创建模板
+（1）创建模板目录
+[root@room8pc16 mysite]# mkdir -p polls/templates/polls
+（2）创建模板文件
+# vim polls/templates/polls/polls_index.html
+（3）更改视图views.py
+def polls_index(request):
+    return render(request, 'polls/polls_index.html')
 
 
 
