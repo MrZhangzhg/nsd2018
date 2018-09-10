@@ -84,6 +84,60 @@ def polls_index(request):
     {% endfor %}
 </div>
 </body>
+20、修改问题详情
+（1）将问题详请发送到模板
+def detail(request, q_id):
+    question = get_object_or_404(Question, pk=q_id)
+    return render(request, 'polls/detail.html', {'question': question})
+（2）修改模板文件detail.html，显示问题的内容
+<body>
+<div class="container bg-info">
+    <p>你正在查看第{{ question.id }}个问题</p>
+    <h1>{{ question.question_text }}</h1>
+    <ul>
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }}</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+21、在detail.html中加入表单，选择某一项之后，将数据发送给
+http://127.0.0.1/polls/1/vote/处理
+（1）修改setting.py，禁用csrf功能。CSRF是防止跨站攻击的。
+MIDDLEWARE = [
+    ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ...
+]
+（2）修改模板
+<body>
+<div class="container bg-info">
+    <p>你正在查看第{{ question.id }}个问题</p>
+    <h1>{{ question.question_text }}</h1>
+    <form role="form" action="/polls/{{ question.id }}/vote/" method="post">
+        {% for choice in question.choice_set.all %}
+        <div class="form-group">
+            <label>
+                <input type="radio" name="c_id" value="{{ choice.id }}">{{ choice.choice_text }}
+            </label>
+        </div>
+        {% endfor %}
+        <input class="btn btn-primary" type="submit" value="提交">
+    </form>
+</div>
+</body>
+（3）修改vote函数，接收表单传过来的c_id，再到数据库中把c_id对应的choice找到
+def vote(request, q_id):
+    question = get_object_or_404(Question, pk=q_id)
+    c_id = request.POST.get('c_id')
+    choice = question.choice_set.get(pk=c_id)
+    choice.votes += 1
+    choice.save()
+    return redirect('result', q_id=q_id)  # redirect不携带参数，访问新网页
+
+
+
+
 
 
 

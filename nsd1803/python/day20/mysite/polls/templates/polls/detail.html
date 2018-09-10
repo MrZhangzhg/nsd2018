@@ -8,7 +8,23 @@
 </head>
 <body>
 <div class="container bg-info">
-    <p>你正在查看第{{ question_id }}个问题</p>
+    <p>你正在查看第{{ question.id }}个问题</p>
+    <h1>{{ question.question_text }}</h1>
+{#    <ul>#}
+{#        {% for choice in question.choice_set.all %}#}
+{#            <li>{{ choice.choice_text }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+    <form role="form" action="/polls/{{ question.id }}/vote/" method="post">
+        {% for choice in question.choice_set.all %}
+        <div class="form-group">
+            <label>
+                <input type="radio" name="c_id" value="{{ choice.id }}">{{ choice.choice_text }}
+            </label>
+        </div>
+        {% endfor %}
+        <input class="btn btn-primary" type="submit" value="提交">
+    </form>
 </div>
 </body>
 </html>

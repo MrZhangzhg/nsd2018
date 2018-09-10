@@ -9,11 +9,15 @@
 <body>
 <div class="container bg-info">
     <p>polls主页</p>
-    {% for q in qlist %}
-        <div>
-            {{ q.id }}: <a href="/polls/{{ q.id }}/">{{ q.question_text }}</a> {{ q.publish_date }}
-        </div>
-    {% endfor %}
+    {% if qlist %}
+        {% for q in qlist %}
+            <div>
+                {{ q.id }}: <a href="/polls/{{ q.id }}/">{{ q.question_text }}</a> {{ q.publish_date }}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>没有任何调查问题</p>
+    {% endif %}
 </div>
 </body>
 </html>
