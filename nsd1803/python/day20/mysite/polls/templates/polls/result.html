@@ -3,17 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Polls主页</title>
+    <title>问题结果</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
 <div class="container bg-info">
-    <p>polls主页</p>
-    {% for q in qlist %}
-        <div>
-            {{ q.id }}: <a href="/polls/{{ q.id }}/">{{ q.question_text }}</a> {{ q.publish_date }}
-        </div>
-    {% endfor %}
+    <p>你正在查看第{{ question_id }}个问题的结果</p>
 </div>
 </body>
 </html>

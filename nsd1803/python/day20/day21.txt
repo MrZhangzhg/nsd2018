@@ -63,6 +63,28 @@ def detail(request, q_id):
 这里的字典，相当于是向detail.html传入了question_id=1
 （2）创建detail.html，变量用{{ question_id }}表示
     <p>你正在查看第{{ question_id }}个问题</p>
+17、编写投票结果页
+当用户访问http://127.0.0.1/1/result/时，使用result处理，返回result.html
+18、编写投票功能页
+当用户访问http://127.0.0.1/1/vote/时，使用vote函数处理，不用返回模板
+19、修改主页，主面中显示所有问题，点击某个问题的时候，跳转到该问题的详情页
+（1）修改视图函数
+def polls_index(request):
+    latest_qlist = Question.objects.order_by('-publish_date')[:5]
+    context = {'qlist': latest_qlist}
+    return render(request, 'polls/polls_index.html', context)
+（2）修改模板文件，列出所有的问题
+<body>
+<div class="container bg-info">
+    <p>polls主页</p>
+    {% for q in qlist %}
+        <div>
+            {{ q.id }}: <a href="/polls/{{ q.id }}/">{{ q.question_text }}</a> {{ q.publish_date }}
+        </div>
+    {% endfor %}
+</div>
+</body>
+
 
 
 
