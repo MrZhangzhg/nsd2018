@@ -109,7 +109,7 @@ MIDDLEWARE = [
     # 'django.middleware.csrf.CsrfViewMiddleware',
     ...
 ]
-（2）修改模板
+（2）修改模板detail.html
 <body>
 <div class="container bg-info">
     <p>你正在查看第{{ question.id }}个问题</p>
@@ -134,7 +134,32 @@ def vote(request, q_id):
     choice.votes += 1
     choice.save()
     return redirect('result', q_id=q_id)  # redirect不携带参数，访问新网页
-
+'result'是urls.py中定义的/polls/1/result/网址的名字
+22、完成结果页面
+（1）修改result函数
+def result(request, q_id):
+    question = get_object_or_404(Question, pk=q_id)
+    return render(request, 'polls/result.html', {'question': question})
+（2）修改result.html模板文件
+<body>
+<div class="container">
+    <p>你正在查看第{{ question_id }}个问题的结果</p>
+    <h1>{{ question.question_text }}</h1>
+    <table class="table table-bordered table-striped">
+        <tr class="info">
+            <td>选项</td>
+            <td>票数</td>
+        </tr>
+        {% for choice in question.choice_set.all %}
+            <tr>
+                <td>{{ choice.choice_text }}</td>
+                <td>{{ choice.votes }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/polls/">返回首页</a>
+</div>
+</body>
 
 
 

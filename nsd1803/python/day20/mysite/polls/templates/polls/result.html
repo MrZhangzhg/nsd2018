@@ -7,8 +7,22 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-<div class="container bg-info">
+<div class="container">
     <p>你正在查看第{{ question_id }}个问题的结果</p>
+    <h1>{{ question.question_text }}</h1>
+    <table class="table table-bordered table-striped">
+        <tr class="info">
+            <td>选项</td>
+            <td>票数</td>
+        </tr>
+        {% for choice in question.choice_set.all %}
+            <tr>
+                <td>{{ choice.choice_text }}</td>
+                <td>{{ choice.votes }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/polls/">返回首页</a>
 </div>
 </body>
 </html>
