@@ -48,9 +48,21 @@ django提供了通过question获得对应choice的方法
     )
 >>> q.choice_set.create(choice_text='达内', votes=0)
 >>> q.choice_set.all()
-
-
-
+14、创建投票问题详情页
+当用户访问http://127.0.0.1/polls/1时采用detail函数进行处理
+1表示1号问题，也有2、3、4……很多问题，可以通过正则表达式来匹配数字
+这些数字还需要作为参数传递给视图函数，修改urls.py如下：
+ url(r'^(?P<q_id>\d+)/$', views.detail, name='detail')
+15、在views.py中创建detail函数
+def detail(request, q_id):
+    return HttpResponse('你正在查看第%s个问题' % q_id)
+16、创建模板，在模板中显示问题
+（1）修改detail视图，将变量数据传给模板
+def detail(request, q_id):
+    return render(request, 'polls/detail.html', {'question_id': q_id})
+这里的字典，相当于是向detail.html传入了question_id=1
+（2）创建detail.html，变量用{{ question_id }}表示
+    <p>你正在查看第{{ question_id }}个问题</p>
 
 
 
