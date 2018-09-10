@@ -1,0 +1,57 @@
+使用python shell
+1、激活虚拟环境
+2、进入python shell
+(djenv) [root@room8pc16 mysite]# python manage.py shell
+3、导入模型
+>>> from polls.models import Question, Choice
+4、显示所有Question的方法
+>>> Question.objects.all()  # 返回的是查询集，查询集中保存的是所有问题的实例
+>>> q = Question.objects.all()[0]  # 取出第一个实例
+>>> q.id
+>>> q.question_text
+>>> q.publish_date
+5、创建一个question实例
+>>> from django.utils import timezone
+>>> q1 = Question(
+        question_text='你毕业后希望进入哪家公司工作？',
+        publish_date=timezone.now()
+    )
+>>> q1.save()
+6、修改
+>>> q1.question_text='你期待哪家公司给你发offer？'
+>>> q1.save()
+7、在models中添加方法，用于判断某问题是不是1天内发布的
+8、添加完毕后，需要退出再重新进入python shell
+>>> from polls.models import Question, Choice
+>>> q = Question.objects.all()[1]
+>>> q.was_published_recently()
+>>> q1 = Question.objects.all()[0]
+>>> q1
+>>> q1.was_published_recently()
+9、通过关键字查询，返回值是实例，如果不存在则报错
+>>> Question.objects.get(id=1)
+>>> Question.objects.get(question_text='你计划在哪个城市找工作？')
+10、通过主键查询，返回值是实例，如果不存在则报错
+>>> Question.objects.get(pk=1)
+11、使用双下划线过滤属性
+>>> Question.objects.filter(id=1)
+>>> Question.objects.filter(question_text__startswith='你')
+>>> Question.objects.filter(publish_date__year=2018)
+12、Question和Choice有主外键关系，一个问题question可以有多个选项choice
+django提供了通过question获得对应choice的方法
+>>> q = Question.objects.get(pk=2)
+>>> q.choice_set.all()
+13、创建choice条目，create不需要save，直接写入数据库
+>>> q.choice_set.create(choice_text='阿里巴巴', votes=0)
+>>> c = Choice.objects.create(
+        choice_text='网易', votes=0, question_id=2
+    )
+>>> q.choice_set.create(choice_text='达内', votes=0)
+>>> q.choice_set.all()
+
+
+
+
+
+
+
