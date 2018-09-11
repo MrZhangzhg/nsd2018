@@ -240,6 +240,60 @@ def template(request):
 {% endblock %}
 
 
+模型
+1、models.py
+from django.db import models
+
+class Department(models.Model):
+    dep_name = models.CharField(max_length=50, unique=True)
+    def __str__(self):
+        return self.dep_name
+
+class Employee(models.Model):
+    emp_name = models.CharField(max_length=20)
+    phone = models.CharField(max_length=11)
+    depart = models.ForeignKey(Department, models.CASCADE)
+    def __str__(self):
+        return self.emp_name
+2、生成数据库表
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+(djenv) [root@room8pc16 mysite]# sqlite3 db.sqlite3
+sqlite> .tables
+sqlite> .schema myapp_department
+sqlite> .schema myapp_employee
+操作数据
+(djenv) [root@room8pc16 mysite]# python manage.py shell
+>>> from myapp.models import Department, Employee
+>>> Department.objects.all()
+>>> d1 = Department(dep_name='development')
+>>> d1.save()
+>>> Department.objects.create(dep_name='devops')
+>>> Department.objects.create(dep_name='operations')
+>>> Department.objects.order_by('id')
+>>> Department.objects.filter(dep_name='devops')
+>>> Department.objects.filter(dep_name__contains='dev')
+>>> Department.objects.filter(dep_name__regex='s$')  # 正则匹配
+>>> Department.objects.filter(id__gt=2)  # id>2的条目
+>>> Department.objects.exclude(id__gt=2)  # 排除id>2的条目
+>>> d1.employee_set.create(emp_name='张三', phone='13345678900')
+>>> d1.employee_set.all()
+>>> d1.employee_set.create(emp_name='李四', phone='13345678900')
+>>> e1 = d1.employee_set.create(emp_name='李四', phone='13345678900')
+>>> e1.delete()
+>>> e2 = d1.employee_set.all()[1]
+>>> e2.phone = '13344556677'
+>>> e2.save()
+>>> d1.employee_set.get_or_create(emp_name='张三', phone='13345678900')
+不成功，因为数据库中已有张三
+>>> e2.depart  # 反向获得e2员工所在的部门实例
+
+
+
+
+
+
+
 
 
 
