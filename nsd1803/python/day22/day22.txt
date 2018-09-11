@@ -38,10 +38,45 @@ def hello(request, age):
     return HttpResponse('Hello World! %s' % age)
 访问http://127.0.0.1/myapp/hello/
 
+通过URL获取参数
+# urls.py
+urlpatterns = [
+    url(r'^hello/$', views.hello, {'age': 23}, name='hello'),
+    url(r'^(?P<name>[a-zA-Z]+)/(?P<age>\d+)/', views.info, name='info'),
+]
+# views.py
+def info(request, name, age):
+    return HttpResponse('%s is %s years old.' % (name, age))
+访问http://127.0.0.1/myapp/zhangsan/25/
 
+URL规划可以参见RESTful
+http://www.runoob.com/w3cnote/restful-architecture.html
 
-
-
+表单的方法
+1、访问首页，由index函数处理
+# urls.py
+url(r'^$', views.index, name='index'),
+2、视图。如果方法是POST，则获取用户名，否则用户名设置为None
+def index(request):
+    if request.method == 'POST':
+        user = request.POST.get('xm')
+    else:
+        user = None
+    return render(request, 'index.html', {'user': user})
+3、模板
+# mkdir myapp/templates
+# myqpp/templates/index.html
+<body>
+<form action="" method="post">
+    {% if user %}
+        {{ user }}
+        <hr>
+    {% endif %}
+    姓名：<input type="text" name="xm">
+    <input type="submit" value="提交">
+</form>
+</body>
+4、访问http://127.0.0.1/myapp/
 
 
 
