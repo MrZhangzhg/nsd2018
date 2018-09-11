@@ -1,0 +1,51 @@
+创建一个新的项目
+(djenv) [root@room8pc16 day22]# django-admin startproject mysite
+(djenv) [root@room8pc16 day22]# cd mysite/
+(djenv) [root@room8pc16 mysite]# python manage.py startapp myapp
+修改settings.py
+ALLOWED_HOSTS = '*'
+INSTALLED_APPS = [
+    ... ...
+    'myapp',
+]
+MIDDLEWARE = [
+    ... ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ... ...
+]
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+(djenv) [root@room8pc16 mysite]# python manage.py createsuperuser
+
+将http://127.0.0.1/myapp/开头的路径交给myapp应用处理
+# vim mysite/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^myapp/', include('myapp.urls')),
+]
+# vim myapp/urls.py
+from django.conf.urls import url
+from . import views
+urlpatterns = [
+    url(r'^hello/$', views.hello, {'age': 23}, name='hello'),
+]
+# vim views.py
+from django.shortcuts import render, HttpResponse
+def hello(request, age):
+    return HttpResponse('Hello World! %s' % age)
+访问http://127.0.0.1/myapp/hello/
+
+
+
+
+
+
+
+
+
+
+
+
