@@ -65,7 +65,7 @@ def index(request):
     return render(request, 'index.html', {'user': user})
 3、模板
 # mkdir myapp/templates
-# myqpp/templates/index.html
+# myapp/templates/index.html
 <body>
 <form action="" method="post">
     {% if user %}
@@ -78,7 +78,48 @@ def index(request):
 </body>
 4、访问http://127.0.0.1/myapp/
 
+5、Cookie
+HTTP是无状态的，也就是相同的用户即使在短时间内连续访问，服务器也不认识
 
+6、登陆
+（1）三个页面/myapp/home/用于显示登陆表单，访问/myapp/protect/如果用户没有
+登陆跳转到home页面。登陆时/myapp/login/用于验证用户
+（2）构建URL
+    url(r'^home/$', views.home, name='home'),
+    url(r'^protect/$', views.protect, name='protect'),
+    url(r'^login/$', views.login, name='login'),
+（2）编写视图
+def home(request):
+    return render(request, 'home.html')
+
+def login(request):
+    user = request.POST.get('username')
+    passwd = request.POST.get('password')
+    if user == 'tom' and passwd == '123456':
+        request.session['IS_LOGINED'] = True
+        return redirect('protect')
+    else:
+        return redirect('home')
+
+def protect(request):
+    is_login = request.session.get('IS_LOGINED', False)
+    if is_login:
+        return render(request, 'protect.html')
+    return redirect('home')
+（3）编写模板
+# home.html
+<body>
+<form action="/myapp/login/" method="post">
+    用户名：<input type="text" name="username"><br>
+    密 码：<input type="password" name="password"><br>
+    <input type="submit" value="登陆">
+</form>
+</body>
+# protect.html
+<body>
+登陆成功后可见页面
+</body>
+（4）访问http://127.0.0.1/myapp/protect将会跳转到home
 
 
 
