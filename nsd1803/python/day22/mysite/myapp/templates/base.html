@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        .container{margin: 0 auto; width: 800px}
+        .header{height: 100px; background: #CCCCCC}
+        .footer{text-align: center;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"></div>
+    <div class="main">{% block content %}{% endblock %}</div>
+    <div class="footer">
+        <a href="http://linux.tedu.cn">达内云计算学院</a>
+    </div>
+</div>
+</body>
+</html>

@@ -31,7 +31,16 @@ def protect(request):
         return render(request, 'protect.html')
     return redirect('home')
 
-
+def template(request):
+    user = 'zhangsan'
+    age = 25
+    friends = ['lisi', 'wangwu', 'bob', 'alice']
+    info = {'phone': '13566778899', 'email': 'zs@163.com'}
+    context = {
+        'user': user, 'age': age, 'friends': friends,
+        'info': info,
+    }
+    return render(request, 'template.html', context)
 
 
 

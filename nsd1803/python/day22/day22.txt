@@ -121,6 +121,126 @@ def protect(request):
 </body>
 （4）访问http://127.0.0.1/myapp/protect将会跳转到home
 
+模板测试
+(1)定义url.py
+    url(r'^template/$', views.template, name='template'),
+(2)创建视图
+def template(request):
+    user = 'zhangsan'
+    age = 25
+    friends = ['lisi', 'wangwu', 'bob', 'alice']
+    info = {'phone': '13566778899', 'email': 'zs@163.com'}
+    context = {
+        'user': user, 'age': age, 'friends': friends,
+        'info': info,
+    }
+    return render(request, 'template.html', context)
+(3)编写模板
+视图函数把context字典传递给模板，注意，没有把context这个名字传过去，传过去
+的是字典本身（{}），字典中的key相当于是传递给模板的变量名，模板只要使用这个变
+量名，就可以得到相应的值
+# template.html
+<body>
+{{ user }}今年{{ age }}岁了。
+<hr>
+{{ friends }}: {{ friends.0 }}, {{ friends.1 }}
+<hr>
+{{ info }}: {{ info.phone }}, {{ info.email }}
+<hr>
+{{ info.keys }}, {{ info.values }}, {{ info.items }}
+<hr>
+<ol>
+    {% for f in friends %}
+        <li>{{ f }}</li>
+    {% endfor %}
+</ol>
+<ul>
+    {% for f in friends %}
+        <li>{{ forloop.counter }}{{ f }}</li>
+    {% endfor %}
+</ul>
+<ul>
+    {% for f in friends %}
+        <li>{{ forloop.counter0 }}{{ f }}</li>
+    {% endfor %}
+</ul>
+</body>
+
+模板继承：有很多网页，这些页面的整体结构完全一样，只是其中的内容不一样
+可以先建立一个基础模板，其他页面继承这个模板，就可以拥有一致的风格
+1、建立基础模板base.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        .container{margin: 0 auto; width: 800px}
+        .header{height: 100px; background: #CCCCCC}
+        .footer{text-align: center;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"></div>
+    <div class="main">{% block content %}{% endblock %}</div>
+    <div class="footer">
+        <a href="http://linux.tedu.cn">达内云计算学院</a>
+    </div>
+</div>
+</body>
+</html>
+2、其他页面，继承模板
+{% extends 'base.html' %}
+
+{% block title %}模板测试{% endblock %}
+
+{% block content %}
+{{ user }}今年{{ age }}岁了。
+<hr>
+{{ friends }}: {{ friends.0 }}, {{ friends.1 }}
+<hr>
+{{ info }}: {{ info.phone }}, {{ info.email }}
+<hr>
+{{ info.keys }}, {{ info.values }}, {{ info.items }}
+<hr>
+<ol>
+    {% for f in friends %}
+        <li>{{ f }}</li>
+    {% endfor %}
+</ol>
+<ul>
+    {% for f in friends %}
+        <li>{{ forloop.counter }}{{ f }}</li>
+    {% endfor %}
+</ul>
+<ul>
+    {% for f in friends %}
+        <li>{{ forloop.counter0 }}{{ f }}</li>
+    {% endfor %}
+</ul>
+<hr>
+<table border="1px">
+    {% for key, val in info.items %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ val }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% if age <= 22 %}
+    上学
+{% elif age >= 60 %}
+    退休
+{% else %}
+    上班
+{% endif %}
+<hr>
+{{ user|capfirst }}, {{ user|upper }}, {{ friends|join:", " }}
+{% endblock %}
+
+
+
 
 
 
