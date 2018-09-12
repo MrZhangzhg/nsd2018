@@ -65,6 +65,15 @@ urlpatterns = [
     url(r'^addmodules/$', views.addmodules, name='addmodules'),
     url(r'^tasks/$', views.tasks, name='tasks'),
 ]
+六、创建视图函数
+简单的把几个视图函数定义，主体为HttpResponse('xxxxx')
+完成后启动服务，通过浏览器验证各个URL
+
+七、创建模型
+# vim webansi/models.py
+参见models.py文件
+[root@room8pc16 myansible]# python manage.py makemigrations
+[root@room8pc16 myansible]# python manage.py migrate
 
 
 
