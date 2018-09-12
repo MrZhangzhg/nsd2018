@@ -75,7 +75,51 @@ urlpatterns = [
 [root@room8pc16 myansible]# python manage.py makemigrations
 [root@room8pc16 myansible]# python manage.py migrate
 
+八、创建管理员用户
+[root@room8pc16 myansible]# python manage.py createsuperuser
 
+九、注册模型到后台管理
+# vim webansi/admin.py
+from django.contrib import admin
+from .models import Group, Host, Module, Args
+
+for item in [Group, Host, Module, Args]:
+    admin.site.register(item)
+
+十、ansible的动态主机清单
+1、在与manage.py同级的目录下创建工作目录
+[root@room8pc16 myansible]# mkdir ansicfg
+[root@room8pc16 myansible]# cd ansicfg
+[root@room8pc16 ansicfg]# vim ansible.cfg
+[defaults]
+remote_user = root
+inventory = dhosts.py
+2、编写动态主机清单文件，这个文件要求有x权限，输出有固定格式，是json格式
+例如：有三个主机组webservers/lvs/dbservers，每个组中有几台主机
+动态主机清单输出时是个字典，字典的key是主机组名，它的值又是个字典。内层字典
+key是固定的hosts，值是列表，列表中的元素是成员主机的IP地址
+    {
+        "webservers": {
+            "hosts": ["192.168.4.2", "192.168.4.3", "192.168.4.6"]
+        },
+        "lvs": {
+            "hosts": ["192.168.4.4", "192.168.4.5"]
+        },
+        "dbservers": {
+            "hosts": ["192.168.4.1"]
+        },
+    }
+# pip2 install sqlalchemy
+# vim ansicfg/dhosts.py
+详见dhosts.py文件
+注意：因为数据库已经存在了，所以要写ORM，先要分析数据库表和字段
+# sqlite3 db.sqlite3
+sqlite> .tables
+sqlite> .schema webansi_group
+3、执行测试
+[root@room8pc16 ansicfg]# chmod +x dhosts.py
+[root@room8pc16 ansicfg]# ./dhosts.py
+[root@room8pc16 ansicfg]# ansible webservers -m ping
 
 
 
