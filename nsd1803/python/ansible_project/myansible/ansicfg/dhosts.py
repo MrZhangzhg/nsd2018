@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 import json
 
 engine = create_engine(
-    'sqlite:////var/ftp/nsd2018/nsd1802/python/ansible_project/myansible/db.sqlite3',
+    'sqlite:////var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/db.sqlite3',
     encoding='utf8'
 )
 Base = declarative_base()
@@ -29,4 +29,14 @@ class Host(Base):
     group_id = Column(Integer, ForeignKey('webansi_group.id'))
 
 if __name__ == '__main__':
-    print(json.dumps({}))
+    session = Session()
+    qset = session.query(Group.hostgroup, Host.ipaddr).\
+        join(Host, Group.id==Host.group_id)
+    hosts = qset.all()
+    result = {}
+    # [(u'webservers', u'192.168.4.2'), (u'webservers', u'192.168.4.3')]
+    for group, ip in hosts:
+        if group not in result:
+            result[group] = {'hosts': []}
+        result[group]['hosts'].append(ip)
+    print(json.dumps(result))
