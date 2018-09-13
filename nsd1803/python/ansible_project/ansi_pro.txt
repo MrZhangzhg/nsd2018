@@ -135,7 +135,7 @@ sqlite> .schema webansi_group
 十二、创建视图及模板
 1、http://127.0.0.1/出现各路径的超链接
 2、http://127.0.0.1/webansi/显示cmdb
-# ansible all -i 主机清单文件 -m setup --tree 信息保存存的目录
+# ansible all -i 主机清单文件 -m setup --tree 信息保存的目录
 # ansible-cmdb 信息保存存的目录 > html文件
 并将上面两条命令写到计划任务
 例如：
@@ -144,7 +144,16 @@ sqlite> .schema webansi_group
 生成index.html之后，修改视图函数index，它返回index.html
 3、创建主机
 （1）addhosts.html页面中既有添加主机的表单，又有现有主机的列表
-
-
-
+（2）addhosts.html表单提交数据的网址是自己。addhosts函数判断，如果method
+是post则把主机信息写到数据库
+4、添加模块
+方法与第3步《创建主机》思路完全一样
+5、执行任务
+（1）执行任务是两个表单，一个表单用于给主机执行任务，另一个用于给主机组执行任务
+（2）执行任务的函数，先从表单获取数据，获取的数据如果主机不是None，意味着
+用户提交的是主机表单，那么把主机相关的模块和参数取出来。如果主机是None，意味
+着用户提交的是主机组表单，则把组相关的模块和参数取出来。
+（3）执行任务采用的方法是调用ansible临时命令。把day15的ansible_adhoc.py
+内容复制过来，放到函数里。函数接收的参数是：主机清单文件、要执行任务的主机或组、
+模块以及传递给模块的参数。
 

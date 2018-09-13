@@ -43,8 +43,6 @@ def exec_task(host_file, host, mod, param):
             tqm.cleanup()
         shutil.rmtree(C.DEFAULT_LOCAL_TMP, True)
 
-
-
 def mainpage(request):
     return render(request, 'webansi/mainpage.html')
 
