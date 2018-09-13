@@ -141,6 +141,9 @@ sqlite> .schema webansi_group
 例如：
 [root@room8pc16 myansible]# ansible all -i /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/ansicfg/dhosts.py -m setup --tree /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/webansi/templates/all
 [root@room8pc16 myansible]# ansible-cmdb /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/webansi/templates/all > /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/webansi/templates/webansi/index.html
+生成index.html之后，修改视图函数index，它返回index.html
+3、创建主机
+（1）addhosts.html页面中既有添加主机的表单，又有现有主机的列表
 
 
 
