@@ -6,7 +6,7 @@ def mainpage(request):
     return render(request, 'webansi/mainpage.html')
 
 def index(request):
-    return HttpResponse('web ansi index')
+    return render(request, 'webansi/index.html')
 
 def addhosts(request):
     return HttpResponse('add hosts')

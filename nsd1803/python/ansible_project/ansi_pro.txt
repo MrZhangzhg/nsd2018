@@ -132,6 +132,15 @@ sqlite> .schema webansi_group
 # mkdir webansi/static/imgs
 制作一个banner.jgp图片存在这个目录下
 
+十二、创建视图及模板
+1、http://127.0.0.1/出现各路径的超链接
+2、http://127.0.0.1/webansi/显示cmdb
+# ansible all -i 主机清单文件 -m setup --tree 信息保存存的目录
+# ansible-cmdb 信息保存存的目录 > html文件
+并将上面两条命令写到计划任务
+例如：
+[root@room8pc16 myansible]# ansible all -i /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/ansicfg/dhosts.py -m setup --tree /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/webansi/templates/all
+[root@room8pc16 myansible]# ansible-cmdb /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/webansi/templates/all > /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/webansi/templates/webansi/index.html
 
 
 
