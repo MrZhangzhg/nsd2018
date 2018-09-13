@@ -1,7 +1,33 @@
 {% extends 'webansi/base.html' %}
+{% load staticfiles %}
 
 {% block title %}首页{% endblock %}
 
 {% block content %}
-    hello world!
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <a href="{% url 'index' %}" target="_blank">
+                <img class="img-thumbnail" src="{% static 'imgs/linux.jpg' %}" width="150px" alt="">
+                <p>主机信息</p>
+            </a>
+        </div>
+        <div class="col-md-3 text-center">
+            <a href="{% url 'addhosts' %}" target="_blank">
+                <img class="img-thumbnail" src="{% static 'imgs/linux.jpg' %}" width="150px" alt="">
+                <p>添加主机</p>
+            </a>
+        </div>
+        <div class="col-md-3 text-center">
+            <a href="{% url 'addmodules' %}" target="_blank">
+                <img class="img-thumbnail" src="{% static 'imgs/linux.jpg' %}" width="150px" alt="">
+                <p>添加模板</p>
+            </a>
+        </div>
+        <div class="col-md-3 text-center">
+            <a href="{% url 'tasks' %}" target="_blank">
+                <img class="img-thumbnail" src="{% static 'imgs/linux.jpg' %}" width="150px" alt="">
+                <p>执行任务</p>
+            </a>
+        </div>
+    </div>
 {% endblock %}
