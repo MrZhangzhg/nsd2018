@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, HttpResponse
-from .models import Group, Module
+from .models import Group, Module, Host
 
 def mainpage(request):
     return render(request, 'webansi/mainpage.html')
@@ -31,4 +31,8 @@ def addmodules(request):
     return render(request, 'webansi/addmodules.html', {'modules': modules})
 
 def tasks(request):
-    return HttpResponse('execute task')
+    groups = Group.objects.all()
+    hosts = Host.objects.all()
+    modules = Module.objects.all()
+    context = {'groups': groups, 'hosts': hosts, 'modules': modules}
+    return render(request, 'webansi/tasks.html', context)

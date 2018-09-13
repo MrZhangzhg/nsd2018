@@ -1,0 +1,83 @@
+{% extends 'webansi/base.html' %}
+{% block title %}添加主机{% endblock %}
+{% block content %}
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#host" data-toggle="tab">主机</a></li>
+        <li><a href="#group" data-toggle="tab">主机组</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="host">
+            <form action="" method="post" role="form">
+                <div class="form-group">
+                    <select class="form-control" name="ip" id="">
+                        {% for h in hosts %}
+                            <option value="{{ h.ipaddr }}">{{ h.hostname }}: {{ h.ipaddr }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <tr class="info">
+                        <th>模块</th><th>参数</th>
+                    </tr>
+                    {% for module in modules %}
+                        <tr>
+                            <td>
+                                <input name="mod" type="radio">{{ module.module_name }}
+                            </td>
+                            <td>
+                                <ul class="list-unstyled">
+                                    {% for args in module.args_set.all %}
+                                        <li>
+                                            <input name="param" type="radio">{{ args.args_text }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="text-center">
+                    <input class="btn btn-primary" type="submit" value="执行">
+                </div>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="group">
+            <form action="" method="post" role="form">
+                <div class="form-group">
+                    <select name="hostgroup" id="" class="form-control">
+                        {% for g in groups %}
+                            <option value="{{ g.hostgroup }}">{{ g.hostgroup }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <tr class="info">
+                        <th>模块</th><th>参数</th>
+                    </tr>
+                    {% for module in modules %}
+                        <tr>
+                            <td>
+                                <input name="mod" type="radio">{{ module.module_name }}
+                            </td>
+                            <td>
+                                <ul class="list-unstyled">
+                                    {% for args in module.args_set.all %}
+                                        <li>
+                                            <input name="param" type="radio">{{ args.args_text }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="text-center">
+                    <input class="btn btn-primary" type="submit" value="执行">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
