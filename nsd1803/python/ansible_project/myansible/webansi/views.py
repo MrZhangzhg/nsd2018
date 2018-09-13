@@ -10,7 +10,13 @@ def index(request):
     return render(request, 'webansi/index.html')
 
 def addhosts(request):
-    
+    if request.method == 'POST':
+        group = request.POST.get('group')
+        host = request.POST.get('host')
+        ip = request.POST.get('ip')
+        hostgroup = Group.objects.get_or_create(hostgroup=group)[0]
+        print(hostgroup)
+        hostgroup.host_set.get_or_create(hostname=host, ipaddr=ip)
 
     groups = Group.objects.all()
     return render(request, 'webansi/addhosts.html', {'groups': groups})
