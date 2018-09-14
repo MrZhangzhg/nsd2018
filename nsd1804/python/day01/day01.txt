@@ -1,0 +1,85 @@
+ 启动一台内存4G的虚拟机
+ 找到你的zzg_pythonxxx.zip
+ nsd2018.rar
+
+git操作
+1、安装 
+[root@node2 ~]# yum install -y git
+2、配置git基础信息
+[root@node2 ~]# git config --global user.name "zzg"
+[root@node2 ~]# git config --global user.email "zzg@tedu.cn"
+[root@node2 ~]# git config --global core.editor vim
+[root@node2 ~]# git config --list
+[root@node2 ~]# cat ~/.gitconfig 
+3、新建一个项目，并且交由git管理
+[root@node2 ~]# git init devops
+[root@node2 ~]# ls -a devops/
+4、在devops中编写代码
+[root@node2 ~]# cd devops/
+[root@node2 devops]# echo 'print("hello World")' > hi.py
+5、将指定文件加入到git追踪
+[root@node2 devops]# git add hi.py 
+6、如果添加错了，可以将其撤出暂存区
+[root@node2 devops]# git rm --cached hi.py
+7、将当前目录中所有内容加入到git追踪
+[root@node2 devops]# git add .
+8、将暂存区内容确认至版本库
+[root@node2 devops]# git commit -m "devops pro init"
+[root@node2 devops]# git status
+9、文件改名
+[root@node2 devops]# git mv hi.py hello.py
+[root@node2 devops]# git commit -m "mv hi.py hello.py"
+10、查看版本库中的内容
+[root@node2 devops]# git ls-files
+11、删除文件
+[root@node2 devops]# git rm hello.py
+[root@node2 devops]# git commit -m "rm hello.py"
+
+配置node1作为gitlab服务器
+1、安装docker
+[root@node1 docker]# cd docker_pkgs/
+[root@node1 docker_pkgs]# yum install -y *.rpm
+2、启动服务
+[root@node1 docker_pkgs]# systemctl start docker
+[root@node1 docker_pkgs]# systemctl enable docker
+3、导入镜像
+[root@node1 docker]# cd images/
+[root@node1 images]# docker load < gitlab_zh.tar
+4、将虚拟机的ssh端口改为2222
+[root@node1 ~]# vim /etc/ssh/sshd_config 
+Port 2222
+[root@node1 ~]# systemctl restart sshd
+退出ssh，再重新连接
+[root@room8pc16 python]# ssh -p2222 192.168.4.1
+5、启动gitlab
+[root@node1 ~]# docker run -d -h gitlab --name gitlab -p 443:443 -p 80:80 -p 22:22 --restart always -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data gitlab_zh:latest 
+说明： -h gitlab是设置容器的hostname主机名，--name gitlab是设置容器名字，也就是通过docker ps查看到的名字；--restart always指的是出现问题重启容器
+6、gitlab关键概念
+群组group：公司中每个团队可以创建一个组
+项目project：存储代码的地方,里面还包含问题列表、维基文档以及其他一些Gitlab功能
+成员member：添加你的团队成员或其他人员到Gitlab
+7、gitlab上创建devops的组，创建core_py的项目，创建用户。将用户设置为项目的主程序员。
+8、用户上传代码
+[root@node2 devops]# cat README 
+该项目的说明文件
+[root@node2 devops]# echo 'hello world' > hello.py
+[root@node2 devops]# git add .
+[root@node2 devops]# git commit -m "gitlab init"
+[root@node2 devops]# git remote rename origin old-origin
+如果出现以下错误，可以忽略
+error: 不能重命名配置小节 'remote.origin' 到 'remote.old-origin'
+[root@node2 devops]# git remote add origin http://192.168.4.1/devops/core_py.git
+[root@node2 devops]# git push -u origin --all
+[root@node2 devops]# git push -u origin --tags
+9、用http的方式上传代码总是需要用户名和密码。可以采用ssh免密进行上传。
+[root@node2 devops]# ssh-keygen -t rsa -C "zzg@tedu.cn" -b 4096
+[root@node2 devops]# cat ~/.ssh/id_rsa.pub 
+把公钥拷贝到服务器用户的“SSH密钥”中。
+点击项目，查看项目通过ssh进行上传的地址：
+    git@192.168.4.1:devops/core_py.git
+[root@node2 devops]#  git remote remove origin
+[root@node2 devops]# git remote add origin git@192.168.4.1:devops/core_py.git
+[root@node2 devops]# cp /etc/hosts .
+[root@node2 devops]# git add .
+[root@node2 devops]# git commit -m "add file hosts"
+[root@node2 devops]# git push
