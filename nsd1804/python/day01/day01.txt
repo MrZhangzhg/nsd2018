@@ -52,7 +52,7 @@ Port 2222
 退出ssh，再重新连接
 [root@room8pc16 python]# ssh -p2222 192.168.4.1
 5、启动gitlab
-[root@node1 ~]# docker run -d -h gitlab --name gitlab -p 443:443 -p 80:80 -p 22:22 --restart always -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data gitlab_zh:latest 
+[root@node1 ~]# docker run -d -h gitlab --name gitlab -p 443:443 -p 80:80 -p 22:22 --restart always -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data:/var/opt/gitlab gitlab_zh:latest
 说明： -h gitlab是设置容器的hostname主机名，--name gitlab是设置容器名字，也就是通过docker ps查看到的名字；--restart always指的是出现问题重启容器
 6、gitlab关键概念
 群组group：公司中每个团队可以创建一个组

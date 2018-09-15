@@ -1,0 +1,114 @@
+数据类型
+1、数字：简单来说分成无小数的整数，和有小数的浮点数
+进制转换：N进制数转成10进制数就是乘N（的几次方）。10进制转成N进制就是除以N
+整数没有前缀表示10进制，0o表示8进制，0x表示16进制，0b表示2进制
+例：
+>>> import os
+>>> os.chmod('hi.py', 755)  # 权限不正确，因为权限是8进制数
+>>> os.chmod('hi.py', 0o755)
+2、字符串
+>>> '%s is %s years old' % ('bob', 23)   # 引号中的%s是占位符，可以有多个
+>>> '%s is %s years old' % ('faxu', 25)  # 括号中的数据按顺序替换%s
+>>> 'tom\'s pet is a cat'
+>>> "tom's pet is a cat"
+>>> words = "hello\nnihao"   # \n表示回车
+>>> print(words)
+>>> greets = """hello    # 三引号能够保存用户的输入格式
+... nihao"""
+>>> print(greets)
+>>> greets    # 三引号实际上只是python帮我们加上了\n
+
+>>> py_str = 'python'
+>>> len(py_str)
+>>> 't' in py_str
+>>> 'th' in py_str
+>>> 'to' in py_str
+>>> py_str[0]
+>>> py_str[6]  # 错误
+>>> py_str[-1]
+>>> py_str[2:4]  # 起始下标对应的字符包含，结束下标不包含
+>>> py_str[2:6]  # 切片，下标超过范围不报错
+>>> py_str[2:]   # 结束不写表示取到结尾
+>>> py_str[:2]   # 开头不写表示从开头取
+>>> py_str[::2]  # 最后的2表示步长值，默认是1
+>>> py_str[1::2]
+>>> py_str[::-1]  # 步长值是负数，表示从右向左取
+>>> '*' * 50   # 把*重复50次
+>>> '#a' * 20
+>>> 'hello ' + py_str  # 字符串接接到一起
+
+3、列表
+>>> alist = ['bob', 'alice', 10, 20, [1, 2, 3]]
+>>> len(alist)
+>>> 10 in alist
+>>> 2 in alist
+>>> alist[-1]
+>>> alist[-3:-1]
+>>> alist * 2
+>>> alist + 'hello'  # 错误，类型不同
+>>> alist + ['hello']
+>>> alist[-1] = 100
+>>> alist
+
+4、元组
+元组相当于是静态的列表，也能计算长度、取下标、取切片、拼接、重复，但是不能改变值
+>>> atuple = ('bob', 'alice', 10, 20, 100)
+>>> atuple[:2]
+>>> atuple[-1] = 1000  # 错误，元组不能改变
+
+5、字典
+字典是映射类型，采用key-val对形式，通过key找到val，key不能重复
+字典是没有顺序的，书写和输出的顺序都无关紧要
+>>> adict = {'name': 'bob', 'age': 25}
+>>> len(adict)
+>>> 25 in adict      # 判断25是不是key
+>>> 'age' in adict   # 判断age是不是key
+>>> adict['age']
+>>> adict[0]         # key error，没有key是0的项目
+
+6、数据类型的分类：重要，需要背下来
+（1）按存储模型分为
+    标量：不能包含共他对象  数字、字符串
+    容器：可以包含任意对象  列表、元组、字典
+（2）按访问模型分为：
+    直接：数字
+    序列：字符串、列表、元组
+    映射：字典
+（3）按更新模型分为：
+    可变：列表、字典
+    不可变：数字、字符串、元组
+验证可变不可变：
+>>> blist = alist   # alist和blist指向了同一内存空间
+>>> blist.append(500)  # 改变blist，alist也会一起改变
+>>> blist
+>>> alist
+>>> clist = alist.copy()  # 把alist内容复制一份给clist，clist使用新空间
+>>> clist
+>>> alist
+
+条件表达式（三元运算符）
+a = 10
+b = 20
+if a < b:
+    smaller = a
+else:
+    smaller = b
+print(smaller)
+以上四行判断可以用以下一行解决
+s = a if a < b else b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
