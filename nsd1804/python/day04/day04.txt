@@ -27,8 +27,33 @@ x, y = [1000, 2000]
 >>> keyword.kwlist
 >>> keyword.iskeyword('true')
 
+>>> list(('bob', 'alice'))
+>>> list('abcd')
+>>> str(10)
+>>> str([10, 20])
+>>> tuple(['bob', 'alice'])
+>>> tuple('abcd')
+>>> from random import randint
+>>> alist = [randint(1, 100) for i in range(10)]
+>>> max(alist)
+>>> min(alist)
 
+ASCII码只有7位
+1000001   A
+1000010   B
+1000011   C
+1000100   D
+ISO-8859-1 / Latin-1 在ASCII的基础上扩充了1位，共8位
+中国自己使用的编码有GBK/GB2312/GB18030
+ISO国际标准化组织使用了UTF编码，UTF8使用最多。它使用不定长的一串数字表示某个字符
+对于英文字符UTF8只有8位，对于汉字使用24位
 
+在python内部有字符和bytes类型之分
+>>> a = '你好'    # 字符类型
+>>> a.encode('utf8')   # 转成bytes类型
+b'\xe4\xbd\xa0\xe5\xa5\xbd'   # \x表示16进制
+>>> b = a.encode('utf8')
+>>> b.decode('utf8')   # 转成str类型
 
 
 
