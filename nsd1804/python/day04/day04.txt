@@ -1,0 +1,36 @@
+>>> import shutil
+>>> f1 = open('/etc/hosts', 'rb')
+>>> f2 = open('/tmp/zhuji', 'wb')
+>>> shutil.copyfileobj(f1, f2)
+>>> f1.close()
+>>> f2.close()
+
+>>> shutil.copyfile('/etc/hosts', '/tmp/zj')
+>>> shutil.copyfile('/etc/hosts', '/tmp/')   # 错误
+
+>>> shutil.copy('/etc/hosts', '/tmp/')
+>>> shutil.copy2('/etc/passwd', '/tmp')  # cp -p
+
+>>> shutil.move('/tmp/passwd', '/var/tmp/')
+
+>>> shutil.copytree('/etc/security', '/tmp/anquan')  # cp -r
+>>> shutil.rmtree('/tmp/anquan')  # rm -rf
+>>> shutil.chown('/tmp/zj', user='zhangsan', group='zhangsan')
+
+pythonic  像python一样
+a = b = 10
+x, y = 10, 20   => x = 10; y = 20
+x, y = (100, 200)
+x, y = [1000, 2000]
+关键字
+>>> import keyword
+>>> keyword.kwlist
+>>> keyword.iskeyword('true')
+
+
+
+
+
+
+
+
