@@ -76,6 +76,71 @@ print('%-10s%-10s' % ('zhaozihao', 20))   # 常用
 >>> "{1} is {0} years old".format(25, 'zhangsan')
 >>> "{0[1]} is {0[0]} years old".format([25, 'zhangsan'])
 
+>>> wpath = 'c:\temp'
+>>> print(wpath)   # \t被转换成tab键
+c:	emp
+>>> wpath = 'c:\\temp'
+>>> print(wpath)
+c:\temp
+>>> winpath = r'c:\temp'
+>>> print(winpath)
+c:\temp
+>>> winpath
+'c:\\temp'
+
+>>> print('+%s+' % ('*' * 48))
+>>> py_str = 'Python'
+>>> py_str.upper()
+>>> py_str.lower()
+>>> 'python'.capitalize()
+>>> 'hello world'.title()
+>>> py_str.center(20)
+>>> py_str.center(20, '#')
+>>> py_str.ljust(20)
+>>> py_str.rjust(20)
+>>> 'hao123'.islower()
+>>> 'hao123'.isdigit()
+>>> '123'.isdigit()
+>>> py_str.endswith('on')
+>>> py_str.startswith('abc')
+>>> '  hello \t  '.strip()   # 常用
+>>> '  hello \t  '.lstrip()
+>>> '  hello \t  '.rstrip()
+>>> 'hello.tar.gz'.split('.')
+>>> 'hello sdf sdf sdf aaa'.split()
+
+>>> alist = [10, 80, 100]
+>>> alist[-1] = 200
+>>> alist[:2] = [1, 50]
+>>> alist[2:2] = [50, 100]
+
+>>> alist.append(1000)
+>>> alist.extend('new')
+>>> alist.extend(['hello', 'world'])
+>>> alist.remove(50)   # 删除列表中的第一个50
+>>> alist.index('new')   # 返回new的下标
+>>> alist.reverse()  # 将列表本身翻转
+>>> alist.reverse()
+>>> alist.insert(3, 150)  # 在下标为3的位置插入150
+>>> alist.sort()  # 排序
+>>> alist.count(200)  # 统计列表中有几个200
+>>> alist.pop()   # 弹出列表中最后一项
+>>> alist.pop(6)  # 弹出下标是6的一项
+
+>>> atuple = (10, [1, 2, 3])
+>>> atuple[-1].append(4)
+
+>>> a = (10)
+>>> type(a)
+<class 'int'>
+>>> a = (10,)   # 单元素元组，必须有结尾的逗号，否则逗号会自动消失
+>>> type(a)
+<class 'tuple'>
+
+
+
+
+
 
 
 
