@@ -55,6 +55,35 @@ b'\xe4\xbd\xa0\xe5\xa5\xbd'   # \x表示16进制
 >>> b = a.encode('utf8')
 >>> b.decode('utf8')   # 转成str类型
 
+字符串格式化
+>>> '%s is %s years old' % ('王立军', 23)  # 常用
+>>> '%s is %d years old' % ('王立军', 23)  # 常用
+>>> '%s is %d years old' % ('王立军', 23.5)
+>>> '97 is %c' % 97    # ASCII值
+>>> '%#o' % 10   # 8进制
+>>> '%#x' % 10   # 16进制
+>>> '%e' % 100000  # 科学计数法
+>>> '%f' % (5 / 3)   # 浮点数
+print('%10s%10s' % ('name', 'age'))  # 常用
+print('%10s%10s' % ('zhaozihao', 20))  # 常用
+
+print('%-10s%-10s' % ('name', 'age'))  # 常用
+print('%-10s%-10s' % ('zhaozihao', 20))   # 常用
+>>> '%+d' % 10
+>>> '%+d' % -10
+
+>>> "{} is {} years old".format('zhangsan', 25)
+>>> "{1} is {0} years old".format(25, 'zhangsan')
+>>> "{0[1]} is {0[0]} years old".format([25, 'zhangsan'])
+
+
+
+
+
+
+
+
+
 
 
 
