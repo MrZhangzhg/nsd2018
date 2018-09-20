@@ -1,0 +1,45 @@
+>>> dict(['ab', 'cd'])
+>>> dict([('name', 'bob'), ('age', 23)])
+>>> {}.fromkeys(['zs', 'ls', 'ww', 'zl'], 18)
+
+>>> adict = {'name': 'zs', 'age': 23}
+>>> for key in adict:
+...     print('%s: %s' % (key, adict[key]))
+>>> "%(name)s: %(age)s" % adict
+
+>>> adict['name'] = 'zhangsan'
+>>> adict['email'] = 'zhangsan@tedu.cn'
+
+>>> bdict = adict
+>>> bdict.pop('email')  # adict也会少一项
+>>> cdict = adict.copy()
+>>> cdict['age'] = 25   # adict不会改变
+>>> adict.get('age')   # 取出value
+>>> adict.get('phone')   # 返回None
+>>> adict.get('phone', '400-000-5858')  # 如果没有phone，返回400电话
+>>> adict.setdefault('age', 30)  #字典中有age这个key，不会改变age的值
+# 因为字典中没有phone这个key，就会向字典中加入新项
+>>> adict.setdefault('phone', '15088776655')
+>>> adict.keys()
+>>> adict.values()
+>>> adict.items()
+>>> for key, val in adict.items():
+...   print('%s: %s' % (key, val))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
