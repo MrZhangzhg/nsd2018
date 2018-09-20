@@ -27,6 +27,109 @@
 ...   print('%s: %s' % (key, val))
 
 
+集合就像是一个无值的字典，所以也用{}表示
+>>> s1 = set('abc')
+>>> s2 = set('cde')
+>>> len(s1)
+>>> for ch in s1:
+...   print(ch)
+>>> s1 & s2   # 交集
+>>> s1 | s2   # 并集
+>>> s1 - s2   # 差补  s1中有，s2中没有的元素
+
+>>> s1.add('new')
+>>> s1.update('new')
+>>> s1.update(['hello', 'world'])
+>>> s1.remove('new')
+>>> s1 = set('abc')
+>>> s2 = set('abcde')
+>>> s1.issubset(s2)       # s1是s2的子集吗
+>>> s2.issuperset(s1)     # s2是s1的超集吗
+>>> s1.union(s2)          # 并集
+>>> s1.intersection(s2)   # 交集
+>>> s2.difference(s1)     # 差补
+
+# cp /etc/passwd /tmp/
+# cp /etc/passwd /tmp/mima
+# vim /tmp/mima   # 修改文件，可以增加新行
+
+>>> f1 = open('/tmp/passwd')
+>>> f2 = open('/tmp/mima')
+>>> s1 = set(f1)
+>>> s2 = set(f2)
+>>> s3 = s2 - s1
+>>> f1.close()
+>>> f2.close()
+>>> with open('/tmp/f3.txt', 'w') as f:
+...   f.writelines(s3)
+
+time模块
+>>> import time
+>>> time.localtime()   # 九元组
+>>> time.localtime(0)  # 1970-1-8:00:00
+>>> time.gmtime(0)     # 1970-1-0:00:00
+>>> time.time()      # 指令输入时间和1970-1-8:00:00之间的秒数，常用
+>>> time.sleep(10)
+>>> time.ctime()
+>>> time.ctime(0)
+>>> time.asctime()
+>>> time.strftime('%Y-%m-%d %H:%M:%S')  # 常用
+>>> time.strptime("2018-09-20 16:35:06", '%Y-%m-%d %H:%M:%S')
+>>> time.strftime('%a')
+>>> time.strftime('%A')
+https://yiyibooks.cn/  -> Python 352 文档 ->库参考
+
+datetime模块
+>>> datetime.datetime.now()
+>>> datetime.now()  # 年月日时分秒毫秒
+>>> from datetime import timedelta
+>>> t1 = datetime.now()
+>>> t1 + timedelta(days=90)  # 90天以后的时间
+>>> t1 - timedelta(days=60)  # 60天之间的时间
+
+
+>>> import os
+>>> os.getcwd()   # pwd
+>>> os.listdir()  # ls
+>>> os.listdir('/home')
+>>> os.makedirs('/tmp/abc/xyz')   # mkdir -p
+>>> os.mkdir('/tmp/demo')  # mkdir
+>>> os.chdir('/tmp/abc')   # cd /tmp/abc/
+>>> os.symlink('/etc/hosts', '/tmp/abc/zhuji')  # ln -s
+>>> os.mknod('123.txt')  # touch 123.txt
+>>> os.unlink('/tmp/abc/zhuji')  # 删除快捷方式
+>>> os.rename('123.txt', 'abcd.txt')
+>>> os.chmod('abcd.txt', 0o644)
+>>> os.remove('abcd.txt')   # rm -f
+>>> os.rmdir('xyz')   # rmdir xyz
+>>> os.path.split('/tmp/abc/aaa.txt')
+>>> os.path.join('/tmp/abc', 'aaa.txt')
+>>> os.path.isfile('/tmp/aaa')  # 存在并且是文件
+>>> os.path.isdir('/etc')
+>>> os.path.exists('/tmp/abc')
+
+
+>>> import pickle as p
+>>> shop_list = ['egg', 'apple', 'banana', 'orange']
+>>> with open('/tmp/shopping.data', 'wb') as fobj:
+...     p.dump(shop_list, fobj)
+
+>>> with open('/tmp/shopping.data', 'rb') as fobj:
+...     mylist = p.load(fobj)
+
+>>> type(mylist)
+>>> mylist[2:]
+
+
+
+
+
+
+
+
+
+
+
 
 
 
