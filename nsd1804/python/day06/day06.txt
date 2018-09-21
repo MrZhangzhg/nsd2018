@@ -10,6 +10,70 @@
 >>> get_info(20, name='bob')  # 参数按顺序传递，20赋值给name，name得到多个值
 >>> get_info('bob', age=20)
 
+>>> x = 10
+>>> def foo():
+...   print(x)   # 使用全局变量
+...
+>>> foo()
+10
+>>> def bar():
+...   x = 'hello'
+...   print(x)   # 局部的x遮盖了全局的x，输出hello
+...
+>>> bar()
+hello
+>>> x   # 局部的x不会将全局的x重新赋值
+10
+>>> def foobar():
+...   global x    # 明确声明函数要使用的x是全局变量x
+...   x = 'nihao'
+...   print(x)
+...
+>>> foobar()
+nihao
+>>> x
+'nihao'
+# python在查找名称的时候，先在局部查找，再到全局查，最后在内建查询
+
+
+>>> import tkinter  # 它们是标准库提供的，但是如果没有安装依赖包，也无法使用
+>>> import sqlite3
+解决这些模块不存在的方法：重新编译python
+# yum install -y tcl-devel tk-devel sqlite-devel
+# tar xzf Python-3.xxxx.tar.gz
+# cd Python-3.xxx
+# ./configure --prefix=/usr/local/
+# make && make install
+
+
+>>> def myadd(a, b, c, d, e, f):
+...   return a + b + c + d + e + f
+>>> myadd(10, 20, 30, 40, 50, 1)
+>>> myadd(10, 20, 30, 40, 50, 2)
+>>> from functools import partial
+# 偏函数就是改造现有函数，生成新函数，将原有函数的一些参数给出固定值
+>>> newadd = partial(myadd, 10, 20, 30, 40, 50)
+>>> newadd(1)
+>>> newadd(2)
+>>> newadd(100)
+
+
+生成器：本质上就是个函数。
+函数一般通过return返回一个值。生成器可以通过yield返回多个中结果。
+>>> def mygen():
+...   yield 'hello world'
+...   a = 10 + 20
+...   yield a
+...   yield [100, 200]
+>>> a = mygen()
+>>> for i in a:
+...   print(i)
+
+
+
+
+
+
 
 
 
