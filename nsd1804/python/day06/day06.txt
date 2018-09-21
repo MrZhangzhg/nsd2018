@@ -1,0 +1,17 @@
+>>> def get_info(name, age):
+...   print('%s is %s years old' % (name, age))
+
+>>> get_info('bob', 20)
+>>> get_info(20, 'bob')  # 没有语法错误，但是语义不对
+>>> get_info('bob')  # Error, 缺少参数
+>>> get_info('bob', 20, 100)  # Error, 参数太多
+>>> get_info(age=20, name='bob')
+>>> get_info(age=20, 'bob')   # 语法错误，关键字参数必须在后
+>>> get_info(20, name='bob')  # 参数按顺序传递，20赋值给name，name得到多个值
+>>> get_info('bob', age=20)
+
+
+
+
+
+
