@@ -1,0 +1,53 @@
+导入模块时，python到sys.path定义的环境变量中去搜索模块，如果搜索到就导入进来
+如果搜不到会发生ImportError异常
+如果我们自己编写了一个模块，需要在任意目录下都能导入，那么可以这么做：
+（1）把自己的模块放到/usr/local/lib/python3.6/site-packages
+（2）定义环境变量PYTHONPATH=/你的模块目录
+
+包：对应文件系统中的目录
+[root@room8pc16 day07]# mkdir demo
+[root@room8pc16 day07]# vim demo/hello.py
+hi = 'Hello World!'
+[root@room8pc16 day07]# python3
+>>> import demo.hello
+>>> demo.hello.hi
+
+hashlib模块
+计算文件的md5值
+>>> import hashlib
+>>> with open('/etc/passwd', 'rb') as fobj:
+...   data = fobj.read()
+...
+>>> m = hashlib.md5(data)
+>>> m.hexdigest()
+
+tarfile模块
+压缩
+>>> import tarfile
+>>> import os
+>>> os.chdir('/etc/')
+>>> tar = tarfile.open('/tmp/mytest.tar.gz', 'w:gz')
+>>> tar.add('security')
+>>> tar.add('hosts')
+>>> tar.close()
+解压缩
+>>> os.mkdir('/tmp/mydemo')
+>>> os.chdir('/tmp/mydemo')
+>>> tar = tarfile.open('/tmp/mytest.tar.gz', 'r:gz')
+>>> tar.extractall()
+>>> tar.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
