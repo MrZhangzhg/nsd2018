@@ -38,9 +38,27 @@ tarfile模块
 >>> tar.close()
 
 
+获取每个文件的完全路径
+>>> import os
+>>> list(os.walk('/etc/security'))
+--------------------------------------------------------
+>>> for path, folders, files in os.walk('/etc/security'):
+...     for each_file in files:
+...         print(os.path.join(path, each_file))
 
+{'/etc/security/access.conf': '13ec4d189f0ed9acf3433977a53d446b',
+'/etc/security/group.conf': 'f1e26e8db6f7abd2d697d7dad3422c36'
+}
 
+{'/etc/security/access.conf': '13ec4d189f0ed9acf3433977a53d446b',
+'/etc/security/users.conf': '33ec4d120f0ed9acf3433577a5cd44fb',
+'/etc/security/group.conf': '4675d12b2ee4b50fe53d86fd0a47d615'
+}
 
+security_full_20180924.tar.gz
+security_incr_20180925.tar.gz
+security_incr_20180926.tar.gz
+security_incr_20180927.tar.gz
 
 
 
