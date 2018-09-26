@@ -1,5 +1,5 @@
 >>> import re
->>> re.match('f..', 'food')  # 如果匹配到返回匹配对象，否则返回None
+>>> re.match('f..', 'food')  # 如果匹配到，返回匹配对象，否则返回None
 >>> print(re.match('f..', 'seafood'))  # match只能从头部开始匹配
 >>> m = re.match('f..', 'food')
 >>> m.group()  # 匹配对象的group方法能返回匹配到的数据
