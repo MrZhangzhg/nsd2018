@@ -18,6 +18,12 @@
 >>> m.group()
 >>> cpatt.findall('seafood is food')
 
+>>> from collections import Counter
+>>> c = Counter()
+>>> c.update('hello world!')
+>>> c.update(['192.168.1.1'])
+>>> c.most_common(5)  # 出现次数最多的前5项
+
 
 
 

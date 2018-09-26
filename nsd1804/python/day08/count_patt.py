@@ -17,3 +17,8 @@ if __name__ == '__main__':
     print(count_patt(log_file, ip))
     br = 'Chrome|Firefox|MSIE'
     print(count_patt(log_file, br))
+
+# >>> import count_patt
+# >>> bash = 'nologin$|bash$'
+# >>> count_patt.count_patt('/etc/passwd', bash)
+
