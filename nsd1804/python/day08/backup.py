@@ -42,18 +42,18 @@ def incr_backup(src_dir, dst_dir, md5file):
     new_md5 = {}
 
     with open(md5file, 'rb') as fobj:
-        old_md5 = p.load(fobj)
+        old_md5 = p.load(fobj)  # 取出前一天的md5值
 
     for path, folders, files in os.walk(src_dir):
         for each_file in files:
             key = os.path.join(path, each_file)
-            new_md5[key] = check_md5(key)
+            new_md5[key] = check_md5(key)  # 计算当前所有文件的md5值
 
     with open(md5file, 'wb') as fobj:
-        p.dump(new_md5, fobj)
+        p.dump(new_md5, fobj)   # 将新md5值写文件
 
     tar = tarfile.open(fname, 'w:gz')
-    for key in new_md5:
+    for key in new_md5:   # 有变化的、新增的文件才需要打进tar包
         if old_md5.get(key) != new_md5[key]:
             tar.add(key)
     tar.close()

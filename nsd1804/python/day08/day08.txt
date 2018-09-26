@@ -1,0 +1,28 @@
+>>> import re
+>>> re.match('f..', 'food')  # 如果匹配到返回匹配对象，否则返回None
+>>> print(re.match('f..', 'seafood'))  # match只能从头部开始匹配
+>>> m = re.match('f..', 'food')
+>>> m.group()  # 匹配对象的group方法能返回匹配到的数据
+>>> m = re.search('f..', 'seafood')  # search可以在任意位置匹配
+>>> m.group()
+>>> re.findall('f..', 'seafood is food')  # 匹配所有数据，返回列表
+# finditer与findall类似，返回匹配对象的生成器
+>>> for m in re.finditer('f..', 'seafood is food'):
+...   print(m.group())
+
+>>> re.split('\.|-', 'hello-world.tar.gz')  # 以.或-作分隔符，切割
+>>> re.sub('X', 'zzg', 'Hi X. U R X.')
+如果区配量比较大，把正则的模式先编译，可以提升效率
+>>> cpatt = re.compile('f..')
+>>> m = cpatt.search('seafood')
+>>> m.group()
+>>> cpatt.findall('seafood is food')
+
+
+
+
+
+
+
+
+
