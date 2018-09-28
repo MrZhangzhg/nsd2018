@@ -34,6 +34,40 @@ GIL不允许多个线程同时占用解释器，也就是不能同时把多个�
 计算密集型应用：瓶颈来自于处理器，因为不能同时使用多个核心，所以无法提升性能
 IO密集型应用：瓶颈来自于输入输出，多线程可以提升性能
 
+运维过程中会用到的模块：
+os
+sys
+shutil
+time
+tarfile
+hashlib
+pstuil
+
+pip ->用于在线安装python软件包（模块）
+如果安装过程比较慢，可以使用国内镜像站点
+https://www.cnblogs.com/wqpkita/p/7248525.html
+# cat ~/.pip/pip.conf
+[global]
+index-url = http://pypi.douban.com/simple/
+[install]
+trusted-host=pypi.douban.com
+# pip3 install psutil
+https://www.jianshu.com/p/bc10e79847cb  # pstuil使用的文章
+>>> psutil.cpu_count()  # CPU核心数
+>>> help(psutil.cpu_count)  # 获取帮助
+>>> psutil.cpu_count(logical=False)  # 物理核心数，不包含超线程
+>>> psutil.cpu_times()  # 获取CPU所有的信息
+>>> psutil.cpu_percent()  # CPU使用率的百分比
+>>> psutil.virtual_memory()  # 获取内存信息
+>>> psutil.disk_partitions()
+>>> psutil.disk_usage('/')  # 根分区信息
+>>> root = psutil.disk_usage('/')
+>>> root.total    # 总大小，以字节为单位
+>>> root.percent  # 已用百分比
+>>> psutil.net_io_counters()  # 网络收发数据的统计
+
+
+
 
 
 
