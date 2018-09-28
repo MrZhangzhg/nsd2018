@@ -1,0 +1,42 @@
+re贪婪匹配
+将tomorrow中的morr分组
+>>> m = re.search('to(morr)ow', 'I will see you tomorrow')
+>>> m.group()   # 总是匹配全部的模式
+>>> m.group(1)  # 匹配第一个分组，也就是模式中第一个括号中的部分
+>>> m = re.search('to(morr)(ow)', 'I will see you tomorrow')
+>>> m.group(1)
+>>> m.group(2)
+>>> m = re.search('.+', 'My phone number: 13312345678')
+>>> m.group()  # 匹配到了所有字符
+>>> m = re.search('.+\d+', 'My phone number: 13312345678')
+>>> m.group()  # 匹配到了所有字符
+>>> m = re.search('.+(\d+)', 'My phone number: 13312345678')
+>>> m.group(1)  # 只得到了一个8，因为+/*都是贪婪匹配，也就是匹配尽量多的字符
+>>> m = re.search('.+?(\d+)', 'My phone number: 13312345678')
+>>> m.group(1)   # .+后面的问号取消了贪婪匹配，让?后面的模式尽量多的匹配
+http://down.51cto.com  -> 《正则表达式必知必会》
+
+fork
+[root@room8pc16 day09]# vim chdir.sh
+#!/bin/bash
+cd /home
+[root@room8pc16 day09]# bash chdir.sh
+[root@room8pc16 day09]# chmod +x chdir.sh
+[root@room8pc16 day09]# ./chdir.sh
+[root@room8pc16 day09]# source chdir.sh
+前两种方式都没有切换路径，因为采用fork执行方式。fork就是父进程将自身资源拷贝一份，
+生成子进程，代码在子进程中执行，子进程结束之后销毁。
+第三种方式执行脚本将改变路径，因为它是在当前进程中执行脚本
+
+
+
+
+
+
+
+
+
+
+
+
+
