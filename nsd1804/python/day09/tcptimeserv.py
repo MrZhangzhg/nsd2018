@@ -18,21 +18,26 @@ class TcpTimeServ:
             data = '[%s] %s' % (strftime('%Y-%m-%d %H:%M:%S'), data.decode())
             c_sock.send(data.encode())
         c_sock.close()
-        exit(0)
 
     def mainloop(self):
         while True:
             try:
                 cli_sock, cli_addr = self.serv.accept()
-                pid = os.fork()  # 服务器、客户端套接字在父子进程中都有
             except:
                 break
+            pid = os.fork()  # 服务器、客户端套接字在父子进程中都有
 
             if pid:
                 cli_sock.close()   # 父进程关闭客户端套接字
+                while True:
+                    rc = os.waitpid(-1, 1)  # 每个waitpid只能处理一个子进程
+                    print(rc)
+                    if rc[0] == 0:
+                        break
             else:
                 self.serv.close()  # 子进程关闭服务器套接字
                 self.handle_child(cli_sock)
+                exit(0)
 
         self.serv.close()
 
