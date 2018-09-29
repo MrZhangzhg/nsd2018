@@ -1,0 +1,55 @@
+多进程模块multiprocessing
+https://www.jianshu.com/p/3b28c9b5dec1
+
+pip配置
+[root@localhost	~]#	mkdir ~/.pip/
+[root@localhost	~]#	vim	~/.pip/pip.conf
+[global]
+index-url=http://pypi.douban.com/simple/
+[install]
+trusted-host=pypi.douban.com
+安装pymysql
+# pip3 install pymysql
+
+编写小型数据库：发工资
+员工ID、员工名、性别、出生日期、部门、联系方式、月份、基本工资、奖金、工资总额
+第一范式1NF：原子性，即数据库表的每一列都是不可分割的原子数据项
+联系方式：可以分成电话号码、email
+第二范式2NF：是在第一范式（1NF）的基础上建立起来的，要求实体的属性完全依赖于
+主关键字。所谓完全依赖是指不能存在仅依赖主关键字一部分的属性
+员工表：员工ID（主键）、员工名、性别、电话号码、email、部门ID
+部门表：部门ID（主键）、部门
+工资表：AUTOID（主键）、员工ID、月份、基本工资、奖金、工资总额
+第三范式3NF：在2NF基础上，任何非主属性不依赖于其它非主属性（在2NF基础上消除传递依赖）
+工资表中的工资总额依赖基本工资和奖金，工资总额就不应该出现在表中。工资总额需要用的时
+候临时生成即可。
+
+设置密码
+[root@room8pc16 day10]# mysqladmin password tedu.cn
+[root@room8pc16 day10]# mysql -uroot -ptedu.cn
+MariaDB [(none)]> create database tarena1804 default charset utf8;
+MariaDB [(none)]> use tarena1804;
+MariaDB [tarena1804]> create table department(dep_id int,
+ dep_name varchar(20) unique not null, primary key(dep_id));
+MariaDB [tarena1804]> create table employee(emp_id int,
+ emp_name varchar(20) not null, gender varchar(6), birth_date date,
+ phone char(11) unique not null, email varchar(50) unique not null,
+ dep_id int, primary key(emp_id),
+ foreign key(dep_id) references department(dep_id));
+MariaDB [tarena1804]> create table salary(autoid int auto_increment,
+ emp_id int, date date, basic int, awards int, primary key(autoid),
+ foreign key(emp_id) references employee(emp_id));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
