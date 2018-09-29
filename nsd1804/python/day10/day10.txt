@@ -40,6 +40,8 @@ MariaDB [tarena1804]> create table salary(autoid int auto_increment,
  emp_id int, date date, basic int, awards int, primary key(autoid),
  foreign key(emp_id) references employee(emp_id));
 
+sqlalchemy:
+# pip3 install sqlalchemy
 
 
 
