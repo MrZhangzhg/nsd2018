@@ -1,4 +1,4 @@
-from dbconn import Department, Employee, Session
+from dbconn import Department, Employee, Salary, Session
 
 session = Session()
 dep_dev = Department(dep_name='development')
@@ -35,6 +35,8 @@ zzh = Employee(
     email='zzh@qq.com',
     dep_id=4
 )
-session.add_all([wh, lj, zzh])
+# session.add_all([wh, lj, zzh])
+wh20181001 = Salary(emp_id=1, date='2018-10-01', basic=15000, awards=5000)
+session.add(wh20181001)
 session.commit()
 session.close()

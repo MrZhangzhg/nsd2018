@@ -31,6 +31,14 @@ class Employee(Base):
     def __str__(self):
         return '<员工: %s>' % self.emp_name
 
+class Salary(Base):
+    __tablename__ = 'salary'
+    autoid = Column(Integer, primary_key=True)
+    date = Column(Date)
+    emp_id = Column(Integer, ForeignKey('employee.emp_id'))
+    basic = Column(Integer)
+    awards = Column(Integer)
+
 if __name__ == '__main__':
     # 在数据库中创建表，如果表已存在则忽略
     Base.metadata.create_all(engine)
