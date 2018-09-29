@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 engine = create_engine(
     'mysql+pymysql://root:tedu.cn@127.0.0.1/tedu1804?charset=utf8',
     encoding='utf8',
-    echo=True  # 屏幕输出日志信息
+    # echo=True  # 屏幕输出日志信息
 )
 Base = declarative_base()  # 生成ORM映射的基类
 Session = sessionmaker(bind=engine)  # 创建会话类，用于连接数据库
