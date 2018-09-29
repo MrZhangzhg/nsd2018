@@ -42,6 +42,8 @@ MariaDB [tarena1804]> create table salary(autoid int auto_increment,
 
 sqlalchemy:
 # pip3 install sqlalchemy
+1、创建数据库
+MariaDB [tarena1804]> CREATE DATABASE tedu1804 DEFAULT CHARSET utf8;
 
 
 
