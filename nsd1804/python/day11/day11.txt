@@ -1,0 +1,22 @@
+通过telnet访问web服务器
+[root@room8pc16 day10]# telnet www.baidu.com 80
+GET / HTTP/1.1
+HOST: www.baidu.com
+回车
+
+>>> from urllib import request
+>>> html = request.urlopen('http://www.baidu.com/')
+>>> data = html.read()
+>>> type(data)
+<class 'bytes'>
+>>> with open('/tmp/bd.html', 'wb') as fobj:
+...     fobj.write(data)
+[root@room8pc16 day10]# firefox /tmp/bd.html
+>>> img = request.urlopen('https://upload-images.jianshu.io/upload_images/1276176-ce4d97b8f2309161.jpg')>>>
+>>> data = img.read()
+>>> with open('/tmp/myimg.jpg', 'wb') as fobj:
+...     fobj.write(data)
+[root@room8pc16 day10]# eog /tmp/myimg.jpg
+
+
+
