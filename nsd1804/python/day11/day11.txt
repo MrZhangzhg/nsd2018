@@ -43,8 +43,25 @@ https://www.baidu.com/s?wd=hello%20world%21
 'hello%E9%99%88%E9%87%91%E5%AE%87%21'
 https://www.baidu.com/s?wd=hello%E9%99%88%E9%87%91%E5%AE%87%21
 
+paramiko -> ssh/scp客户端
+# pip3 install paramiko
+创建三台虚拟机，配置IP地址，用于测试
+# virsh console 虚拟机名字     退出时按ctrl + ]
 
-
+>>> import paramiko
+>>> ssh = paramiko.SSHClient()
+# 下面一行，相当于服务器问(yes/no)?时，回答yes
+>>> ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+>>> ssh.connect('192.168.4.2', username='root', password='123456')
+>>> ssh.exec_command('useradd zhangsan')
+>>> a = ssh.exec_command('id zhangsan')
+# 返回值是输入、输出、错误的类文件对象组成的元组
+>>> a[1].read()
+>>> a[2].read()
+>>> stdin, stdout, stderr = ssh.exec_command('id wangwu')
+>>> stdout.read()
+>>> stderr.read()
+>>> ssh.close()
 
 
 
