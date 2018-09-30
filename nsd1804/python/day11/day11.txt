@@ -18,5 +18,40 @@ HOST: www.baidu.com
 ...     fobj.write(data)
 [root@room8pc16 day10]# eog /tmp/myimg.jpg
 
+模拟客户端
+1、跟踪日志尾部输出
+[root@room8pc16 day10]# tail -f /var/log/httpd/access_log
+2、通过urllib访问
+>>> html = request.urlopen('http://127.0.0.1/')
+日志输出，显示"Python-urllib/3.6"访问
+2、可以模拟urllib用的是Firefox访问
+（1）使用firefox访问服务器，查看日志输出，将浏览器记录下来
+Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+（2）构建头部
+>>> header = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
+>>> url = 'http://127.0.0.1/'
+（3）创建请求对象
+>>> html = request.Request(url, headers=header)
+（4）获取网页内容
+>>> request.urlopen(html).read()
+日志输出显示客户端的浏览器是firefox
+
+URL只允许一部分ASCII编码，其他字符需要编码成允许的字符才能使用，如
+https://www.baidu.com/s?wd=hello%20world%21
+将字符串编码成URL允许的字符：
+>>> request.quote('hello陈金宇!')
+'hello%E9%99%88%E9%87%91%E5%AE%87%21'
+https://www.baidu.com/s?wd=hello%E9%99%88%E9%87%91%E5%AE%87%21
+
+
+
+
+
+
+
+
+
+
+
 
 
