@@ -63,7 +63,14 @@ paramiko -> ssh/scp客户端
 >>> stderr.read()
 >>> ssh.close()
 
-
+网络唤醒
+1、将BIOD设置中的wake on lan打开
+2、网络开机
+# ether-wake -i 从哪块网卡发出  目标主机的MAC地址
+# ether-wake -i enp2s0 12:34:56:78:90:11
+3、获得远程主机MAC地址
+[root@room8pc16 day11]# ping -c2 172.40.50.113 &> /dev/null
+[root@room8pc16 day11]# arp -n 172.40.50.113
 
 
 
