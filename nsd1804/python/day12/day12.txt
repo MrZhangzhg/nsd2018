@@ -1,6 +1,21 @@
 网易邮箱需要在右上角点击设置，然后勾选POP3/SMTP服务，手机验证后可以使用
 下方的提示有邮件服务器的地址
 
+JSON：可以方便的在网络中传输各种数据类型
+>>> import json
+>>> n = json.dumps(100)
+>>> json.loads(n)
+
+查看天气预报
+打开百度，搜索“中国天气网 城市代码”
+天气实况：http://www.weather.com.cn/data/sk/城市代码.html
+城市信息：http://www.weather.com.cn/data/cityinfo/城市代码.html
+详细指数：http://www.weather.com.cn/data/zs/城市代码.html
+
+
+
+
+
 
 
 

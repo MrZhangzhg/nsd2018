@@ -5,7 +5,7 @@ from email.header import Header
 
 def send_mail(server, user, pwd, sender, receivers, msg):
     smtp_obj = smtplib.SMTP()
-    # smtp_obj.starttls()
+    # smtp_obj.starttls()   # 如果是基于安全的邮件服务器，需加此项
     smtp_obj.connect(server, 25)
     smtp_obj.login(user, pwd)
     smtp_obj.sendmail(sender, receivers, msg.as_string())
