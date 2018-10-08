@@ -38,7 +38,20 @@ requests: 它的底层采用了urllib3，使用起来更加简化
 ...   fobj.write(r3.content)
 
 思考：怎么模拟firefox访问服务器
+>>> header = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0"}
+>>> r4 = requests.get('http://127.0.0.1/', headers=header)
 
+状态码
+>>> r4.status_code
+>>> requests.codes.not_found  # requests模块将状态码都起了一个有意义的名字
+>>> requests.codes.forbidden
+>>> requests.codes.ok
+
+HTTP是无状态的，也就意味着，用户两次访问同一网站，该网站也不知道是同一客户端
+为了使得服务器可以识别客户端，服务器可以将一些数据（cookie）发送给客户端，客户端
+每次访问服务器时，都会携带cookie去访问服务器
+
+zabbix: https://www.zabbix.com/documentation/3.4/zh/manual/api
 
 
 
