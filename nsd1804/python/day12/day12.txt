@@ -12,7 +12,32 @@ JSON：可以方便的在网络中传输各种数据类型
 城市信息：http://www.weather.com.cn/data/cityinfo/城市代码.html
 详细指数：http://www.weather.com.cn/data/zs/城市代码.html
 
+requests: 它的底层采用了urllib3，使用起来更加简化
+# pip3 install requests
+>>> import requests
+>>> r = requests.get('http://www.baidu.com/')
+>>> r.text   返回网页的字符串，因为编码问题，中文可能是乱码
+>>> r.encoding   # 默认是ISO-8859-1
+>>> r.encoding = 'utf8'
+>>> r.text
+>>> data = r.content   # 返回网页的bytes类型
+>>> type(data)
 
+>>> r1 = requests.get('http://www.weather.com.cn/data/sk/101010100.html')
+>>> r1.encoding = 'utf8'
+>>> r1.json()   # 对json格式数据进行解码
+
+>>> r2 = requests.get('http://www.weather.com.cn/m/i/legend.jpg')
+>>> with open('/tmp/tq.jpg', 'wb') as fobj:
+...   fobj.write(r2.content)
+
+>>> r3 = requests.get('http://www.baidu.com/s', params={'wd': '中国天气网'})
+>>> r3.encoding = 'utf8'
+>>> r3.text
+>>> with open('/tmp/bd.html', 'wb') as fobj:
+...   fobj.write(r3.content)
+
+思考：怎么模拟firefox访问服务器
 
 
 
