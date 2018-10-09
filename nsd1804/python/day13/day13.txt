@@ -47,6 +47,34 @@ CI/CD环境
 [root@room8pc16 webpro]# git push -u origin --all
 [root@room8pc16 webpro]# git push -u origin --tags
 
+jenkins服务器构建工程
+1、因为使用了gitlab，并且使用了tag，所以需要为jenkins服务器准备git插件
+[root@node3 ~]# yum install -y git
+jenkins首页->系统管理->管理插件->可选插件->Git Parameter勾选后点“直接安装”
+Git Parameter插件可以使得jenkins能够解析到gitlab的tag标记和branch分支
+2、创建一个自由风格的项目
+jenkins将gitlab上的代码下载到/var/lib/jenkins/workspace/目录下
+
+配置分发服务器
+1、通过http将gitlab上下载的软件共享给应用服务器（WEB服务器）
+[root@node3 ~]# yum install -y httpd
+[root@node3 ~]# systemctl start httpd
+[root@node3 ~]# systemctl enable httpd
+[root@node3 ~]# mkdir -pv /var/www/html/deploy/packages
+[root@node3 ~]# chown -R jenkins.jenkins /var/www/html/deploy
+2、将软件打包，以便于共享
+修改jenkins的项目，在“构建”部分“增加构建步骤”，使用shell脚本
+deploy_dir=/var/www/html/deploy/packages
+cp -r mp-${mptag} $deploy_dir
+rm -rf $deploy_dir/mp-${mptag}/.git
+cd $deploy_dir
+tar czf mp-${mptag}.tar.gz mp-${mptag}
+rm -rf mp-${mptag}
+md5sum mp-${mptag}.tar.gz | awk '{print $1}' > mp-${mptag}.tar.gz.md5
+3、将打包的软件计算出MD5值，以便于应用服务器下载后，可以校验文件
+4、分发服务器上有很多版本，分发服务器应该记录当前软件版本以及上一个软件版本
+
+
 
 
 
