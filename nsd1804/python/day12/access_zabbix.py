@@ -3,7 +3,7 @@ import json
 
 # 获取版本信息
 # url = 'http://192.168.4.2/zabbix/api_jsonrpc.php'
-# headers = {'Content-Type':	'application/json-rpc'}
+# headers = {'Content-Type': 'application/json-rpc'}
 # data = {
 #     "jsonrpc": "2.0",
 #     "method": "apiinfo.version",
@@ -33,7 +33,7 @@ import json
 #
 # 获取所有的主机信息
 # url = 'http://192.168.4.2/zabbix/api_jsonrpc.php'
-# headers = {'Content-Type':	'application/json-rpc'}
+# headers = {'Content-Type': 'application/json-rpc'}
 # data = {
 #     "jsonrpc": "2.0",
 #     "method": "host.get",

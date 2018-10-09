@@ -1,0 +1,56 @@
+# gcc -o hello hello.c
+# ./hello
+
+tomcat部署java程序
+1、将java程序通过ant/maven生成war包
+2、将war包拷贝到tomcat的文档目录下
+3、重启tomcat，将自动解开war包，实现代码上线
+
+CI/CD环境
+1、物理主机作为应用服务器
+2、192.168.4.1作为gitlab服务器
+3、192.168.4.3作为jenkins服务器，它的eth1设置为使用NAT连接，以便可以访问外网
+    rh7_node3它的eth1与物理主机的virbr0相连
+    如果虚拟机上也有virbr0，应该把它删掉
+    [root@node3 ~]# ifconfig virbr0 down
+    [root@node3 ~]# brctl delbr virbr0
+    [root@node3 ~]# nmtui   # 添加eth1网卡，地址默认为自动获得即可
+    [root@node3 ~]# ifup eth1
+
+安装jenkins
+需要jre环境
+[root@node3 ~]# rpm -ihv jenkins-2.121-1.1.noarch.rpm
+[root@node3 ~]# systemctl start jenkins
+访问http://192.168.4.3:8080进行后续初始化工作
+
+模拟程序员开发软件项目
+1、创建软件项目
+[root@room8pc16 nsd1805]# git init /tmp/webpro
+[root@room8pc16 nsd1805]# echo '<h1>Hello World!</h1>' >/tmp/webpro/index.html
+[root@room8pc16 nsd1805]# cd /tmp/webpro
+[root@room8pc16 webpro]# git add .
+[root@room8pc16 webpro]# git commit -m "web project init"
+2、开发达成阶段目标后，将软件标记为1.0版本
+[root@room8pc16 webpro]# git tag 1.0  # 为当前程序打上1.0标签
+3、继续开发
+[root@room8pc16 webpro]# echo 'new line.' >> index.html
+[root@room8pc16 webpro]# git add .
+[root@room8pc16 webpro]# git commit -m "web 2.0"
+4、开发达成另一个阶段目标后，将软件标记为2.0版本
+[root@room8pc16 webpro]# git tag 2.0
+[root@room8pc16 webpro]# git tag
+
+在gitlab上创建项目myproject，程序员用户成为该项目的“主程序员”
+上传代码到服务器
+[root@room8pc16 webpro]# git remote rename origin old-origin
+[root@room8pc16 webpro]# git remote add origin http://192.168.4.1/devops/myproject.git
+[root@room8pc16 webpro]# git push -u origin --all
+[root@room8pc16 webpro]# git push -u origin --tags
+
+
+
+
+
+
+
+
