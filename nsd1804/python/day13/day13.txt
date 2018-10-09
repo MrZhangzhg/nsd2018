@@ -63,6 +63,7 @@ jenkins将gitlab上的代码下载到/var/lib/jenkins/workspace/目录下
 [root@node3 ~]# mkdir -pv /var/www/html/deploy/packages
 [root@node3 ~]# chown -R jenkins.jenkins /var/www/html/deploy
 2、将软件打包，以便于共享
+3、将打包的软件计算出MD5值，以便于应用服务器下载后，可以校验文件
 修改jenkins的项目，在“构建”部分“增加构建步骤”，使用shell脚本
 deploy_dir=/var/www/html/deploy/packages
 cp -r mp-${mptag} $deploy_dir
@@ -71,8 +72,23 @@ cd $deploy_dir
 tar czf mp-${mptag}.tar.gz mp-${mptag}
 rm -rf mp-${mptag}
 md5sum mp-${mptag}.tar.gz | awk '{print $1}' > mp-${mptag}.tar.gz.md5
-3、将打包的软件计算出MD5值，以便于应用服务器下载后，可以校验文件
 4、分发服务器上有很多版本，分发服务器应该记录当前软件版本以及上一个软件版本
+/var/www/html/deploy下创建两个文件，一个名为live_version记录当前版本，另一个
+名为last_version，记录前一个版本。构建时，将live_version中的版本号写入到
+last_version中，live_version中的内容是管理员手工填写的。shell脚本中内容如下：
+deploy_dir=/var/www/html/deploy
+cd $deploy_dir
+[ -f live_version ] && cat live_version > last_version
+echo ${mptag} > live_version
+
+应用服务器部署软件
+1、检查服务器的最新版本和自己的版本，如果有更新则下载
+2、下载完成后检MD5值，如果MD5值相同，则解压
+3、下载的每个项目都保存在/var/www/packages/目录下，
+如/var/www/packages/{mp-1.0,mp-2.0}
+4、发布的软件，是/var/www/packages/目录中某个版本的快捷方式
+/var/www/html/mysite -> /var/www/packages/mp-1.0
+
 
 
 
