@@ -51,8 +51,50 @@ autocmd FileType yaml setlocal sw=2 ts=2 et ai  # 如果是yaml文件才生效
 检查语法，没有问题后执行
 [root@room8pc16 myansi]# ansible-playbook --syntax-check auth_key.yml
 [root@room8pc16 myansi]# ansible-playbook auth_key.yml -k
+7、在本地创建files/server.repo文件，用copy模块发送到所有的远程主机
+[root@room8pc16 myansi]# vim copy_repo.yml
+---
+- name: copy yum config file
+  hosts: all
+  tasks:
+    - name: config yum file
+      copy:
+        src: files/server.repo
+        dest: /etc/yum.repos.d/server.repo
+[root@room8pc16 myansi]# ansible-playbook copy_repo.yml
+8、配置dbservers安装mariadb，web服务器配置httpd/php/php-mysql
+[root@room8pc16 myansi]# vim lamp.yml
+---
+- name: configure web servers
+  hosts: webservers
+  tasks:
+    - name: install web pkgs
+      yum:
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - httpd
+        - php
+        - php-mysql
+    - name: configure web service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
 
-
+- name: configure db servers
+  hosts: dbservers
+  tasks:
+    - name: install db pkgs
+      yum:
+        name: mariadb-server
+        state: latest
+    - name: configure db service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+[root@room8pc16 myansi]# ansible-playbook  lamp.yml
 
 
 
