@@ -154,7 +154,24 @@ play_source =  dict(
             # dict(action=dict(module='debug', args=dict(msg='{{shell_out.stdout}}')))
          ]
     )
+# 实例化Play
+play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
 
+# 实例化任队列管理器
+tqm = None
+try:
+    tqm = TaskQueueManager(
+              inventory=inventory,
+              variable_manager=variable_manager,
+              loader=loader,
+              options=options,
+              passwords=passwords,
+          )
+    result = tqm.run(play)
+finally:
+    if tqm is not None:
+        tqm.cleanup()  # 清理任务
+    shutil.rmtree(C.DEFAULT_LOCAL_TMP, True)  # 删除临时目录
 
 
 
