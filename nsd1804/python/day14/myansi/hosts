@@ -1,0 +1,6 @@
+[dbservers]
+node2.tedu.cn
+
+[webservers]
+node3.tedu.cn
+node4.tedu.cn

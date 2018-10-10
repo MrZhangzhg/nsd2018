@@ -1,0 +1,64 @@
+安装基于python3的ansible
+# pip3 install ansible
+
+使用ansible
+1、在物理主机上配置名称解析
+[root@room8pc16 day14]# vim /etc/hosts
+[root@room8pc16 day14]# for i in {1..6}
+> do
+> echo -e "192.168.4.$i\tnode$i.tedu.cn\tnode$i" >> /etc/hosts
+> done
+2、收集被管端的密钥
+[root@room8pc16 day14]# ssh-keyscan 192.168.4.{2..4} node{2..4} node{2..4}.tedu.cn >> ~/.ssh/known_hosts
+3、配置ansible的工作环境
+[root@room8pc16 day14]# mkdir myansi
+[root@room8pc16 day14]# cd myansi
+[root@room8pc16 myansi]# vim ansible.cfg
+[defaults]
+inventory = hosts
+remote_user = root
+[root@room8pc16 myansi]# vim hosts
+[dbservers]
+node2.tedu.cn
+
+[webservers]
+node3.tedu.cn
+node4.tedu.cn
+4、测试到远程服务器的连通性
+[root@room8pc16 myansi]# ansible all -m ping -k
+5、执行ad-hoc命令，在webservers上安装httpd
+[root@room8pc16 myansi]# ansible webservers -m yum -a\
+                         "name=httpd state=latest" -k
+6、配置vim
+[root@room8pc16 myansi]# vim ~/.vimrc
+set ai  # 自动缩进
+set ts=4  # tab键缩进4个空格
+set et   # 将tab转换成空格
+autocmd FileType yaml setlocal sw=2 ts=2 et ai  # 如果是yaml文件才生效
+6、配置playbook，实现免密登陆
+[root@room8pc16 myansi]# ansible-doc -l | grep auth
+[root@room8pc16 myansi]# ansible-doc authorized_key
+[root@room8pc16 myansi]# vim auth_key.yml
+---
+- name: configure ssh key
+  hosts: all
+  tasks:
+    - name: upload ssh key
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+检查语法，没有问题后执行
+[root@room8pc16 myansi]# ansible-playbook --syntax-check auth_key.yml
+[root@room8pc16 myansi]# ansible-playbook auth_key.yml -k
+
+
+
+
+
+
+
+
+
+
+
