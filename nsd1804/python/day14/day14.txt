@@ -96,6 +96,68 @@ autocmd FileType yaml setlocal sw=2 ts=2 et ai  # 如果是yaml文件才生效
         enabled: yes
 [root@room8pc16 myansi]# ansible-playbook  lamp.yml
 
+https://docs.ansible.com/ansible/latest/index.html
+按ctrl+f搜索python api
+
+命名元组：基于元组，为元组的每个元素起名
+>>> from collections import namedtuple
+>>> Point = namedtuple('Point', ['x', 'y', 'z'])
+>>> a = Point(10, 20, 50)
+>>> len(a)  # a可以像普通元组一样使用
+>>> a[0]
+>>> a[1]
+>>> a[:2]
+>>> a.x   # a三个元素的下标，名称分别为x、y、z
+>>> a.y
+>>> a.z
+
+ansible模块说明
+# DataLoader用于分析yaml/json/ini文件
+from ansible.parsing.dataloader import DataLoader
+# VariableManager用于ansible的变量
+from ansible.vars.manager import VariableManager
+# InventoryManager用于管理主机清单
+from ansible.inventory.manager import InventoryManager
+# Play用于创建Playbook对象，还能自动创建任务对象
+from ansible.playbook.play import Play
+# TaskQueueManager用于管理任务队列
+from ansible.executor.task_queue_manager import TaskQueueManager
+# CallbackBase不是必须的，用于自定义输出
+from ansible.plugins.callback import CallbackBase
+# ansible.constants定义ansible使用的一些常量
+import ansible.constants as C
+
+# Options是执行ansible时传递的选项，多数都是可选项
+Options = namedtuple('Options', ['connection', 'module_path', 'forks', 'become', 'become_method', 'become_user', 'check', 'diff'])
+# connection是连接的类型：分别有local(本地执行任务)、ssh(远程执行任务)、smart(智能判断)
+# module_path，除默认的模块路径以外的、自定义的模块目录
+# forks，指定创建多少子进程
+# become，使用become执行操作，不明确提示密码
+# become_method，切换用户的方法，如su、sudo
+# become_user，切换成哪个用户
+# check，不真正执行命令，只是检查是否会有改变
+# diff，如果小文件有改动，显示改动部分
+
+passwords = dict()  # 定义各种密码，没有密码则使用空字典
+# 定义主机清单文件，sources可以使用主机配置文件路径，也可以使用逗号隔开的所有主机
+inventory = InventoryManager(loader=loader, sources='localhost,')
+inventory = InventoryManager(loader=loader, sources=['myansi/hosts'])
+
+play_source =  dict(
+        name = "Ansible Play",  # Play的名字
+        # hosts = 'localhost',    # 在哪些主机上执行命令
+        hosts = 'dbservers',
+        gather_facts = 'no',    # 不收集主机信息
+        tasks = [
+            dict(action=dict(module='yum', args='name=vsftpd state=present'), register='shell_out'),
+            # dict(action=dict(module='shell', args='ls'), register='shell_out'),
+            # dict(action=dict(module='debug', args=dict(msg='{{shell_out.stdout}}')))
+         ]
+    )
+
+
+
+
 
 
 
