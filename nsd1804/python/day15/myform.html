@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>my form</title>
+    <script>
+        function show() {
+            alert("你好啊～")
+        }
+    </script>
+</head>
+<body>
+
+<form action="">
+    <select name="course" id="">
+        <option value="linux">linux</option>
+        <option value="db">mysql</option>
+        <option value="py">python</option>
+    </select><br>
+    <textarea name="msg" cols="50" rows="10"></textarea><br>
+    <input type="submit">
+</form>
+
+<hr>
+<form action="">
+    <label>
+        <input type="checkbox" name="course" value="linux">Linux系统管理<br>
+    </label>
+    <input type="checkbox" name="course" value="py" id="pyth">
+    <label for="pyth">python</label><br>
+    <input type="submit">
+</form>
+
+
+<hr>
+<form action="">
+    <input type="hidden" name="hd" value="hide">
+    上传文件：<input type="file">
+    <input type="submit" value="上传">
+</form>
+
+<hr>
+
+<input type="button" value="欢迎" onclick="show()">
+
+
+<form action="">
+    username: <input type="text"><br>
+    password: <input type="password"><br>
+    <input type="submit">
+    <input type="reset">
+</form>
+
+<hr>
+
+<form action="" method="post">
+    你喜欢的课程是？<br>
+    <input type="checkbox" name="lesson" value="linux">Linux系统管理<br>
+    <input type="checkbox" name="lesson" value="db">mysql<br>
+    <input type="checkbox" name="lesson" value="py" checked>python<br>
+    <input type="submit">
+</form>
+
+
+<hr>
+<form action="">
+    你喜欢的课程是？ <br>
+    <input type="radio" name="course" value="linux">Linux系统管理<br>
+    <input type="radio" name="course" value="db">mysql<br>
+    <input type="radio" name="course" value="py">python<br>
+    <input type="submit">
+</form>
+
+<hr>
+<form action="">
+    username: <input type="text" placeholder="用户名" name="xm"><br>
+    password: <input type="password" placeholder="密码" name="pwd"><br>
+    xxxx: <input type="text" value="abc" maxlength="10"><br>
+    yyyy: <input type="text" value="xyz" readonly>
+    <input type="submit">
+</form>
+
+
+<hr>
+
+<form action="http://www.baidu.com/s" target="_blank" method="get">
+    百度搜索：<input type="text" name="wd">
+    <input type="submit" value="百度一下">
+</form>
+<hr>
+<form action="http://cn.bing.com/search" target="_blank">
+    必应搜索：<input type="text" name="q">
+    <input type="submit" value="必应搜索">
+</form>
+</body>
+</html>
