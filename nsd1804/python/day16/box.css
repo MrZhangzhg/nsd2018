@@ -1,0 +1,18 @@
+body, p, h1, h2, h3, h4, h5, h6{
+    margin: 0;
+}
+
+p{
+    border: 1px solid black;
+    margin: 50px;
+}
+
+.box{
+    font-variant: small-caps;
+    width: 200px;
+    height: 100px;
+    border: 1px solid black;
+    padding: 20px;
+    margin: 50px;
+}
+
