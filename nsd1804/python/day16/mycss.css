@@ -1,0 +1,32 @@
+body{
+    background: silver;
+    color: blue;
+}
+hr{
+    color: red;
+}
+p{
+    font-size: 20px;
+}
+.p2{
+    color: green;
+}
+.b2{
+    background-color: orange;
+}
+
+/* p.important表示p标签有个class属性，名字是important */
+p.important{
+    font-weight: bold;
+}
+
+/* h2, .warning 表示h2标签 和 warning类 */
+h2,.warning{
+    color: brown;
+}
+
+/* p .new 表示p标签中的内容有个元素，属于new类*/
+p .new{
+    color: purple;
+}
+
