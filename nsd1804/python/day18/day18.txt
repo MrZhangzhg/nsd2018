@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     ... ...
     'polls',
 ]
-3、配置路由URLConf，当访问http://127.0.0.1/polls/开头的网址，都交由polls应用
+3、配置路由URLConf，当访问http://127.0.0.1/polls/开头的网址，都交由polls应用。
 当用户访问一个网址时，都是找到mysite/urls.py查找使用哪个视图函数去处理。可以在该
 文件中授权将以http://127.0.0.1/polls/开头的网址，交给polls/urls.py处理
 # vim mysite/urls.py
