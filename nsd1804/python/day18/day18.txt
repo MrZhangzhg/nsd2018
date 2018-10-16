@@ -41,11 +41,45 @@ DATABASES = {
 # vim mysite/__init__.py
 import pymysql
 pymysql.install_as_MySQLdb()
+8、其他常用配置
+# vim mysite/settings.py
+ALLOWED_HOSTS = '*'
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+
+9、访问后台管理界面 http://127.0.0.1/admin
+10、生成数据库
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+11、创建管理员账号
+(djenv) [root@room8pc16 mysite]# python manage.py createsuperuser
 
 
+管理应用APP
+1、创建应用
+(djenv) [root@room8pc16 mysite]# python manage.py startapp polls
+2、将应用添加到项目中
+# vim mysite/settings.py
+INSTALLED_APPS = [
+    ... ...
+    'polls',
+]
+3、配置路由URLConf，当访问http://127.0.0.1/polls/开头的网址，都交由polls应用
+当用户访问一个网址时，都是找到mysite/urls.py查找使用哪个视图函数去处理。可以在该
+文件中授权将以http://127.0.0.1/polls/开头的网址，交给polls/urls.py处理
+# vim mysite/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
 
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^polls/', include('polls.urls')),
+]
+# vim polls/urls.py
+from django.conf.urls import url
 
+urlpatterns = [
 
+]
 
 
 
