@@ -118,8 +118,61 @@ class Choice(models.Model):
 3、生成数据库中的表
 (djenv) [root@room8pc16 mysite]# python manage.py makemigrations
 (djenv) [root@room8pc16 mysite]# python manage.py migrate
+4、分析表
+数据库中将会为Question和Choice创建polls_question和polls_choice
+polls_question表中有三个字段。我们没有手工指定主键，django自动创建一个名为
+id的字段，将它设置为主键，主键可以自动增长
+polls_choice表中有四个字段。主键与polls_question一样。class中question是
+外键，那么polls_choice表中就会出现一个question_id的外键。如果将class中的
+question改名为q，那么表中的question_id就会变为q_id
+5、将模型注册到管理后台
+# vim polls/admin.py
+from django.contrib import admin
+from .models import Question, Choice
 
+admin.site.register(Question)
+admin.site.register(Choice)
+6、访问管理后台，可以看到两个模型
+7、在后台添加问题后，每个问题都显示为Question object，解决方法如下：
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    publish_date = models.DateTimeField('date published')
 
+    def __str__(self):
+        return self.question_text
+
+django推荐书籍：http://down.51cto.com/search.php?q=django+by+example
+
+自定义管理后台
+1、后面增加显示的字段
+# vim polls/admin.py
+from django.contrib import admin
+from .models import Question, Choice
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'publish_date')
+
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ('question', 'choice_text', 'votes')
+
+# admin.site.register(Question)
+# admin.site.register(Choice)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice, ChoiceAdmin)
+2、为问题增加时间过滤器
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'publish_date')
+    list_filter = ('publish_date',)   # 增加此项
+3、为Question增加时间轴，点击时间，可以看到某个时间发布的问题
+# vim mysite/settings.py
+USE_TZ = False
+# vim /etc/my.cnf
+[mysqld]
+default-time_zone = '+08:00'
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'publish_date')
+    list_filter = ('publish_date',)
+    date_hierarchy = 'publish_date'
 
 
 
