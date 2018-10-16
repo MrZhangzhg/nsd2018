@@ -1,0 +1,62 @@
+django虚拟环境：是一组隔离资源，相当于docker容器
+
+1、创建虚拟环境
+[root@room8pc16 day17]# python3 -m venv /opt/djenv
+2、激活虚拟环境
+[root@room8pc16 day17]# source /opt/djenv/bin/activate
+3、在pycharm中修改项目解释器
+File -> Settings -> Project Interpreter -> 点击齿轮，add local ->
+existing environment -> 找到/opt/djenv/bin/python
+4、在虚拟环境中安装django
+(djenv) [root@room8pc16 day17]# pip install django==1.11.6
+
+管理django项目
+1、创建项目
+(djenv) [root@room8pc16 day18]# django-admin startproject mysite
+(djenv) [root@room8pc16 day18]# cd mysite/
+2、在pycharm中配置django
+file->settings->languages&frame works->Django
+3、django项目最终应该放到apahce/nginx服务器上，对外提供服务。在开发过程中，
+为了方便，django提供了一个内建的服务器。
+4、启动内建服务器，0:80是0.0.0.0:80的简写
+(djenv) [root@room8pc16 mysite]# python manage.py runserver 0:80
+访问http://127.0.0.1/可以看到缺省页面
+5、在mariadb中为django项目创建数据库
+[root@room8pc16 mysite]# mysql -uroot -ptedu.cn
+MariaDB [(none)]> CREATE DATABASE 1804dj DEFAULT CHARSET utf8;
+6、修改数据库设置
+# vim mysite/settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '1804dj',
+        'USER': 'root',
+        'PASSWORD': 'tedu.cn',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+7、配置pymysql模块
+(djenv) [root@room8pc16 mysite]# pip install pymysql
+# vim mysite/__init__.py
+import pymysql
+pymysql.install_as_MySQLdb()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
