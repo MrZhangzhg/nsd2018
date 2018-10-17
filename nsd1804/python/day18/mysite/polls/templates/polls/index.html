@@ -6,6 +6,16 @@
 </head>
 <body>
 {# questions是django函数传过来的变量名 #}
-{{ questions }}
+{#{{ questions }}#}
+<ul>
+    {% for q in questions %}
+        <li>
+{#            <a href="http://127.0.0.1/polls/{{ q.id }}">#}
+            <a href="{% url 'detail' question_id=q.id %}">
+                {{ q.question_text }}
+            </a>
+            {{ q.publish_date }}</li>
+    {% endfor %}
+</ul>
 </body>
 </html>

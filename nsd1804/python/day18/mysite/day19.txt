@@ -104,7 +104,7 @@ def index(request):
 点击后进入该问题的详情页
 2、1号问题的详情页是http://127.0.0.1/polls/1/，n号问题的详情页是http://127.0.0.1/polls/n/
 这个页面包含一个表单。表单有问题，有问题所有的选项，用户可以选择，然后提交。
-提交的数据发给http://127.0.0.1/polls/votes/，该URL对应一个函数，用于写数据库
+提交的数据发给http://127.0.0.1/polls/1/votes/，该URL对应一个函数，用于写数据库
 3、1号问题的投票结果是http://127.0.0.1/polls/1/result/。这个页面中显示问题，
 以及问题每个选项得到了多少票
 
@@ -138,12 +138,41 @@ def detail(request, question_id):
 </body>
 </html>
 
+编写投票结果
+1、设计URL
+url(r'(?P<question_id>\d+)/result/$', views.result, name='result'),
+2、编写视图函数
+def result(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    return render(request, 'polls/result.html', {'question': question})
+3、编写html模板文件result.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票结果</title>
+</head>
+<body>
+{{ question }}
+</body>
+</html>
 
-
-
-
-
-
+完善首页模板
+1、模板中使用变量，表示符号为{{}}，也可以使用循环、判断。循环语法是：
+{% for i in xxx %}
+{% endfor %}
+2、在变量和其他语法的外面字符，是直接显示在网页中的
+3、修改index.html，body元素中改为以下内容
+<ul>
+    {% for q in questions %}
+        <li>
+{#            <a href="http://127.0.0.1/polls/{{ q.id }}">#}
+            <a href="{% url 'detail' question_id=q.id %}">
+                {{ q.question_text }}
+            </a>
+            {{ q.publish_date }}</li>
+    {% endfor %}
+</ul>
 
 
 
