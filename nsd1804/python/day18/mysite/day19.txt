@@ -1,0 +1,39 @@
+使用django api学习如何操作数据库
+1、进入django python shell
+[root@room8pc16 mysite]# source /opt/djenv/bin/activate
+(djenv) [root@room8pc16 mysite]# python manage.py shell
+2、导入模型
+>>> from polls.models import Question, Choice
+3、django为每个class都建立了一个管理器，叫objects，可以通过objects的各个方法实现
+对数库表的增删改查
+获取所有的问题：
+>>> Question.objects.all()
+4、导入模块。创建Question实例时，有一个DateTimeField，需要用到时间
+>>> from django.utils import timezone
+5、创建实例，方法一：
+>>> q1 = Question(question_text='你那里气温多少度？', publish_date=timezone.now())
+>>> q1.save()
+6、创建实例，方法二：通过管理器
+>>> q2 = Question.objects.create(question_text='秋天去哪赏红叶？', publish_date=timezone.now())
+7、使用同样的方法，也可以创建Choice实例
+>>> c1 = Choice(choice_text='18', question=q1)
+>>> c1.save()
+8、因为两个表有外键约束关系，所以可以通过一个类实例查看到另一个类对应的信息
+Question可以有很多个Choice，django就为Question创建了一个choice_set
+>>> q1.choice_set.all()
+同样的，通过选项，也可以获得它是谁的选项
+>>> c1.question
+
+
+
+
+
+
+
+
+
+
+
+
+
+
