@@ -23,9 +23,79 @@ Question可以有很多个Choice，django就为Question创建了一个choice_set
 >>> q1.choice_set.all()
 同样的，通过选项，也可以获得它是谁的选项
 >>> c1.question
+9、访问实例的属性
+>>> q1.question_text
+>>> q1.publish_date
+>>> q1.id
+10、通过属性值的修改，对数据库实现update操作
+>>> q1.question_text = '你所在城市的气温是多少度？'
+>>> q1.save()
+11、通过问题创建选项
+# 获取一个问题的实例
+>>> q1 = Question.objects.get(question_text='你所在城市的气温是多少度？')
+>>> q1.choice_set.create(choice_text="25")  # 创建choice
+>>> q1.choice_set.all()   # 查看结果
 
 
+查询：
+1、可以通过管理器的all方法得到全部数据，它是由全部实例构成的一个集合
+>>> Question.objects.all()
+2、通过get方法。要求只能返回一个值，否则报错，该值是class的实例
+>>> Question.objects.get(id=1)
+>>> Question.objects.get(question_text='你所在城市的气温是多少度？')
+# 获得2018年所有的问题，报错
+>>> Question.objects.get(publish_date__year=2018)
+3、通过filter获取多个值，构成查询集合
+>>> Question.objects.filter(publish_date__month=10)
+>>> Question.objects.filter(publish_date__month=9)
+4、排序，得到的结果也是查询集合
+>>> Question.objects.order_by('publish_date')
+>>> Question.objects.order_by('-publish_date')
+5、通过问题获取所有选项
+>>> q1.choice_set.all()  # 返回该问题对应的所有的选项集合
 
+
+为模型创建方法
+1、为Question增加方法，判断该问题是不是一周内发布的
+# vim polls/models.py  # Question修改为以下内容
+from django.db import models
+from datetime import timedelta
+from django.utils import timezone
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    publish_date = models.DateTimeField('date published')
+
+    def __str__(self):
+        return self.question_text
+
+    def was_pub_recently(self):
+        return self.publish_date > timezone.now() - timedelta(days=7)
+
+为polls主页编写视图函数
+1、修改视图
+# vim polls/views.py
+from django.shortcuts import render, HttpResponse
+from .models import Question
+
+def index(request):
+    questions = Question.objects.all()  # 获取所有的问题
+    # render用于向用户返回一个网页(模板)，字典是传给网页的数据
+    return render(request, 'polls/index.html', {'questions': questions})
+2、创建模板目录。应用的模板目录默认叫templates
+[root@room8pc16 mysite]# mkdir -p polls/templates/polls/
+3、创建模板文件
+[root@room8pc16 mysite]# vim polls/templates/polls/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>polls主页</title>
+</head>
+<body>
+{{ questions }}
+</body>
+</html>
 
 
 
