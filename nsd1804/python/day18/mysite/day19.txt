@@ -20,7 +20,7 @@
 >>> c1.save()
 8、因为两个表有外键约束关系，所以可以通过一个类实例查看到另一个类对应的信息
 Question可以有很多个Choice，django就为Question创建了一个choice_set
->>> q1.choice_set.all()
+>>> q1.choice_set.all()   # q1.choice_set相当于是固定了问题的Choise.objects
 同样的，通过选项，也可以获得它是谁的选项
 >>> c1.question
 9、访问实例的属性
@@ -96,6 +96,49 @@ def index(request):
 {{ questions }}
 </body>
 </html>
+4、访问http://127.0.0.1/polls/可以看到所有的问题了
+
+
+页面规划：
+1、http://127.0.0.1/polls/是投票首页，显示有哪些问题。每个问题是个超链接，
+点击后进入该问题的详情页
+2、1号问题的详情页是http://127.0.0.1/polls/1/，n号问题的详情页是http://127.0.0.1/polls/n/
+这个页面包含一个表单。表单有问题，有问题所有的选项，用户可以选择，然后提交。
+提交的数据发给http://127.0.0.1/polls/votes/，该URL对应一个函数，用于写数据库
+3、1号问题的投票结果是http://127.0.0.1/polls/1/result/。这个页面中显示问题，
+以及问题每个选项得到了多少票
+
+编写视图函数
+1、为问题详情页设置URL
+# vim polls/urls.py
+urlpatterns = [
+    ... ...
+    url(r'(?P<question_id>\d+)/$', views.detail, name='detail'),
+]
+(?P<question_id>\d+) -> \d+表示至少一个数字 -> (\d+)将数字保存到一个分组
+?P<question_id>表示将(\d+)这个分组的内容保存到一个名为question_id的变量中，
+将该变量作为views.detail函数的参数
+2、为问题详情页编写视图函数
+from django.shortcuts import render, HttpResponse, get_object_or_404
+
+def detail(request, question_id):
+    # question = Question.objects.get(id=question_id)
+    question = get_object_or_404(Question, id=question_id)
+    return render(request, 'polls/detail.html', {'question': question})
+3、为问题详情页编写html模板
+# vim polls/templates/polls/detail.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票详情页</title>
+</head>
+<body>
+{{ question }}
+</body>
+</html>
+
+
 
 
 
