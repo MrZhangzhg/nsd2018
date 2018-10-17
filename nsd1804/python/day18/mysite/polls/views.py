@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from .models import Question
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Question, Choice
 
 # request必须提供，表示用户的请求
 # def index(request):
@@ -18,4 +18,9 @@ def result(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     return render(request, 'polls/result.html', {'question': question})
 
-
+def vote(request, question_id):
+    choice_id = request.POST.get('c_id')
+    c = get_object_or_404(Choice, id=choice_id)
+    c.votes += 1
+    c.save()
+    return redirect('result', question_id=question_id)

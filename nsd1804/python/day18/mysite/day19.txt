@@ -104,7 +104,7 @@ def index(request):
 点击后进入该问题的详情页
 2、1号问题的详情页是http://127.0.0.1/polls/1/，n号问题的详情页是http://127.0.0.1/polls/n/
 这个页面包含一个表单。表单有问题，有问题所有的选项，用户可以选择，然后提交。
-提交的数据发给http://127.0.0.1/polls/1/votes/，该URL对应一个函数，用于写数据库
+提交的数据发给http://127.0.0.1/polls/1/vote/，该URL对应一个函数，用于写数据库
 3、1号问题的投票结果是http://127.0.0.1/polls/1/result/。这个页面中显示问题，
 以及问题每个选项得到了多少票
 
@@ -173,6 +173,59 @@ def result(request, question_id):
             {{ q.publish_date }}</li>
     {% endfor %}
 </ul>
+
+
+完善结果页面
+将result.html的body元素，改为以下内容：
+<table border="1px">
+    <tr>
+        <td colspan="2">{{ question.question_text }}</td>
+    </tr>
+    {% for c in question.choice_set.all %}
+        <tr>
+            <td>{{ c.choice_text }}</td>
+            <td>票数：{{ c.votes }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+完善detail.html页面
+1、该页面有投票功能，投票时将数据发给http://127.0.0.1/polls/n/vote/
+准备URL：
+url(r'(?P<question_id>\d+)/vote/$', views.vote, name='vote'),
+2、表单在提交时，CSRF报错（安全选项）。将CSRF功能关闭
+# vim mysite/settings.py
+MIDDLEWARE = [
+    ... ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ... ...
+]
+3、修改detail.html的body元素为以下内容：
+<form action="{% url 'vote' question_id=question.id %}" method="post">
+    <p>{{ question.question_text }}</p>
+    {% for c in question.choice_set.all %}
+        <label>
+            <input type="radio" name="c_id" value="{{ c.id }}">{{ c.choice_text }}
+        </label>
+    {% endfor %}
+    <input type="submit" value="提交">
+</form>
+4、编写vote函数
+def vote(request, question_id):
+    choice_id = request.POST.get('c_id')
+    c = get_object_or_404(Choice, id=choice_id)
+    c.votes += 1
+    c.save()
+    return redirect('result', question_id=question_id)
+
+
+为detail.html和result.html加上返回到主页的链接
+<a href="{% url 'index' %}">返回首页</a>
+
+
+
+
+
 
 
 

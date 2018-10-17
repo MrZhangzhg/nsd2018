@@ -5,6 +5,16 @@
     <title>投票详情页</title>
 </head>
 <body>
-{{ question }}
+{#{{ question }}#}
+<form action="{% url 'vote' question_id=question.id %}" method="post">
+    <p>{{ question.question_text }}</p>
+    {% for c in question.choice_set.all %}
+        <label>
+            <input type="radio" name="c_id" value="{{ c.id }}">{{ c.choice_text }}
+        </label>
+    {% endfor %}
+    <input type="submit" value="提交">
+</form>
+<a href="{% url 'index' %}">返回首页</a>
 </body>
 </html>
