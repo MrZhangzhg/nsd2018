@@ -1,0 +1,76 @@
+1、创建项目
+(djenv) [root@room8pc16 day20]# cd /tmp/
+(djenv) [root@room8pc16 tmp]# django-admin startproject mysite
+2、为项目创建数据库
+MariaDB [(none)]> CREATE DATABASE dj1804 DEFAULT CHARSET utf8;
+3、修改配置 settings.py
+ALLOWED_HOSTS = '*'
+MIDDLEWARE = [
+    ... ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ... ...
+]
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dj1804',
+        'USER': 'root',
+        'PASSWORD': 'tedu.cn',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False
+4、配置mysql模块，修改mysite/__init__.py
+import pymysql
+pymysql.install_as_MySQLdb()
+5、创建应用
+(djenv) [root@room8pc16 mysite]# python manage.py startapp myapp
+6、添加应用到项目 settings.py
+INSTALLED_APPS = [
+    ... ...
+    'myapp',
+]
+7、生成数据库
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+8、创建管理员用户
+(djenv) [root@room8pc16 mysite]# python manage.py createsuperuser
+9、授权访问127.0.0.1/myapp/开头的网址都交给myapp处理
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^myapp/', include('myapp.urls')),
+]
+10、编写myapp/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+
+]
+11、测试URL
+urlpatterns = [
+    url(r'^hello', views.hello, name='hello'),
+]
+# vim views.py
+from django.shortcuts import render, HttpResponse
+
+def hello(request):
+    return HttpResponse('<h1>Hello World!</h1>')
+访问http://127.0.0.1/myapp/hello开头的都匹配，如http://127.0.0.1/myapp/helloabc
+
+
+
+
+
+
+
+
+
+
+
