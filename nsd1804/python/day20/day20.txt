@@ -211,10 +211,36 @@ def mobasn(request):
 {% endfor %}
 </body>
 
+过滤：
+1、严格匹配
+>>> Message.objects.filter(msg="本周是大家在达内学习的最后一周了。")
+>>> Message.objects.filter(msg__exact="本周是大家在达内学的最后一周了。")
+2、不区分大小写
+>>> Message.objects.filter(msg__iexact="本周是大家在达内学的最后一周了。")
+3、包含
+>>> Message.objects.filter(msg__contains="达内")
+4、不区分大小写的包含
+>>> Message.objects.filter(msg__icontains="达内")
+5、正则过滤
+>>> Message.objects.filter(msg__regex="达内")
+
+双下划线是各种属性，比如字符串变量astr有startswith方法，在django中的写法是
+astr__startswith=""
+>>> Message.objects.filter(msg__startswith="asd")
+datetime对象的year属性，使用句点表示：
+>>> from datetime import datetime
+>>> t1 = datetime.now()
+>>> t1.year
+在django中，属性使用双下划线
+>>> Message.objects.filter(pub_date__year=2018)
+
+排除：满足条件的排除掉
+>>> Message.objects.exclude(msg__endswith="kl")
+
+删除：
+>>> m1 = Message.objects.all()[1]
+>>> m1.delete()
 
 
-
-
-
-
+https://yiyibooks.cn/
 
