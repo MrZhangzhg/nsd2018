@@ -1,0 +1,17 @@
+在django中添加bootstrap
+1、将bootstrap放到polls应用目录的static目录下
+2、在模板文件中引入boostrap
+（1）在html的顶部加上以下内容：
+{% load staticfiles %}
+（2）html的head元素中加入以下内容：
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+（3）html的body元素底部加上以下以内容：
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{%  static 'js/bootstrap.min.js' %}"></script>
+
+3、其他样式，可以像讲BOOSTRAP时一样使用
+
+
+
+
