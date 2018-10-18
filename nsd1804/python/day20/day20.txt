@@ -64,9 +64,72 @@ def hello(request):
     return HttpResponse('<h1>Hello World!</h1>')
 访问http://127.0.0.1/myapp/hello开头的都匹配，如http://127.0.0.1/myapp/helloabc
 
+11、方法测试。WEB的基础方法是GET，没有指定方法，都是get
+页面下方显示所有的留言，上方是个文本框，用户可以提交留言
+(1)创建模型：models.py
+from django.db import models
 
+class Message(models.Model):
+    msg = models.CharField(max_length=200)
+    # auto_now_add表示创建实例时，自动填充时间字段
+    pub_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.msg
 
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+(2)创建URL
+urlpatterns = [
+    url(r'^hello', views.hello, name='hello'),
+    url(r'^message/$', views.message, name='message'),
+]
+(3)创建message函数  views.py增以下内容
+from .models import Message
+def message(request):
+    msgs = Message.objects.all()
+
+    return render(request, 'message.html', {'msgs': msgs})
+(4)创建模板
+(djenv) [root@room8pc16 mysite]# mkdir myapp/templates
+(djenv) [root@room8pc16 mysite]# vim myapp/templates/message.html
+body元素中加入以下内容（如果msgs非空才显示）：
+{% if msgs %}
+    {{ msgs }}
+{% endif %}
+继续完善模板，加入表单，能够提交数据。body元素中改为以下格式：
+# form表单的action为空，表示提交给自己
+<form action="" method="post">
+    <textarea name="liuyan" id="" cols="80" rows="10"></textarea><br>
+    <input type="submit" value="提交">
+</form>
+<hr>
+{% if msgs %}
+    {{ msgs }}
+{% endif %}
+(5)完善message函数
+def message(request):
+    if request.method == 'POST':
+        msg = request.POST.get('liuyan')
+        m = Message(msg=msg)
+        m.save()
+
+    msgs = Message.objects.all()
+
+    return render(request, 'message.html', {'msgs': msgs})
+(6)把message.html中留言判断的部分完善
+{% if msgs %}
+    {% for msg in msgs %}
+        <p>{{ msg.msg }} {{ msg.pub_date }}</p>
+    {% endfor %}
+{% endif %}
+(7)提交数据后，每次刷新web页面都会重复提交，导致大量的重复留言。解决办法是修改
+视图函数message.py的判断为以下内容：
+    if request.method == 'POST':
+        msg = request.POST.get('liuyan')
+        Message.objects.get_or_create(msg=msg)
+        # m = Message(msg=msg)
+        # m.save()
 
 
 
