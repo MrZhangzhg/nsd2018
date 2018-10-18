@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言</title>
+</head>
+<body>
+<form action="" method="post">
+    <textarea name="liuyan" id="" cols="80" rows="10"></textarea><br>
+    <input type="submit" value="提交">
+</form>
+
+<hr>
+{% if msgs %}
+    {% for msg in msgs %}
+        <p>{{ msg.msg }} {{ msg.pub_date }}</p>
+    {% endfor %}
+{% endif %}
+</body>
+</html>

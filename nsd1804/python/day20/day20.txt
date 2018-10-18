@@ -131,6 +131,54 @@ def message(request):
         # m = Message(msg=msg)
         # m.save()
 
+模拟登陆：
+1、http://127.0.0.1/myapp/protected/是受保护页面，如果没有登陆直接访这个页面
+则跳转到http://127.0.0.1/myapp/home，显示登陆页
+2、在登陆的时候，使用http://127.0.0.1/myapp/login/进行判断，如果用户名和密码
+正确则跳转到http://127.0.0.1/myapp/protected/
+3、受保护页面名为protect.html，登陆页名为home.html
+# vim protect.html
+<body>
+未登陆不能访问。
+</body>
+# vim home.html
+<body>
+<form action="{% url 'login' %}" method="post">
+    用户名：<input type="text" name="username"><br>
+    密码：<input type="password" name="password"><br>
+    <input type="submit" value="登陆">
+</form>
+</body>
+4、编写URL映射
+url(r'^home/$', views.home, name='home'),
+url(r'^login/$', views.login, name='login'),
+url(r'^protected/$', views.protected, name='protected'),
+5、编写函数
+def home(request):
+    return render(request, 'home.html')
+
+def login(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    if username == 'bob' and password == '123456':
+        request.session['IS_LOGIN'] = True
+        return redirect('protected')
+    return redirect('home')
+
+def protected(request):
+    is_login = request.session.get('IS_LOGIN', False)
+    if is_login:
+        return render(request, 'protect.html')
+    return redirect('home')
+6、测试
+访问http://127.0.0.1/myapp/protected/将被重定向到http://127.0.0.1/myapp/home
+在home页填上不正确的用户名和密码，仍会停留在当前页面，如果填对了，则显示正确的
+protect.html页面
+
+
+
+
+
 
 
 
