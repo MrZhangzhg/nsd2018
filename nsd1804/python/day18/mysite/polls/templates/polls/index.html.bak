@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>polls主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container h4">
+    {# questions是django函数传过来的变量名 #}
+    {#{{ questions }}#}
+    <ul>
+        {% for q in questions %}
+            <li>
+    {#            <a href="http://127.0.0.1/polls/{{ q.id }}">#}
+                <a href="{% url 'detail' question_id=q.id %}">
+                    {{ q.question_text }}
+                </a>
+                {{ q.publish_date }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{%  static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>

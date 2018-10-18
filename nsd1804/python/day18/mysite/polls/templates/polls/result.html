@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>投票结果</title>
-</head>
-<body>
-{#{{ question }}#}
-<table border="1px">
-    <tr>
-        <td colspan="2">{{ question.question_text }}</td>
-    </tr>
-    {% for c in question.choice_set.all %}
-        <tr>
-            <td>{{ c.choice_text }}</td>
-            <td>票数：{{ c.votes }}</td>
+{% extends 'base.html' %}
+{% block title %}投票结果{% endblock %}
+{% block content %}
+    <table class="table table-striped table-hover">
+        <tr class="info">
+            <td colspan="2">{{ question.question_text }}</td>
         </tr>
-    {% endfor %}
-</table>
-<a href="{% url 'index' %}">返回首页</a>
-</body>
-</html>
+        {% for c in question.choice_set.all %}
+            <tr>
+                <td>{{ c.choice_text }}</td>
+                <td>票数：{{ c.votes }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'index' %}">返回首页</a>
+{% endblock %}

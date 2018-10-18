@@ -9,8 +9,38 @@
 （3）html的body元素底部加上以下以内容：
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{%  static 'js/bootstrap.min.js' %}"></script>
-
 3、其他样式，可以像讲BOOSTRAP时一样使用
+
+模板继承
+1、当很多页面具有相似的风格时，可以制作一个基础页面，把相似的内容放到里边。
+其他页面使用基础页面进行扩展
+2、在templates下创建base.html，把基础结构放到base.thml中
+[root@room8pc16 mysite]# cp polls/templates/polls/index.html\
+                            polls/templates/base.html
+修改base.html为以下结构：
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container h4">
+    {% block content %}{% endblock %}
+</div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{%  static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+
+将其他页面修改，使其继承base.html
+
+
+
+
 
 
 
