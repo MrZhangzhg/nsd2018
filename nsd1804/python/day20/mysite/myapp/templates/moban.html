@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板</title>
+</head>
+<body>
+{{mystr}}
+<hr>
+{{ mylist }}
+<hr>
+{% for name in mylist %}
+    name: <b>{{ name }}</b>
+{% endfor %}
+<hr>
+{{ mylist.1 }}
+<hr>
+{{ mynum }}
+<hr>
+{{ mydict }}
+<hr>
+{{ mydict.bob }}
+<hr>
+{% for name, age in mydict.items %}
+    {{ name }}: {{ age }}
+{% endfor %}
+</body>
+</html>

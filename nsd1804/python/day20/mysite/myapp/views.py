@@ -1,6 +1,14 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Message
 
+def moban(request):
+    astr = 'hello world!'
+    alist = ['zhansan', 'lisi', 'wangwu', 'zhaoliu']
+    number = 100
+    adict = {'bob': 23, 'alice': 20}
+    context = {'mystr': astr, 'mylist': alist, 'mynum': number, 'mydict': adict}
+    return render(request, 'moban.html', context)
+
 def home(request):
     return render(request, 'home.html')
 

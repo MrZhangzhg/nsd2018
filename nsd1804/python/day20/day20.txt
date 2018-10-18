@@ -176,7 +176,40 @@ def protected(request):
 protect.html页面
 
 
-
+使用模板
+1、新建url
+url(r'^moban/$', views.moban, name='moban'),
+2、创建视图函数
+def mobasn(request):
+    astr = 'hello world!'
+    alist = ['zhansan', 'lisi', 'wangwu', 'zhaoliu']
+    number = 100
+    adict = {'bob': 23, 'alice': 20}
+    context = {'mystr': astr, 'mylist': alist, 'mynum': number, 'mydict': adict}
+    return render(request, 'moban.html', context)
+3、创建模板
+# vim moban.html
+<body>
+{{mystr}}
+<hr>
+{{ mylist }}
+<hr>
+{% for name in mylist %}
+    name: <b>{{ name }}</b>
+{% endfor %}
+<hr>
+{{ mylist.1 }}
+<hr>
+{{ mynum }}
+<hr>
+{{ mydict }}
+<hr>
+{{ mydict.bob }}
+<hr>
+{% for name, age in mydict.items %}
+    {{ name }}: {{ age }}
+{% endfor %}
+</body>
 
 
 
