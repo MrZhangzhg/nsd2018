@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block title %}首页{% endblock %}
 {% block content %}
-内容
+<div class="row" style="margin: 20px 0;">
+    <div class="col-md-3 text-center">
+        <a href="{% url 'mainpage' %}" target="_blank"><img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>主机信息</a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="{% url 'addhosts' %}" target="_blank"><img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>添加主机</a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="{% url 'addmodules' %}" target="_blank"><img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>添加模块</a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="{% url 'tasks' %}" target="_blank"><img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>执行任务</a>
+    </div>
+</div>
 {% endblock %}
