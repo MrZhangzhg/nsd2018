@@ -1,0 +1,93 @@
+1、激活django虚拟环境
+2、创建项目myansible
+(djenv) [root@room8pc16 ansible_project]# django-admin startproject myansible
+3、在虚拟环境中安装ansible
+(djenv) [root@room8pc16 ansible_project]# pip install ansible
+4、如果不能使用默认的sqlite数据库，需要重新编译python3
+# yum install -y sqlite-devel
+# ./configure --prefix=/usr/local
+# make && make install
+5、创建应用
+(djenv) [root@room8pc16 myansible]# python manage.py startapp webansi
+6、修改配置  settings.py
+ALLOWED_HOSTS = '*'
+INSTALLED_APPS = [
+    ... ...
+    'webansi',
+]
+MIDDLEWARE = [
+    ... ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ... ...
+]
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False
+
+
+制作主页http://127.0.0.1/
+1、定义URL  myansible/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+from webansi import views
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index, name='index'),
+    url(r'^webansi/', include('webansi.urls')),
+]
+2、编写webansi的urls.py
+from django.conf.urls import url
+urlpatterns = [
+]
+3、编写主页的视图函数  webansi/views.py
+from django.shortcuts import render
+def index(request):
+    return render(request, 'index.html')
+4、编写模板文件
+将boostrap那个static目录拷贝到webansi下
+(djenv) [root@room8pc16 myansible]# cp -r ../../day18/mysite/polls/static/ webansi/
+在static下创建imgs目录，拷贝相关的图片到该目录下
+(djenv) [root@room8pc16 myansible]# cp -r /var/ftp/nsd2018/nsd1803/python/ansible_project/myansible/webansi/static/imgs/ webansi/static/
+制作基础模板
+(djenv) [root@room8pc16 myansible]# mkdir webansi/templates
+(djenv) [root@room8pc16 myansible]# vim webansi/templates/base.html
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .banner{
+            background-image: url("{% static 'imgs/banner.jpg' %}");
+            background-size: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container h4">
+    <div class="banner"></div>
+    <div class="main">{% block content %}{% endblock %}</div>
+    <div class="modal-footer text-center">
+        <a href="http://linux.tedu.cn/" target="_blank">达内云计算学院</a> 客服电话：400-111-8989 邮箱：admin@tedu.cn
+    </div>
+</div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+创建index.html首页
+# index.html
+{% extends 'base.html' %}
+{% block title %}首页{% endblock %}
+{% block content %}
+内容
+{% endblock %}
+
+
+
+
+
