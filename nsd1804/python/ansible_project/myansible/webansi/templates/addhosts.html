@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}添加主机(组){% endblock %}
+{% block content %}
+    <div style="margin: 10px 0;">
+        <form action="" role="form" method="post" class="form-inline">
+            <div class="form-group">
+                <label>主机名：<input type="text" class="form-control" name="host"></label>
+            </div>
+            <div class="form-group">
+                <label>ip地址：<input type="text" class="form-control" name="ip"></label>
+            </div>
+            <div class="form-group">
+                <label>主机组：<input type="text" class="form-control" name="group"></label>
+            </div>
+            <input type="submit" value="提交" class="btn btn-primary">
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="info">
+            <th>主机组</th>
+            <th>主机名</th>
+        </tr>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.group_name }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for host in group.host_set.all %}
+                            <li>{{ host.hostname }}: {{ host.ipaddr }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

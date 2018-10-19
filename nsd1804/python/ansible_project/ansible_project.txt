@@ -282,6 +282,19 @@ def mainpage(request):
 4、访问验证 http://127.0.0.1:8000/webansi/
 这个页面是固定的，为了能及时的反映实际情况，可以把第2步的“生成web页面”写到计划任务
 
+制作“添加主机页”
+1、页面上方是添加主机信息部分，下面是主机组和所有主机组成的表格
+2、添加主机时，执行的action是空，表示自己处理
+3、编写addhosts函数
+def addhosts(request):
+    groups = HostGroup.objects.all()
+    return render(request, 'addhosts.html', {'groups': groups})
+4、制作addhosts.html
+
+
+
+
+
 
 
 
