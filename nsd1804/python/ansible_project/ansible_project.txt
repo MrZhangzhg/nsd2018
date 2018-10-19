@@ -71,7 +71,7 @@ def index(request):
 <div class="container h4">
     <div class="banner"></div>
     <div class="main">{% block content %}{% endblock %}</div>
-    <div class="modal-footer text-center">
+    <div class="footer text-center">
         <a href="http://linux.tedu.cn/" target="_blank">达内云计算学院</a> 客服电话：400-111-8989 邮箱：admin@tedu.cn
     </div>
 </div>
@@ -86,6 +86,41 @@ def index(request):
 {% block content %}
 内容
 {% endblock %}
+
+
+设计内页基础框架
+1、设计内页的URL   webansi/urls.py
+from django.conf.urls import url
+from webansi import views
+
+urlpatterns = [
+    url(r'^$', views.mainpage, name='mainpage'),
+    url(r'^addhosts/$', views.addhosts, name='addhosts'),
+    url(r'^addmodules/$', views.addmodules, name='addmodules'),
+    url(r'^tasks/$', views.tasks, name='tasks'),
+]
+2、创建视图函数
+from django.shortcuts import render, HttpResponse
+
+def index(request):
+    return render(request, 'index.html')
+
+def mainpage(request):
+    return HttpResponse('<h1>main page</h1>')
+
+def addhosts(request):
+    return HttpResponse('<h1>add hosts</h1>')
+
+def addmodules(request):
+    return HttpResponse('<h1>add modules</h1>')
+
+def tasks(request):
+    return HttpResponse('<h1>tasks</h1>')
+
+
+
+
+
 
 
 
