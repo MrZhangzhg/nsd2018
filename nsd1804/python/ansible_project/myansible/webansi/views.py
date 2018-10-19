@@ -4,7 +4,7 @@ def index(request):
     return render(request, 'index.html')
 
 def mainpage(request):
-    return HttpResponse('<h1>main page</h1>')
+    return render(request, 'mainpage.html')
 
 def addhosts(request):
     return HttpResponse('<h1>add hosts</h1>')

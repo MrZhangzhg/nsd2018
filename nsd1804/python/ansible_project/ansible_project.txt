@@ -260,8 +260,6 @@ if __name__ == '__main__':
     print(json.dumps(result))
 (djenv) [root@room8pc16 ansicfg]# ansible all -m ping -k
 
-
-
 将模型注册到后台管理界面
 # vim webansi/admin.py
 from django.contrib import admin
@@ -272,10 +270,17 @@ for item in [Host, HostGroup, AnsibleModule, ModuleArg]:
 (djenv) [root@room8pc16 myansible]# python manage.py createsuperuser
 
 
-
-
-
-
+制作主机信息页：使用ansible-cmdb模块
+1、安装
+(djenv) [root@room8pc16 ansicfg]# pip3 install ansible-cmdb
+2、生成web页面
+(djenv) [root@room8pc16 ansicfg]# ansible all -m setup --tree out/
+(djenv) [root@room8pc16 ansicfg]# ansible-cmdb out/ > ../webansi/templates/mainpage.html
+3、修改视图函数
+def mainpage(request):
+    return render(request, 'mainpage.html')
+4、访问验证 http://127.0.0.1:8000/webansi/
+这个页面是固定的，为了能及时的反映实际情况，可以把第2步的“生成web页面”写到计划任务
 
 
 
