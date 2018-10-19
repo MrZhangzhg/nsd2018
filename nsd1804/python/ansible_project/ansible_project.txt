@@ -138,6 +138,55 @@ def tasks(request):
 </div>
 {% endblock %}
 
+添加ansible配置目录
+(djenv) [root@room8pc16 myansible]# mkdir ansicfg
+(djenv) [root@room8pc16 myansible]# vim ansicfg/ansible.cfg
+[defaults]
+inventory = dhosts.py
+remote_user = root
+主机清单采用的是动态主机清单，所以dhosts.py是python脚本，用于到数据中获取主机信息
+主机信息存储在数据库中。所以稍后编写。
+
+创建Model
+# vim webansi/models.py
+from django.db import models
+
+class HostGroup(models.Model):
+    group_name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.group_name
+
+class Host(models.Model):
+    hostname = models.CharField(max_length=50, unique=True)
+    ipaddr = models.CharField(max_length=15)
+    hostgroup = models.ForeignKey(HostGroup, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "<%s: %s>" % (self.hostname, self.ipaddr)
+
+class AnsibleModule(models.Model):
+    mod_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.mod_name
+
+class ModuleArg(models.Model):
+    arg_text = models.CharField(max_length=100)
+    mod = models.ForeignKey(AnsibleModule, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.arg_text
+在数据库中创建相应的表
+(djenv) [root@room8pc16 myansible]# python manage.py makemigrations
+(djenv) [root@room8pc16 myansible]# python manage.py migrate
+查看数据库：sqlite是文件型数据库，一个文件是一个库，没有服务
+django默认在settings.py中给数据库文件起名为db.sqlite3
+(djenv) [root@room8pc16 myansible]# sqlite3 db.sqlite3
+sqlite> .tables   # 显示所有表
+sqlite> .schema webansi_host  # 查看表结构
+
+
 
 
 
