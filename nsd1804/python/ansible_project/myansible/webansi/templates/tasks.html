@@ -25,7 +25,7 @@
                     <tr>
                         <td>
                             <div class="radio">
-                                <label><input type="radio" name="mod">{{ m.mod_name }}</label>
+                                <label><input type="radio" name="mod" value="{{ m.mod_name }}">{{ m.mod_name }}</label>
                             </div>
                         </td>
                         <td>
@@ -33,7 +33,7 @@
                                 {% for a in m.modulearg_set.all %}
                                     <li>
                                         <div class="radio">
-                                            <label><input type="radio" name="arg">{{ a.arg_text }}</label>
+                                            <label><input type="radio" name="arg" value="{{ a.arg_text }}">{{ a.arg_text }}</label>
                                         </div>
                                     </li>
                                 {% endfor %}
@@ -65,7 +65,7 @@
                     <tr>
                         <td>
                             <div class="radio">
-                                <label><input type="radio" name="mod">{{ m.mod_name }}</label>
+                                <label><input type="radio" name="mod" value="{{ m.mod_name }}">{{ m.mod_name }}</label>
                             </div>
                         </td>
                         <td>
@@ -73,7 +73,7 @@
                                 {% for a in m.modulearg_set.all %}
                                     <li>
                                         <div class="radio">
-                                            <label><input type="radio" name="arg">{{ a.arg_text }}</label>
+                                            <label><input type="radio" name="arg" value="{{ a.arg_text }}">{{ a.arg_text }}</label>
                                         </div>
                                     </li>
                                 {% endfor %}

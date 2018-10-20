@@ -415,6 +415,101 @@ def rmarg(request, arg_id):
 
 实现执行任务的功能
 1、编写tasks.html
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}执行任务{% endblock %}
+{% block content %}
+<ul class="nav nav-tabs" style="margin-top: 5px;">
+    <li class="active"><a href="#allhosts" data-toggle="tab">主机</a></li>
+    <li><a href="#allgroups" data-toggle="tab">主机组</a></li>
+</ul>
+<div class="tab-content" style="margin: 5px 0 20px 0;">
+    <div class="tab-pane fade in active" id="allhosts">
+        <form action="" method="post" role="form">
+            <div class="form-group">
+                <select name="ip" class="form-control">
+                    {% for host in hosts %}
+                        <option value="{{ host.ipaddr }}">{{ host.hostname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <table class="table table-bordered">
+                <tr class="info">
+                    <th>模块</th>
+                    <th>参数</th>
+                </tr>
+                {% for m in mods %}
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="mod" value="{{ m.mod_name }}">{{ m.mod_name }}</label>
+                            </div>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled">
+                                {% for a in m.modulearg_set.all %}
+                                    <li>
+                                        <div class="radio">
+                                            <label><input type="radio" name="arg" value="{{ a.arg_text }}">{{ a.arg_text }}</label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="text-center">
+                <input class="btn btn-primary" type="submit" value="执 行">
+            </div>
+        </form>
+    </div>
+    <div class="tab-pane fade" id="allgroups">
+        <form action="" method="post" role="form">
+            <div class="form-group">
+                <select name="group" class="form-control">
+                    {% for group in groups %}
+                        <option value="{{ group.group_name }}">{{ group.group_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <table class="table table-bordered">
+                <tr class="info">
+                    <th>模块</th>
+                    <th>参数</th>
+                </tr>
+                {% for m in mods %}
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="mod" value="{{ m.mod_name }}">{{ m.mod_name }}</label>
+                            </div>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled">
+                                {% for a in m.modulearg_set.all %}
+                                    <li>
+                                        <div class="radio">
+                                            <label><input type="radio" name="arg" value="{{ a.arg_text }}">{{ a.arg_text }}</label>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="text-center">
+                <input class="btn btn-primary" type="submit" value="执 行">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+实现执行任务的功能
+可以将第14天ansible的执行任务脚本写到函数中
 
 
 
