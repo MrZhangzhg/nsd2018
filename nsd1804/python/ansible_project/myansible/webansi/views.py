@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse
-from .models import HostGroup, AnsibleModule
+from django.shortcuts import render, HttpResponse, redirect
+from .models import HostGroup, AnsibleModule, ModuleArg
 
 def index(request):
     return render(request, 'index.html')
@@ -31,3 +31,8 @@ def addmodules(request):
 
 def tasks(request):
     return HttpResponse('<h1>tasks</h1>')
+
+def rmarg(request, arg_id):
+    a = ModuleArg.objects.get(id=arg_id)
+    a.delete()
+    return redirect('addmodules')

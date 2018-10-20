@@ -381,8 +381,37 @@ def addhosts(request):
     </table>
 {% endblock %}
 2、编写addmodules函数
+def addmodules(request):
+    if request.method == 'POST':
+        mod = request.POST.get('mod_name')
+        arg = request.POST.get('arg')
+        if mod:
+            m = AnsibleModule.objects.get_or_create(mod_name=mod)[0]
+        if arg:
+            m.modulearg_set.get_or_create(arg_text=arg)
+    mods = AnsibleModule.objects.all()
+    return render(request, 'addmodules.html', {'mods': mods})
 
+实现删除参数功能
+1、为删除参数功能添加url
+url(r'^rmarg/(?P<arg_id>\d+)/$', views.rmarg, name='rmarg'),
 
+2、修改addmodules.html，添加删除项
+<td>
+    <ul class="list-unstyled">
+        {% for arg in mod.modulearg_set.all %}
+            <li>
+                {{ arg.arg_text }}
+                <a href="{% url 'rmarg' arg_id=arg.id %}">删除</a>
+            </li>
+        {% endfor %}
+    </ul>
+</td>
+3、创建rmarg视图函数
+def rmarg(request, arg_id):
+    a = ModuleArg.objects.get(id=arg_id)
+    a.delete()
+    return redirect('addmodules')
 
 
 
