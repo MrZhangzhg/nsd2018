@@ -290,9 +290,57 @@ def addhosts(request):
     groups = HostGroup.objects.all()
     return render(request, 'addhosts.html', {'groups': groups})
 4、制作addhosts.html
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}添加主机(组){% endblock %}
+{% block content %}
+    <div style="margin: 10px 0;">
+        <form action="" role="form" method="post" class="form-inline">
+            <div class="form-group">
+                <label>主机名：<input type="text" class="form-control" name="host"></label>
+            </div>
+            <div class="form-group">
+                <label>ip地址：<input type="text" class="form-control" name="ip"></label>
+            </div>
+            <div class="form-group">
+                <label>主机组：<input type="text" class="form-control" name="group"></label>
+            </div>
+            <input type="submit" value="提交" class="btn btn-primary">
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="info">
+            <th>主机组</th>
+            <th>主机名</th>
+        </tr>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.group_name }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for host in group.host_set.all %}
+                            <li>{{ host.hostname }}: {{ host.ipaddr }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
 
 
+修改addhosts函数，如果是POST方法，则创建主机和主机组
+def addhosts(request):
+    if request.method == 'POST':
+        group = request.POST.get('group')
+        host = request.POST.get('host')
+        ip = request.POST.get('ip')
+        g = HostGroup.objects.get_or_create(group_name=group)[0]
+        g.host_set.get_or_create(hostname=host, ipaddr=ip)
 
+    groups = HostGroup.objects.all()
+    return render(request, 'addhosts.html', {'groups': groups})
 
 
 
