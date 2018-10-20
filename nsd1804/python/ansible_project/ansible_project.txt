@@ -413,6 +413,10 @@ def rmarg(request, arg_id):
     a.delete()
     return redirect('addmodules')
 
+实现执行任务的功能
+1、编写tasks.html
+
+
 
 
 

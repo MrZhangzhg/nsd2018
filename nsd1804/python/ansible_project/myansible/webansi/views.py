@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse, redirect
-from .models import HostGroup, AnsibleModule, ModuleArg
+from django.shortcuts import render, redirect
+from .models import HostGroup, AnsibleModule, ModuleArg, Host
 
 def index(request):
     return render(request, 'index.html')
@@ -22,15 +22,17 @@ def addmodules(request):
     if request.method == 'POST':
         mod = request.POST.get('mod_name')
         arg = request.POST.get('arg')
-        if mod:
+        if mod and arg:
             m = AnsibleModule.objects.get_or_create(mod_name=mod)[0]
-        if arg:
             m.modulearg_set.get_or_create(arg_text=arg)
     mods = AnsibleModule.objects.all()
     return render(request, 'addmodules.html', {'mods': mods})
 
 def tasks(request):
-    return HttpResponse('<h1>tasks</h1>')
+    hosts = Host.objects.all()
+    groups = HostGroup.objects.all()
+    mods = AnsibleModule.objects.all()
+    return render(request, 'tasks.html', {'hosts': hosts, 'groups': groups, 'mods': mods})
 
 def rmarg(request, arg_id):
     a = ModuleArg.objects.get(id=arg_id)
