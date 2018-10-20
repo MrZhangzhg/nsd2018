@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from .models import HostGroup
+from .models import HostGroup, AnsibleModule
 
 def index(request):
     return render(request, 'index.html')
@@ -19,7 +19,15 @@ def addhosts(request):
     return render(request, 'addhosts.html', {'groups': groups})
 
 def addmodules(request):
-    return HttpResponse('<h1>add modules</h1>')
+    if request.method == 'POST':
+        mod = request.POST.get('mod_name')
+        arg = request.POST.get('arg')
+        if mod:
+            m = AnsibleModule.objects.get_or_create(mod_name=mod)[0]
+        if arg:
+            m.modulearg_set.get_or_create(arg_text=arg)
+    mods = AnsibleModule.objects.all()
+    return render(request, 'addmodules.html', {'mods': mods})
 
 def tasks(request):
     return HttpResponse('<h1>tasks</h1>')

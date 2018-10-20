@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}添加模块{% endblock %}
+{% block content %}
+    <div style="margin: 10px 0;">
+        <form action="" role="form" method="post" class="form-inline">
+            <div class="form-group">
+                <label>模块：<input type="text" class="form-control" name="mod_name"></label>
+            </div>
+            <div class="form-group">
+                <label>参数：<input type="text" class="form-control" name="arg"></label>
+            </div>
+            <input type="submit" value="提交" class="btn btn-primary">
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="info">
+            <th>模块</th>
+            <th>参数</th>
+        </tr>
+        {% for mod in mods %}
+            <tr>
+                <td>{{ mod.mod_name }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for arg in mod.modulearg_set.all %}
+                            <li>{{ arg.arg_text }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
