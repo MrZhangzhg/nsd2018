@@ -21,8 +21,3 @@ if __name__ == '__main__':
     for ip in ips:
         t = threading.Thread(target=Ping(ip))
         t.start()  # target()
-    
-
-
-
-
