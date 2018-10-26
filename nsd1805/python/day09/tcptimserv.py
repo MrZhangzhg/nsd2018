@@ -12,10 +12,21 @@ class TcpTimeServ:
 
     def mainloop(self):
         while True:
-            cli_sock, cli_addr = self.serv.accept()
+            try:
+                cli_sock, cli_addr = self.serv.accept()
+            except KeyboardInterrupt:
+                print()
+                break
             pid = os.fork()
             if pid:
                 cli_sock.close()
+                while True:
+                    # 一个waitpid只能处理一个僵尸进程，多个子进程需要循环执行
+                    # waitpid优先处理僵尸进程，然后再处理非僵尸进程
+                    result = os.waitpid(-1, 1)[0]
+                    print(result)
+                    if not result:  # 如果result值为0就break
+                        break
             else:
                 self.serv.close()
                 while True:
@@ -26,6 +37,7 @@ class TcpTimeServ:
                     cli_sock.send(sdata.encode())
                 cli_sock.close()
                 exit()
+        self.serv.close()
 
 if __name__ == '__main__':
     serv = TcpTimeServ()
