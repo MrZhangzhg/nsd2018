@@ -1,0 +1,57 @@
+# yum install mariadb-server
+# systemctl start mariadb
+# systemkctl enable mariadb
+# mysqladmin password tedu.cn   # 修改root密码
+
+手工安装
+1、https://pypi.python.org搜索
+2、下载相应软件包后，解压
+3、进入解压目录，执行
+# python3 setup.py install
+
+在线安装（使用国内镜像站点）
+# mkdir ~/.pip
+# vim ~/.pip/pip.conf
+[global]
+index-url = http://pypi.douban.com/simple/
+[install]
+trusted-host=pypi.douban.com
+# pip3 install pymysql
+# pip3 install sqlalchemy
+
+
+员工数据库：发工资
+姓名、员工ID、性别、出生日期、联系方式、部门、工资日期、基本工资、奖金、总额
+
+数据库应该尽量的消除冗余
+
+所谓第一范式（1NF）是指在关系模型中，所有的域都应该是原子性的，即数据库表的每一列都是不可分割的原子数据项。
+根据1NF，联系方式应该具体拆分为：电话号码、email
+第二范式（2NF），在1NF的基础上，非码属性必须完全依赖于候选码（主键）
+可以将字段放到不同的表中，消除冗余，并且可以为每张表设置主键
+员工表：员工ID、姓名、性别、出生日期、电话号码、email、部门ID
+部门表：部门ID、部门名
+工资表：工资日期、员工ID、基本工资、奖金、总额
+第三范式（3NF）：在2NF基础上，任何非主属性不依赖于其它非主属性（在2NF基础上消除传递依赖）
+根据3NF，总额是通过基本工资和奖金算出来的，而基本工资和奖金又不是主键，所以总额不应该存在
+
+
+创建库
+[root@room8pc16 day09]# mysql -uroot -ptedu.cn
+MariaDB [(none)]> CREATE DATABASE tedu1805 DEFAULT CHARSET utf8;
+MariaDB [(none)]> USE tedu1805;
+MariaDB [tedu1805]> CREATE TABLE departments(dep_id int, dep_name varchar(20), PRIMARY KEY(dep_id));
+MariaDB [tedu1805]> CREATE TABLE employees(emp_id int, name varchar(20) NOT NULL, gender varchar(6), birth_date DATE, phone char(11) UNIQUE, email varchar(50), dep_id int, PRIMARY KEY(emp_id), FOREIGN KEY(dep_id) REFERENCES departments(dep_id));
+MariaDB [tedu1805]> CREATE TABLE salary(autoid int AUTO_INCREMENT, date date, emp_id int, basic int, awards int, PRIMARY KEY(autoid), FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
+
+
+
+
+
+
+
+
+
+
+
+
