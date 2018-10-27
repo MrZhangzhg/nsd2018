@@ -45,6 +45,10 @@ MariaDB [tedu1805]> CREATE TABLE employees(emp_id int, name varchar(20) NOT NULL
 MariaDB [tedu1805]> CREATE TABLE salary(autoid int AUTO_INCREMENT, date date, emp_id int, basic int, awards int, PRIMARY KEY(autoid), FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
 
 
+sqlalchemy应用
+1、创建数据库
+MariaDB [tedu1805]> CREATE DATABASE tarena1805 DEFAULT CHARSET utf8;
+
 
 
 
