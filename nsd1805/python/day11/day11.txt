@@ -18,6 +18,7 @@ Host: www.baidu.com
 ...   fobj.write(data)
 [root@room8pc16 day09]# eog /tmp/pic.jpg
 
+
 当一个文件的编码是非utf8时，读入后，因为系统默认采用utf8，就会导致乱码，可以打开文
 件时，指定编码。例如，文件是中文编码，可以这样打开：
 >>> with open('/tmp/netease/163.html', encoding='gbk') as fobj:
