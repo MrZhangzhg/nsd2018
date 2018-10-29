@@ -26,6 +26,137 @@ Host: www.baidu.com
 >>> data
 
 
+模拟通过浏览器访问
+1、监控日志
+[root@room8pc16 day09]# tail -f /var/log/httpd/access_log
+2、使用urllib访问
+>>> from urllib import request
+>>> html = request.urlopen('http://127.0.0.1')
+>>> data = html.read()
+观察日志的输出，发现服务器日志记录了客户端访问的时候，用的是：Python-urllib/3.6
+3、将发送请求的头部改为Firefox
+>>> url = 'http://127.0.0.1/'
+>>> header = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
+>>> r = request.Request(url, headers=header)
+>>> html = request.urlopen(r)
+>>> data = html.read()
+4、在web服务器日志中可以查看到，浏览器是Firefox
+
+
+
+quote:可以将不标准的编码，转换成url中允许的字符
+
+百度搜索'hello world!':
+https://www.baidu.com/s?wd=hello%20world!
+其中网址是https://www.baidu.com/s，?表示后面内容是传递的参数，wd是形参名字，
+hello%20world!是具体的数据
+
+搜索达内
+>>> import webbrowser
+>>> url = 'http://www.baidu.com/s?wd=' + request.quote('达内')
+>>> webbrowser.open_new_tab(url)
+
+
+异常处理
+1、http://127.0.0.1/abc不存在
+2、http://127.0.0.1/ban设置权限，禁止访问
+
+
+
+
+
+paramiko
+1、安装
+[root@room8pc16 day11]# pip3 install paramiko
+2、克隆几台服务器
+[root@room8pc16 day09]# clone-auto7
+[root@room8pc16 day09]# virsh console rh7_node2
+3、使用paramiko
+>>> import paramiko
+>>> ssh = paramiko.SSHClient()
+>>> ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+>>> ssh.connect(hostname='192.168.4.2', username='root', password='redhat')
+>>> ssh.exec_command('userdel -r bob')
+>>> ssh.close()
+4、分析执行命令后的返回值
+>>> ssh.connect(hostname='192.168.4.2', username='root', password='redhat')
+>>> result = ssh.exec_command('id bob; id alice')
+>>> type(result)
+<class 'tuple'>
+>>> len(result)
+3
+返回值有三项，都是类文件对象，分别表示输入、输出和错误
+>>> result[1].read().decode()
+>>> result[2].read().decode()
+
+
+
+通过网络开机，-i指定从自己的哪块网卡发送数据
+[root@room8pc16 day09]# ether-wake -i enp2s0 00:11:22:33:44:55
+
+
+
+
+
+
+
+#!/usr/bin/env python
+# coding: utf8
+
+import sys
+import re
+
+def configip(fname, ip_addr, if_ind):
+    content = """TYPE=Ethernet
+BOOTPROTO=none
+NAME=eth%s
+DEVICE=eth%s
+ONBOOT=yes
+IPADDR=%s
+PREFIX=24
+""" % (if_ind, if_ind, ip_addr)
+    with open(fname, 'w') as fobj:
+        fobj.write(content)
+
+def check_ip(ip_addr):   # 判断IP地址是不是X.X.X.X格式
+    m = re.match(r'(\d{1,3}\.){3}\d{1,3}$', ip_addr)
+    if not m:
+        return False
+    return True
+
+def show_menu():
+    prompt = """Configure IP Address:
+(0) eth0
+(1) eth1
+(2) eth2
+(3) eth3
+Your choice(0/1/2/3): """
+    try:
+        if_ind = raw_input(prompt).strip()[0]
+    except:
+        print 'Invalid input.'
+        sys.exit(1)
+
+    if if_ind not in '0123':
+        print 'Wrong Selection. Use 0/1/2/3'
+        sys.exit(2)
+
+    fname = '/etc/sysconfig/network-scripts/ifcfg-eth%s' % if_ind
+    ip_addr = raw_input('ip address: ').strip()
+    result = check_ip(ip_addr)
+    if not result:
+        print 'Invalid ip address'
+        sys.exit(3)
+    configip(fname, ip_addr, if_ind)
+    print '\033[32;1mConfigure ip address done. Please execute "systemctl restart NetworkManager"\033[0m'
+
+if __name__ == '__main__':
+    show_menu()
+
+
+
+
+
 
 
 
