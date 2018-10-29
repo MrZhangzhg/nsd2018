@@ -1,0 +1,30 @@
+通过telnet方式访问百度首页
+[root@room8pc16 day09]# telnet www.baidu.com 80
+GET / HTTP/1.1
+Host: www.baidu.com
+回车
+
+
+>>> from urllib import request
+>>> html = request.urlopen('http://www.baidu.com')
+>>> data = html.read()
+>>> with open('/tmp/bd.html', 'wb') as fobj:
+...   fobj.write(data)
+[root@room8pc16 day09]# firefox /tmp/bd.html &
+
+>>> html = request.urlopen('https://upload-images.jianshu.io/upload_images/5328453-e77e3c74ad049aa5.jpg')>>>
+>>> data = html.read()
+>>> with open('/tmp/pic.jpg', 'wb') as fobj:
+...   fobj.write(data)
+[root@room8pc16 day09]# eog /tmp/pic.jpg
+
+当一个文件的编码是非utf8时，读入后，因为系统默认采用utf8，就会导致乱码，可以打开文
+件时，指定编码。例如，文件是中文编码，可以这样打开：
+>>> with open('/tmp/netease/163.html', encoding='gbk') as fobj:
+>>>     data = fobj.read()
+>>> data
+
+
+
+
+
