@@ -59,8 +59,25 @@ Additional Behaviours -> check out to a sub directory
 jenkins把代码从gitlab上下载到本机的/var/lib/jenkins/workspace/目录
 Local subdirectory for repo: core_py_${web_tag}
 
-
-
+jenkins服务器从gitlab上拉取代码后，需要将其压缩、计算md5值，再把压缩包和md5值文件
+保存到web下载目录下，以便于应用服务器下载
+1、在jenkins上安装httpd
+[root@node3 ~]# yum install -y httpd
+[root@node3 ~]# systemctl start httpd
+2、创建存储目录
+/var/www/html/deploy: 用于存放版本（当前版本、上一个版本）
+/var/www/html/deploy/packages：用于存放压缩包和md5文件
+[root@node3 ~]# mkdir -p /var/www/html/deploy/packages
+[root@node3 ~]# chown -R jenkins:jenkins /var/www/html/deploy
+3、修改工程，为工程增加额外的步骤
+增加构建步骤 -> 执行shell ->
+deploy_dir=/var/www/html/deploy/packages
+cp -r core_py_${web_tag} $deploy_dir/
+rm -rf $deploy_dir/core_py_${web_tag}/.git
+cd $deploy_dir/
+tar czf core_py_${web_tag}.tar.gz core_py_${web_tag}
+rm -rf core_py_${web_tag}
+md5sum core_py_${web_tag}.tar.gz | awk '{print $1}' > core_py_${web_tag}.tar.gz.md5
 
 
 
