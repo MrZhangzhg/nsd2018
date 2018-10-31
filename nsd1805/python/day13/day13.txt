@@ -41,6 +41,25 @@ error: 不能重命名配置小节 'remote.origin' 到 'remote.old-origin'
 [root@room8pc16 core_py]# git push -u origin --all
 [root@room8pc16 core_py]# git push -u origin --tags
 
+升级jenkins
+https://jenkins.io/download/ -> RedHat/Fedora/CentOS
+# service jenkins stop
+# rpm -Uvh 新版本
+# service jenins start
+
+使用jenkins
+1、在jenkins服务器上安装git
+[root@node3 ~]# yum install -y git
+2、安装git parameter插件，以便jenkins可以识别tag
+3、在jenkins首页创建一个自由风格的软件项目
+参数化构建过程->添加参数->git parameter->name: web_tag, parameter Type: Brance or Tag
+源码管理: Git -> Repository URL: http://192.168.4.1/nsd1805/core_py.git
+Branch Specifier -> ${web_tag}
+Additional Behaviours -> check out to a sub directory
+jenkins把代码从gitlab上下载到本机的/var/lib/jenkins/workspace/目录
+Local subdirectory for repo: core_py_${web_tag}
+
+
 
 
 
