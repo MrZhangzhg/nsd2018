@@ -80,6 +80,28 @@ rm -rf core_py_${web_tag}
 md5sum core_py_${web_tag}.tar.gz | awk '{print $1}' > core_py_${web_tag}.tar.gz.md5
 
 
+jenkins发布了很多软件包，应用服务器下载的时候，需要知道哪个包是最新版本
+如果部署最新版本后，有问题，应该能够快速回滚到前一个版本。为了弄清当前版本和上一个
+版本，需要创建两个文件，live_version记录最新版本，last_version记录上一个版本
+做法：
+创建一个自由风格的项目，参数化构建过程，选择字符参数。名称：web_tag
+构建 -> 增加构建步骤 -> 执行shell脚本
+deploy_dir=/var/www/html/deploy
+cd $deploy_dir
+[ -f live_version ] && cat live_version > last_version
+echo $web_tag > live_version
+
+编写自动部署软件的python程序
+1、创建相关目录：
+/var/www/download/：存储下载的tar包
+/var/www/deploy/：存储解压的目录
+/var/www/html/nsd1805：是一个指向某一版本的链接
+[root@room8pc16 day13]# mkdir /var/www/{download,deploy}
+2、检查是否有新版本，如果有则下载
+3、校验软件，检查下载的文件是否完整
+4、部署：解压、创建到解压目录的链接
+
+
 
 
 
