@@ -1,0 +1,57 @@
+Tomcat: 发布java程序(War包）
+
+一、准备jenkins服务器
+1、把虚拟机第一块网卡的连接方式改为NAT，如果不成功，需要把“虚拟系统管理器”网络的
+default连接激活
+2、启动虚拟机后，把虚拟机的virbr0干掉
+[root@localhost ~]# ifconfig virbr0 down
+[root@localhost ~]# brctl delbr virbr0
+3、激活eth0
+[root@localhost ~]# ifup eth0
+4、把jenkins的rpm包拷贝到虚拟机
+5、安装
+[root@node3 ~]# rpm -ihv jenkins-2.121-1.1.noarch.rpm
+6、启动
+[root@node3 ~]# service jenkins start
+7、在物理机上访问http://192.168.122.179:8080
+二、配置git
+jenkins的eth1网络连接改为private1，因为我的gitlab也是用private1连接
+配置jenkins可以和gitlab服务器通信，配置好jenkins可以使用yum
+1、模拟程序员在本地编写代码，并交由git管理
+[root@room8pc16 day13]# git init core_py
+[root@room8pc16 day13]# cd core_py/
+[root@room8pc16 core_py]# echo '<h1>Hello World!</h1>' > index.html
+[root@room8pc16 core_py]# git commit -m "my web init"
+[root@room8pc16 core_py]# git tag 1.0  # 把当前提交标记为1.0
+[root@room8pc16 core_py]# vim index.html
+<h1 style="color: green">Hello World!</h1>
+[root@room8pc16 core_py]# git add .
+[root@room8pc16 core_py]# git commit -m "my web version 2"
+[root@room8pc16 core_py]# git tag 2.0  # 把当前提交标记为2.0
+[root@room8pc16 core_py]# git tag  # 查看所有的版本
+2、配置gitlab服务器
+群组Group：可以为每个团队创建一个群组，群组有属于他的URL
+项目：每个群组都会创建多个项目，每个项目对应一个URL
+成员：团队成员，一个项目不一定需要全员参与，可以为项目指定成员
+3、以第2步创建的信息，上传代码
+[root@room8pc16 core_py]# git remote rename origin old-origin
+如果出现以下错误，可以忽略
+error: 不能重命名配置小节 'remote.origin' 到 'remote.old-origin'
+[root@room8pc16 core_py]# git remote add origin http://192.168.4.1/nsd1805/core_py.git
+[root@room8pc16 core_py]# git push -u origin --all
+[root@room8pc16 core_py]# git push -u origin --tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
