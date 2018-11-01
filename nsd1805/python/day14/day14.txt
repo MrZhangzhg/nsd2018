@@ -88,8 +88,39 @@ gpgcheck=0
         group: root
         mode: 0644
 [root@room8pc16 kvm_ansi]# ansible-playbook yumrepo.yml
+4、管理服务
+[root@room8pc16 kvm_ansi]# vim service.yml
+---
+- name: configure web service
+  hosts: webservers
+  tasks:
+    - name: install web pkgs
+      yum:
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - httpd
+        - php
+        - php-mysql
+    - name: control web service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
 
-
+- name: configure db service
+  hosts: dbservers
+  tasks:
+    - name: install db pkgs
+      yum:
+        name: mariadb-server
+        state: present
+    - name: control db service
+      service:
+        name: mariadb
+        state: started
+        enabled: true
+[root@room8pc16 kvm_ansi]# ansible-playbook service.yml
 
 
 
