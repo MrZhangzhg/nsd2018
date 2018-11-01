@@ -47,6 +47,49 @@ set ts=4  # 按tab是4个空格
 set et    # 将tab键转换成空格
 autocmd FileType yaml setlocal sw=2 ts=2 et ai  # 如果是yml扩展名的文件，tab键缩进2个空格
 
+2、编写playbook，向所有的主机传送密钥文件，实现免密登陆
+[root@room8pc16 ~]# ansible-doc authorized_key
+[root@room8pc16 kvm_ansi]# vim sshkey.yml
+---
+- name: copy ssh key
+  hosts: all
+  tasks:
+    - name: ssh to remote hosts without pass
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+检查语法：
+[root@room8pc16 kvm_ansi]# ansible-playbook --syntax-check sshkey.yml
+执行：
+[root@room8pc16 kvm_ansi]# ansible-playbook sshkey.yml -k
+测试执行命令，不需要密码
+[root@room8pc16 kvm_ansi]# ansible all -m ping
+3、上传yum配置文件
+(1)准备上传的文件
+[root@room8pc16 kvm_ansi]# mkdir files
+[root@room8pc16 kvm_ansi]# vim files/server.repo
+[server]
+name=server
+baseurl=ftp://192.168.4.254/rhel7.4
+gpgcheck=0
+(2)playbook
+[root@room8pc16 ~]# ansible-doc copy
+[root@room8pc16 kvm_ansi]# vim yumrepo.yml
+---
+- name: upload yum repo
+  hosts: all
+  tasks:
+    - name: upload to all hosts
+      copy:
+        src: files/server.repo
+        dest: /etc/yum.repos.d/server.repo
+        owner: root
+        group: root
+        mode: 0644
+[root@room8pc16 kvm_ansi]# ansible-playbook yumrepo.yml
+
+
 
 
 

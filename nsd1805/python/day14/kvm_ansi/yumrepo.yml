@@ -1,0 +1,11 @@
+---
+- name: upload yum repo
+  hosts: all
+  tasks:
+    - name: upload to all hosts
+      copy:
+        src: files/server.repo
+        dest: /etc/yum.repos.d/server.repo
+        owner: root
+        group: root
+        mode: 0644

@@ -1,0 +1,9 @@
+---
+- name: copy ssh key
+  hosts: all
+  tasks:
+    - name: ssh to remote hosts without pass
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
