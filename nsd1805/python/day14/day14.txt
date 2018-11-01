@@ -150,17 +150,38 @@ http://down.51cto.com/
 30
 
 
+编写模块
+1、创建自定义的模块目录
+[root@room8pc16 day14]# mkdir mymodules
+[root@room8pc16 mymodules]# export ANSIBLE_LIBRARY=/var/ftp/nsd2018/nsd1805/python/day14/mymodules
+2、编写模块文件
+[root@room8pc16 mymodules]# vim rcopy.py
+#!/usr/bin/env python3
+
+import shutil
+from ansible.module_utils.basic import AnsibleModule
+
+def main():
+    module = AnsibleModule(
+        argument_spec=dict(
+            yuan=dict(requried=True, type='str'),
+            mudi=dict(required=True, type='str')
+        )
+    )
+    shutil.copy(module.params['yuan'], module.params['mudi'])
+    module.exit_json(changed=True)
+
+if __name__ == '__main__':
+    main()
+3、测试
+[root@room8pc16 kvm_ansi]# ansible webservers -m rcopy -a "yuan=/etc/hosts mudi=/tmp/zhuji"
 
 
 
-
-
-
-
-
-
-
-
-
-
+ansible-cmdb
+[root@room8pc16 kvm_ansi]# pip3 install ansible-cmdb
+[root@room8pc16 kvm_ansi]# mkdir /tmp/myservers
+[root@room8pc16 kvm_ansi]# ansible all -m setup --tree /tmp/myservers/out/
+[root@room8pc16 kvm_ansi]# ansible-cmdb /tmp/myservers/out/ > /tmp/myservers/hosts.html
+[root@room8pc16 kvm_ansi]# firefox /tmp/myservers/hosts.html &
 
