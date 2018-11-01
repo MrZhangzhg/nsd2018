@@ -127,6 +127,34 @@ gpgcheck=0
 http://vault.centos.org/7.4.1708/isos/x86_64/
 http://vault.centos.org/7.4.1708/os/x86_64/Packages/
 
+https://docs.ansible.com/  -> ansible documentation
+搜索python api
+
+http://down.51cto.com/
+荷尔曼标准库
+
+
+命名元组：基于元组，重建数据类型，为元组的下标起名
+>>> from collections import namedtuple
+>>> Point = namedtuple('Point', ['x', 'y', 'z'])
+>>> a = Point(10, 20, 30)
+>>> a[0]
+10
+>>> a[1:]
+(20, 30)
+>>> a.x
+10
+>>> a.y
+20
+>>> a.z
+30
+
+
+
+
+
+
+
 
 
 
