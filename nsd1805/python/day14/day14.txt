@@ -1,0 +1,64 @@
+ansible
+1、生产环境建议yum install ansible安装，因为ansible的稳定版基于python2
+2、安装基于python3的ansible
+[root@room8pc16 day13]# pip3 install ansible
+3、准备三台虚拟机，用于接受ansible的管理
+配置IP地址、主机名
+
+配置ansible工作环境
+1、创建工作目录
+[root@room8pc16 day14]# mkdir kvm_ansi
+[root@room8pc16 day14]# cd kvm_ansi
+2、编写配置文件，指定主机清单文件和连接远程服务器使用的用户
+[root@room8pc16 kvm_ansi]# vim ansible.cfg
+[defaults]
+inventory = hosts
+remote_user = root
+3、配置主机清单
+[root@room8pc16 kvm_ansi]# vim hosts
+[dbservers]
+node4.tedu.cn
+
+[webservers]
+node5.tedu.cn
+node6.tedu.cn
+4、设置名称解析
+[root@room8pc16 kvm_ansi]# for i in {1..254}
+> do
+> echo -e "192.168.4.$i\tnode$i.tedu.cn\tnode$i" >> /etc/hosts
+> done
+5、将远程主机的公钥收集、追加到~/.ssh/known_hosts
+[root@room8pc16 kvm_ansi]# ssh-keyscan node{4..6} node{4..6}.tedu.cn 192.168.4.{4..6} >> ~/.ssh/known_hosts
+6、安装sshpass
+# yum install -y sshpass  # 使用网络yum源
+
+ansible应用一：ad-hoc临时命令
+1、执行ad-hoc临时命令，使用-m加载模块，通过-a向模块传递命令，-k使用密码
+[root@room8pc16 kvm_ansi]# ansible all -m ping -k
+2、没有传递模块，默认采用command模块
+[root@room8pc16 kvm_ansi]# ansible all -a 'id root' -k
+[root@room8pc16 kvm_ansi]# ansible dbservers -m service -a "name=httpd state=started" -k
+
+ansible应用二：playbook
+1、为了更好的书写yaml文件，可以对vim进行设置
+[root@room8pc16 kvm_ansi]# vim ~/.vimrc
+set ai    # 自动缩进
+set ts=4  # 按tab是4个空格
+set et    # 将tab键转换成空格
+autocmd FileType yaml setlocal sw=2 ts=2 et ai  # 如果是yml扩展名的文件，tab键缩进2个空格
+
+
+
+
+http://vault.centos.org/7.4.1708/isos/x86_64/
+http://vault.centos.org/7.4.1708/os/x86_64/Packages/
+
+
+
+
+
+
+
+
+
+
