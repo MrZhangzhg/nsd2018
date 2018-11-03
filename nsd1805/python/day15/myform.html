@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>my form</title>
+    <script>
+        function show_me(){
+            alert("选择你的目标城市")
+        }
+    </script>
+</head>
+<body>
+<form action="">
+    <textarea name="" cols="50" rows="10"></textarea><br>
+    <select name="city" id="">
+        <option value="bj">北京</option>
+        <option value="hz">杭州</option>
+        <option value="sz">深圳</option>
+    </select>
+</form>
+
+<hr>
+<form action="">
+    <input type="file">
+    <input type="submit" value="上传">
+</form>
+
+
+<hr>
+
+<form action="">
+    你打算到哪个城市工作？<br>
+    <input type="checkbox" name="city1" value="bj">北京<br>
+    <input type="checkbox" name="city2" value="cs">长沙<br>
+    <input type="checkbox" name="city3" value="hz" checked>杭州<br>
+    <input type="checkbox" name="city4" value="wh">武汉<br>
+    <input type="submit">
+    <input type="button" value="提示" onclick="show_me()">
+</form>
+
+<form action="">
+    你喜欢的课程内容是什么？<br>
+    <label><input type="radio" name="lesson">网络管理</label> <br>
+    <input id="linux" type="radio" name="lesson">
+    <label for="linux">Linux系统管理</label> <br>
+    <input type="radio" name="lesson">Linux服务管理 <br>
+</form>
+
+<hr>
+
+<form action="">
+    用户名：<input type="text" placeholder="用户名"><br>
+    密&nbsp;&nbsp;&nbsp;码：<input type="password" placeholder="密码"><br>
+    <input type="submit" value="登陆">
+</form>
+
+
+<hr>
+<form action="http://www.baidu.com/s" target="_blank">
+    关键词：<input type="text" name="wd">
+    <input type="submit" value="百度搜索">
+    <input type="reset" value="重置">
+</form>
+
+<form action="https://www.sogou.com/web" target="_blank">
+    关键词：<input type="text" name="query">
+    <input type="submit" value="搜狗搜索">
+    <input type="reset" value="重置">
+</form>
+
+
+</body>
+</html>
