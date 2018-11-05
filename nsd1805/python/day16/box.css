@@ -1,0 +1,80 @@
+body{
+    /*background-image: url("imgs/star.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-repeat: repeat-x;*/
+    /*background-repeat: repeat-y;*/
+}
+.clear{
+    clear: both;
+}
+.nav2 ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.nav2 li {
+    float: left;
+    margin-left: 2px;
+    padding: 8px 16px;
+    background: #f1f1f1;
+}
+.nav2 li a{
+    text-decoration: none;
+    text-align: center;
+    width: 60px;
+    display: block;
+    color: #000;
+}
+.nav2 li a:hover {
+    color: #fff;
+    background-color: #111;
+}
+.nav2 li.active{
+    background: #009900;
+}
+
+
+.nav ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.nav li a{
+    width: 100px;
+    display: block;
+    background: #f1f1f1;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+.nav li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+
+
+h1{
+    border: 2px solid #000;
+}
+
+.header{
+    text-align: center;
+    line-height: 50px;
+    text-decoration: underline;
+    height: 50px;
+    border: 1px solid #000000;
+}
+
+div.box{
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+    font-variant: small-caps;
+    width: 200px;
+    height: 100px;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #000000;
+}
+
