@@ -2,6 +2,30 @@
     margin: 0;
 }
 body{
-    color: blue;
+    background: silver;
 }
+.p1{
+    font-size: 20px;
+}
+.warning{
+    color: orange;
+}
+.important{
+    font-weight: bold;
+}
+p.p6{
+    font-size: 50px;
+}
+#id8{
+    color: darkgreen;
+    font-size: 40px;
+}
+.p1,.p6{
+    background: darkolivegreen;
+}
+p .p10{
+    font-size: 30px;
+    background: darkorange;
+}
+
 
