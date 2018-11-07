@@ -89,6 +89,48 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^polls/', include('polls.urls')),
 ]
+在polls应用中创建urls.py
+# vim polls/urls.py
+from django.conf.urls import url
+urlpatterns = [
+]
+
+URL规划：
+http://127.0.0.1/polls/      # 列出所有的投票项
+http://127.0.0.1/polls/1/    # 1号投票详细内容
+http://127.0.0.1/polls/1/result/    # 显示投票结果
+
+创建应用首页
+1、为网址http://127.0.0.1/polls/起个名叫index，访问它的时候，使用views.index
+函数进行响应
+# vim polls/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index')
+]
+2、创建视图函数
+# vim polls/views.py
+from django.shortcuts import render, HttpResponse
+
+def index(request):
+    return HttpResponse('<h1>Hello World!</h1>')
+3、访问测试
+http://127.0.0.1/polls/
+4、配置模板Template
+默认情况下，django会到应用目录下的templates目录中查找模板文件
+[root@room8pc16 mysite]# mkdir polls/templates
+# vim polls/templates/index.html
+5、修改视图函数，令index函数返回index.html模板
+# vim polls/views.py
+from django.shortcuts import render, HttpResponse
+
+def index(request):
+    # return HttpResponse('<h1>Hello World!</h1>')
+    return render(request, 'index.html')
+
+
 
 
 
