@@ -131,6 +131,37 @@ def index(request):
     return render(request, 'index.html')
 
 
+Model：模型（数据库）
+Polls应用有问题和选项，一个问题可以有很多选项。分别为它们创建模型。
+问题模型Question有两个属性：question_text问题内容。pub_date发布日期
+选项模型Choice有两个属性：choice_text选项内容。votes票数
+1、编写模型
+# vim polls/models.py
+from django.db import models
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField()
+
+class Choice(models.Model):
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField()
+    q = models.ForeignKey(Question, on_delete=models.CASCADE)
+2、生成数据库
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+数据库中将会创建两张表：
+polls_question(应用名_类名)：
+id: 主键，django自动创建
+question_text和pub_date对应class中的类变量
+polls_choice:
+id: 主键，django自动创建
+choice_text和votes对应class中的类变量
+q_id：django自动将class中的q变成q_id，作为外键
+3、修改字段，将Choice类中的q改为question
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+检查polls_choice中字段的变化
 
 
 
