@@ -187,6 +187,66 @@ admin.site.register(Question)
 admin.site.register(Choice)
 
 
+定制后台
+1、指定显示的字段
+# vim polls/admin.py
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'pub_date')
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
+2、添加过滤器
+from django.contrib import admin
+from .models import Question, Choice
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'pub_date')
+    list_filter = ('pub_date',)
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
+3、增加可以在question_text中搜索的设置
+from django.contrib import admin
+from .models import Question, Choice
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'pub_date')
+    list_filter = ('pub_date',)
+    search_fields = ('question_text',)
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
+4、增加时间轴
+from django.contrib import admin
+from .models import Question, Choice
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'pub_date')
+    list_filter = ('pub_date',)
+    search_fields = ('question_text',)
+    date_hierarchy = 'pub_date'
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
+5、按时间降序排序
+from django.contrib import admin
+from .models import Question, Choice
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'pub_date')
+    list_filter = ('pub_date',)
+    search_fields = ('question_text',)
+    date_hierarchy = 'pub_date'
+    ordering = ['-pub_date']   # 没有减号，默认升序排列
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
+
+
+
+
+
 
 
 
