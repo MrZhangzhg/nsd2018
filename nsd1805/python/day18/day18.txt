@@ -1,0 +1,61 @@
+python虚拟环境
+1、创建虚拟环境
+[root@room8pc16 day18]# python3 -m venv /opt/djenv
+2、激活虚拟环境
+[root@room8pc16 day18]# source /opt/djenv/bin/activate
+3、安装django1.11.6
+(djenv) [root@room8pc16 day18]# pip install django==1.11.6
+(djenv) [root@room8pc16 day18]# python
+>>> import django
+>>> django.__version__
+'1.11.6'
+
+Django
+1、创建项目：可以理解为是django实例的设置集合
+(djenv) [root@room8pc16 day18]# django-admin startproject mysite
+(djenv) [root@room8pc16 day18]# cd mysite/
+manage.py: 项目管理工具
+mysite/__init__.py：py2需要该文件，否则mysite不能当成包导入
+mysite/settings.py: 项目配置文件
+mysite/urls.py: 程序入口。用于URL和函数关联
+mysite/wsgi.py: 部署django到web服务器时使用
+2、django提供了一个内置的web服务器，仅适合开发测试使用
+(djenv) [root@room8pc16 mysite]# python manage.py runserver
+3、如果出现_sqlite问题，是因为django默认使用的数据库是sqlite3数据库，但是机器
+没有提供对该数据库的支持。解决办法：
+(1) # yum install -y sqlite-devel
+(2) 把python重新编译一遍
+4、使用mariadb数据库
+(djenv) [root@room8pc16 mysite]# pip install pymysql
+# vim mysite/__init__.py
+import pymysql
+pymysql.install_as_MySQLdb()
+
+# yum install -y mariadb-server
+[root@room8pc16 day18]# vim /etc/my.cnf
+[mysqld]
+default-time_zone = '+08:00'
+MariaDB [(none)]> CREATE DATABASE dj1805 DEFAULT CHARSET utf8;
+# vim mysite/settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dj1805',
+        'USER': 'root',
+        'PASSWORD': 'tedu.cn',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
