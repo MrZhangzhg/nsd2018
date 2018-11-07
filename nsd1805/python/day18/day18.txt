@@ -32,10 +32,13 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 # yum install -y mariadb-server
+
 [root@room8pc16 day18]# vim /etc/my.cnf
 [mysqld]
 default-time_zone = '+08:00'
+
 MariaDB [(none)]> CREATE DATABASE dj1805 DEFAULT CHARSET utf8;
+
 # vim mysite/settings.py
 DATABASES = {
     'default': {
@@ -47,11 +50,45 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+5、配置项目选项
+# vim mysite/settings.py
+ALLOWED_HOSTS = '*'
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False
+(djenv) [root@room8pc16 mysite]# python manage.py runserver 0:80
+6、生成默认的数据库表
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+7、创建管理员用户
+(djenv) [root@room8pc16 mysite]# python manage.py createsuperuser
+(djenv) [root@room8pc16 mysite]# python manage.py runserver 0:80
+8、访问后台
+http://127.0.0.1/admin/
 
 
+创建应用：
+1、创建
+(djenv) [root@room8pc16 mysite]# python manage.py startapp polls
+(djenv) [root@room8pc16 mysite]# ls polls/
+2、配置项目集成应用
+# vim mysite/settings.py
+INSTALLED_APPS = [
+    ... ...
+    'polls',
+]
 
+用户访问django时，django将会查询mysite/urls.py，将网址与某个函数对应
+如果项目中包含了大量的应用，和大量的URL，这个文件将会变得十分庞大，不好管理
+可以将应的网址与函数对应关系交给应用处理
+# vim mysite/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
 
-
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^polls/', include('polls.urls')),
+]
 
 
 
