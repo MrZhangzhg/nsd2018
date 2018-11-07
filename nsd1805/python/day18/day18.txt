@@ -136,17 +136,22 @@ Polls应用有问题和选项，一个问题可以有很多选项。分别为它
 问题模型Question有两个属性：question_text问题内容。pub_date发布日期
 选项模型Choice有两个属性：choice_text选项内容。votes票数
 1、编写模型
-# vim polls/models.py
 from django.db import models
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField()
 
+    def __str__(self):
+        return self.question_text
+
 class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField()
-    q = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s: %s" % (self.question, self.choice_text)
 2、生成数据库
 (djenv) [root@room8pc16 mysite]# python manage.py makemigrations
 (djenv) [root@room8pc16 mysite]# python manage.py migrate
@@ -162,6 +167,28 @@ q_id：django自动将class中的q变成q_id，作为外键
 (djenv) [root@room8pc16 mysite]# python manage.py makemigrations
 (djenv) [root@room8pc16 mysite]# python manage.py migrate
 检查polls_choice中字段的变化
+
+
+重建删除表
+MariaDB [dj1805]> drop table polls_question;
+MariaDB [dj1805]> drop table polls_choice;
+(djenv) [root@room8pc16 mysite]# rm -rf polls/migrations/*
+(djenv) [root@room8pc16 mysite]# touch polls/migrations/__init__.py
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py sqlmigrate polls 0001
+将0001init转换成sql语句后，在数据库中执行这些语句
+
+将model注册到管理后台
+# vim polls/admin.py
+from django.contrib import admin
+from .models import Question, Choice
+
+admin.site.register(Question)
+admin.site.register(Choice)
+
+
+
+
 
 
 
