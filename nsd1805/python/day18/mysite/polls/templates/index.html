@@ -6,6 +6,11 @@
 </head>
 <body>
 <h1>Polls首页</h1>
-<p>你期待的毕业薪资是多少？</p>
+<ul>
+    {% for q in questions %}
+        <li><a href="{% url 'detail' question_id=q.id %}" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>
+{#        <li><a href="/polls/{{ q.id }}/" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>#}
+    {% endfor %}
+</ul>
 </body>
 </html>

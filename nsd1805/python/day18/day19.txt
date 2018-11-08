@@ -79,9 +79,81 @@ class Question(models.Model):
 >>> q2.pub_date
 
 
+URL规划：
+http://127.0.0.1/polls/      # 列出所有的投票项
+http://127.0.0.1/polls/1/    # 1号投票详细内容
+http://127.0.0.1/polls/1/result/    # 显示投票结果
+
+一、完成首页，把所有的问题列出到页面
+1、修改视图函数
+# vim polls/views.py
+from django.shortcuts import render
+from .models import Question
+
+def index(request):
+    questions = Question.objects.order_by('-pub_date')
+    return render(request, 'index.html', {'questions': questions})
+2、修改模板，显示问题
+# vim polls/templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polls首页</title>
+</head>
+<body>
+<h1>Polls首页</h1>
+{{ questions }}
+</body>
+</html>
+3、修改模板的显示
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polls首页</title>
+</head>
+<body>
+<h1>Polls首页</h1>
+{{ questions }}
+<hr>
+<ul>
+    {% for q in questions %}
+        <li>{{ q.question_text }} {{ q.pub_date }}</li>
+    {% endfor %}
+</ul>
+<hr>
+<ul>
+    {% for q in questions %}
+        {% if q.was_publish_recently %}
+            <li>{{ q.question_text }} {{ q.pub_date }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>
+</body>
+</html>
 
 
-
+二、制作详情页
+1、创建URL
+# vim polls/urls.py
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
+]
+(\d+)是将URL中的数字放到分组中，question_id是传给views.detail函数的参数。
+2、编写视图函数
+# vim polls/views.py
+def detail(request, question_id):
+    return HttpResponse('<h1>%s: detail</h1>' % question_id)
+3、访问http://127.0.0.1/polls/1/
+4、修改首页，加入超链接，通过超链接可以跳转到详情页
+<ul>
+    {% for q in questions %}
+        <li><a href="{% url 'detail' question_id=q.id %}" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>
+{#        <li><a href="/polls/{{ q.id }}/" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>#}
+    {% endfor %}
+</ul>
 
 
 
