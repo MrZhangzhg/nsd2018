@@ -49,7 +49,34 @@ django为每个模型都设置了一个名为objects的管理器，这个管理�
 >>> qs[-1]   # 不允许使用负值
 >>> len(qs)
 >>> qs[len(qs) - 1]
+>>> Question.objects.filter(pub_date__month=11)
+>>> Question.objects.filter(pub_date__month=10)
+>>> Question.objects.filter(question_text__startswith='毕业')
+(3)排序: 返回查询集
+>>> Question.objects.order_by('pub_date')
+>>> Question.objects.order_by('pub_date')[:3]
+>>> Question.objects.order_by('-pub_date')[:3]
 
+自定义方法：
+1、在Question中创建一个方法，用于判定问题是不是最近7天发布的
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField()
+
+    def was_publish_recently(self, days=7):
+        return self.pub_date > timezone.now() - timedelta(days=days)
+
+    def __str__(self):
+        return self.question_text
+2、重新导入模块
+(djenv) [root@room8pc16 mysite]# python manage.py shell
+>>> from polls.models import Question
+>>> q1 = Question.objects.order_by('pub_date')[0]
+>>> q2 = Question.objects.order_by('-pub_date')[0]
+>>> q1.was_publish_recently()
+>>> q2.was_publish_recently()
+>>> q1.pub_date
+>>> q2.pub_date
 
 
 
