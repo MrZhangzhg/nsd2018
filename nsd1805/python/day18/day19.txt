@@ -154,7 +154,37 @@ def detail(request, question_id):
 {#        <li><a href="/polls/{{ q.id }}/" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>#}
     {% endfor %}
 </ul>
+5、修改视图函数，从数据库中取出数据
+def detail(request, question_id):
+    question = Question.objects.get(id=question_id)
+    return render(request, 'detail.html', {'question': question})
+6、创建模板
+模板包含表单，表单提交时，把数据发给http://127.0.0.1/polls/1/vote
+# vim polls/templates/detail.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>调查详情</title>
+</head>
+<body>
+<h1>{{ question.question_text }}</h1>
+<form action="" method="post">
+    {% for c in question.choice_set.all %}
+        <label>
+            <input type="radio" name="choice" value="{{ c.id }}">{{ c.choice_text }}
+        </label><br>
+    {% endfor %}
+    <input type="submit" value="提交">
+</form>
 
+{#<ul>#}
+{#    {% for choice in question.choice_set.all %}#}
+{#        <li>{{ choice.choice_text }}</li>#}
+{#    {% endfor %}#}
+{#</ul>#}
+</body>
+</html>
 
 
 

@@ -6,4 +6,5 @@ def index(request):
     return render(request, 'index.html', {'questions': questions})
 
 def detail(request, question_id):
-    return HttpResponse('<h1>%s: detail</h1>' % question_id)
+    question = Question.objects.get(id=question_id)
+    return render(request, 'detail.html', {'question': question})
