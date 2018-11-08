@@ -1,0 +1,66 @@
+使用python shell
+1、进入python shell
+(djenv) [root@room8pc16 mysite]# python manage.py shell
+>>> from polls.models import Question, Choice
+2、查询全部实例
+django为每个模型都设置了一个名为objects的管理器，这个管理器可以对模型进行增删改查
+>>> Question.objects.all()
+>>> Choice.objects.all()
+返回值是由多个模型对象构成的查询集
+3、创建问题
+(1)通过创建实例的方式
+>>> from django.utils import timezone
+>>> q1 = Question(question_text="散伙饭去哪吃？", pub_date=timezone.now())
+>>> print(q1.id)  # 因为没有写到数据呢，所以值是None
+>>> q1.question_text
+>>> q1.pub_date
+>>> q1.save()   # COMMIT
+>>> q1.id   # 有值了
+(2)通过objects管理器创建
+>>> q2 = Question.objects.create(question_text="休息去哪看红叶？", pub_date=timezone.now())
+直接写入数据库，无需保存
+4、创建选项
+(1)通过创建实例的方式
+>>> c1 = Choice(choice_text="KFC", question=q1)
+>>> c1.save()
+(2)通过object管理器
+>>> Choice.objects.create(choice_text="涮羊肉", question=q1)
+(3)通过问题的实例创建选项。
+因为Question和Choice有主外键约束关系，所以django默认为每个Question实例都创建了
+一个choice_set。这个choice_set也是个管理器，只不过他限定了问题。
+>>> q1.choice_set.all()
+>>> q1.choice_set.create(choice_text="全聚德")
+5、修改内容：把属性重新赋值并保存
+>>> q1.question_text = "毕业后，去哪聚餐？"
+>>> q1.save()
+6、删除
+>>> c1.delete()  # 不要再save，否则删除后，又会重新保存至数据库
+7、查询
+(1)使用get，get要求返回一个实例，如果有多项或没有查询到则报错
+>>> Question.objects.get(id=1)
+>>> q2 = Question.objects.get(question_text="从达内毕业后的第一份工作，你期望的月薪是多少？")
+>>> Question.objects.get(question_text__contains="毕业")
+>>> q2.id
+>>> q2.pub_date
+(2)使用filter，filter返回查询集合
+>>> Question.objects.filter(question_text__contains="毕业")
+>>> qs = Question.objects.filter(question_text__contains=" 毕业")
+>>> qs[0]
+>>> qs[-1]   # 不允许使用负值
+>>> len(qs)
+>>> qs[len(qs) - 1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
