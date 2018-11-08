@@ -187,7 +187,68 @@ def detail(request, question_id):
 </html>
 
 
+实现投票功能
+1、为投票功能指定URL
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
+    url(r'^(?P<question_id>\d+)/vote/$', views.vote, name='vote'),
+]
+2、在detail.html模板中，指定form的action
+<form action="{% url 'vote' question_id=question.id %}" method="post">
+3、编写vote函数
+def vote(request, question_id):
+    choice_id = request.POST.get('choice')
+    question = Question.objects.get(id=question_id)
+    choice = question.choice_set.get(id=choice_id)
+    choice.votes += 1
+    choice.save()
 
+    return redirect('result', question_id=question_id)
+
+实现结果页面
+1、配置URL
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
+    url(r'^(?P<question_id>\d+)/vote/$', views.vote, name='vote'),
+    url(r'^(?P<question_id>\d+)/result/$', views.result, name='result'),
+]
+2、编写result函数
+def result(request, question_id):
+    question = Question.objects.get(id=question_id)
+    return render(request, 'result.html', {'question': question})
+3、完成result.html模板
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票结果</title>
+</head>
+<body>
+<h1>{{ question.question_text }}</h1>
+<table width="400">
+    <tr>
+        <th>问题</th>
+        <th>票数</th>
+    </tr>
+    {% for choice in question.choice_set.all %}
+        <tr>
+            <td>{{ choice.choice_text }}</td>
+            <td>{{ choice.votes }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
+
+关闭CSRF功能
+# vim mysite/setting.py
+MIDDLEWARE = [
+    ... ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ... ...
+]
 
 
 
