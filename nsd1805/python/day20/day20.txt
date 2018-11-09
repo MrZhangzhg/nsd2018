@@ -258,6 +258,61 @@ def vartest(request):
 </body>
 </html>
 
+配置模板继承
+1、如果有有非常多的web页面，它们的格式完全一样，如果每个页面单独制作，重复工作非常多。为了简化工作，可以使用模板继承
+2、配置基础模板文件base.html
+[root@room8pc16 templates]# cp index.html base.html
+[root@room8pc16 templates]# vim base.html
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+3、配置其他web页面继承模板
+[root@room8pc16 templates]# vim index.html
+{% extends 'base.html' %}
+
+{% block title %}Polls首页{% endblock %}
+{% block content %}
+    <h1>Polls首页</h1>
+        <ul>
+            {% for q in questions %}
+                <li><a href="{% url 'detail' question_id=q.id %}" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>
+            {% endfor %}
+        </ul>
+{% endblock %}
+
+[root@room8pc16 templates]# vim detail.html
+{% extends 'base.html' %}
+
+{% block title %}调查详情{% endblock %}
+
+{% block content %}
+    <h1>{{ question.question_text }}</h1>
+    <form action="{% url 'vote' question_id=question.id %}" method="post">
+        {% for c in question.choice_set.all %}
+            <label>
+                <input type="radio" name="choice" value="{{ c.id }}">{{ c.choice_text }}
+            </label><br>
+        {% endfor %}
+        <input type="submit" value="提交">
+    </form>
+    <a href="{% url 'index' %}">返回首页</a>
+{% endblock %}
+
+
+
+
 
 
 
