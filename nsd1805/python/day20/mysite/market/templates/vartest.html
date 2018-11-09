@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>var test</title>
+</head>
+<body>
+<h2>{{ cities | join:", " }}</h2>
+<h2>{{ cities }}</h2>
+
+<hr>
+{% if is_login %}
+    <h2><a href="#">退出</a></h2>
+{% else %}
+    <h2><a href="{% url 'home' %}">登陆</a></h2>
+{% endif %}
+
+
+{% for key, val in user_dict.items %}
+    <h2>{{ forloop.counter }}. {{ key }}: {{ val }}</h2>
+{% endfor %}
+
+{% for key, val in user_dict.items %}
+    <h2>{{ forloop.counter0 }}. {{ key }}: {{ val }}</h2>
+{% endfor %}
+
+{% for key in user_dict %}
+    <h3>{{ key }}</h3>
+{% endfor %}
+{% for val in user_dict.values %}
+    <h2>{{ val }}</h2>
+{% endfor %}
+<h2>{{ user_dict.name }}</h2>
+<h2>{{ user_dict.age }}</h2>
+{% for key, val in user_dict.items %}
+    <h3>{{ key }}: {{ val }}</h3>
+{% endfor %}
+
+<h2>{{ user_dict }}</h2>
+{% for name in alist %}
+    <h2 style="color: purple;">{{ name }}</h2>
+{% endfor %}
+<h2>{{ alist.0 }}</h2>
+<h2>{{ alist }}</h2>
+<h2>{{ atuple.1 }}</h2>
+<h2>{{ atuple }}</h2>
+<h2>{{ num }}</h2>
+<h2>{{ astr }}</h2>
+<h2>{{ astr.0 }}</h2>
+<h2>{{ astr.title }}</h2>
+</body>
+</html>

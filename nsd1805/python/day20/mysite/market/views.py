@@ -47,3 +47,21 @@ def register(request):
         )
 
     return render(request, 'register.html')
+
+def vartest(request):
+    atuple = ('张三', '李四')
+    alist = ['bob', 'alice']
+    user_dict = {'name': '王五', 'age': 23, 'phone': '15099776644'}
+    is_login = request.session.get('LOGINED', False)
+    cities = ['北京', '广州', '杭州', '西安', '长沙', '深圳']
+    context = {
+        'astr': 'hello world!',
+        'num': 100,
+        'atuple': atuple,
+        'alist': alist,
+        'user_dict': user_dict,
+        'is_login': is_login,
+        'cities': cities
+    }
+    return render(request, 'vartest.html', context)
+

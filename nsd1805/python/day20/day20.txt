@@ -212,6 +212,61 @@ admin.site.register(Userdb)
 
 
 
+模板变量的应用
+1、创建url
+    url(r'^vartest/$', views.vartest, name='vartest'),
+2、创建函数
+def vartest(request):
+    atuple = ('张三', '李四')
+    alist = ['bob', 'alice']
+    user_dict = {'name': '王五', 'age': 23, 'phone': '15099776644'}
+    context = {
+        'astr': 'hello world!',
+        'num': 100,
+        'atuple': atuple,
+        'alist': alist,
+        'user_dict': user_dict
+    }
+    return render(request, 'vartest.html', context)
+3、创建模板
+
+
+在day18的polls应用中使用bootstrap
+1、将day17目录中的static拷贝到polls应用中
+[root@room8pc16 mysite]# cp -r ../../day17/static/ polls/
+2、编辑index.html模板文件
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polls首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<h1>Polls首页</h1>
+<ul>
+    {% for q in questions %}
+        <li><a href="{% url 'detail' question_id=q.id %}" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>
+{#        <li><a href="/polls/{{ q.id }}/" target="_blank">{{ q.question_text }}</a> {{ q.pub_date }}</li>#}
+    {% endfor %}
+</ul>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
 
 
 

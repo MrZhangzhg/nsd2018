@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^protected/$', views.protected, name='protected'),
     url(r'^login/$', views.login, name='login'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^vartest/$', views.vartest, name='vartest'),
 ]
 
 
