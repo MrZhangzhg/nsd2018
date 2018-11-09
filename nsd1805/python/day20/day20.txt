@@ -1,0 +1,69 @@
+模拟用户登陆
+1、地址规划
+http://127.0.0.1/market/    # 用于显示登陆界面
+http://127.0.0.1/market/protected/  # 受保护页面，如果用户非登陆，跳转到登陆页
+http://127.0.0.1/market/login/   # 用于验证用户是否合法
+2、创建项目
+(djenv) [root@room8pc16 day20]# django-admin startproject mysite
+3、创建应用
+(djenv) [root@room8pc16 day20]# cd mysite/
+(djenv) [root@room8pc16 mysite]# python manage.py startapp market
+4、修改配置
+# vim mysite/settings.py
+ALLOWED_HOSTS = '*'
+INSTALLED_APPS = [
+    ... ...
+    'market',
+]
+MIDDLEWARE = [
+    ... ...
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    ... ...
+]
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False
+5、配置URL
+# vim mysite/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^market/', include('market.urls')),
+]
+
+# vim market/urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.home, name='home'),
+    url(r'^protected/$', views.protected, name='protected'),
+    url(r'^login/$', views.login, name='login'),
+]
+6、编写用于登陆页的函数
+# vim market/views.py
+def home(request):
+    return render(request, 'home.html')
+# mkdir market/templates/
+# vim market/templates/home.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+</head>
+<body>
+<form action="{% url 'login' %}">
+    <label>用户：</label><input type="text" name="username"><br>
+    <label>密码：</label><input type="password" name="password"><br>
+    <input type="submit" value="登陆">
+</form>
+</body>
+</html>
+
+
+
+
+
