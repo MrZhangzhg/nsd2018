@@ -62,6 +62,58 @@ def home(request):
 </form>
 </body>
 </html>
+7、为其他功能编写基础视图函数
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'home.html')
+
+def login(request):
+    pass
+
+def protected(request):
+
+    return render(request, 'protected.html')
+8、为用户创建模型
+# vim market/models.py
+from django.db import models
+
+class Userdb(models.Model):
+    username = models.CharField(max_length=20)
+    salt = models.CharField(max_length=8)
+    password = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.username
+9、生成数据库
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+10、创建管理员
+(djenv) [root@room8pc16 mysite]# python manage.py createsuperuser
+11、编写login函数
+
+
+
+
+密码：
+[root@room8pc16 nsd2018]# grep root /etc/shadow | cut -d: -f2
+$6$C4I7vQVB$.eduxvFXMG00jhPIA60B9PRUzhso8Ksm8WP8xCsq2EaDxy0XfIv5enGyYzockoCp7wLzoVfE67aNj/ohG2TeD0
+密码格式：$6$salt$加密密码
+6 -> sha512
+salt -> 创建密码时生成的随机字符串
+哈希算法包括：md5/sha/sha256/sha512。如果输入的源相同，结果一定相同。
+
+>>> import hashlib
+>>> m = hashlib.md5(b'123456')
+>>> m.hexdigest()
+'e10adc3949ba59abbe56e057f20f883e'
+访问http://www.cmd5.com，把加密值输入后，可以查到明文密码
+
+
+
+
+
+
 
 
 
