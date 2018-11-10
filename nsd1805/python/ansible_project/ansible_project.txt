@@ -221,7 +221,19 @@ admin.site.register(HostGroup, HostGroupAdmin)
 for item in [AnsiModule, ModArgs]:
     admin.site.register(item)
 
+19、为了实现相应的效果，创建3台虚拟机
+node1、node2作为web服务器，node3作为数据库服务器
 
+20、创建ansible的工作目录及配置文件
+(djenv) [root@room8pc16 myansible]# mkdir ansicfg
+(djenv) [root@room8pc16 myansible]# vim ansicfg/ansible.cfg
+[defaults]
+inventory = dhosts.py
+remote_user = root
+
+21、创建动态主机清单文件dhosts.py
+(djenv) [root@room8pc16 myansible]# pip install sqlalchemy
+# ansicfg/dhosts.py
 
 
 
