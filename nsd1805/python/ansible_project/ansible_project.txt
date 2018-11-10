@@ -1,0 +1,66 @@
+1、安装
+# pip install ansible
+2、创建项目
+(djenv) [root@room8pc16 ansible_project]# django-admin startproject myansible
+3、网址规划
+http://ip/     # 主页：主机信息、添加主机（组）、添加模块、执行任务
+http://ip/webansi/   # 主机信息
+http://ip/webansi/addhosts/   # 添加主机（组）
+http://ip/webansi/addmodules/   # 添加模块
+http://ip/webansi/tasks/   # 执行任务
+
+4、创建应用
+(djenv) [root@room8pc16 myansible]# python manage.py startapp webansi
+
+5、修改项目的配置
+# settings.py
+ALLOWED_HOSTS = '*'
+INSTALLED_APPS = [
+    ... ...
+    'webansi',
+]
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False
+
+6、配置URL
+# myansible/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+from webansi import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^admin/', admin.site.urls),
+    url(r'^webansi/', include('webansi.urls')),
+]
+
+# webansi/urls.py
+from django.conf.urls import url
+
+urlpatterns = [
+]
+7、创建index函数
+# webansi/views.py
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'index.html')
+
+8、创建模板
+(djenv) [root@room8pc16 myansible]# mkdir webansi/templates
+# webansi/templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+这是首页
+</body>
+</html>
+
+
+
+
