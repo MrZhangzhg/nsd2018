@@ -288,6 +288,23 @@ if __name__ == '__main__':
 
 (djenv) [root@room8pc16 myansible]# chmod +x ansicfg/dhosts.py
 
+22、编写主机信息页
+(1)配置url
+    url(r'^$', views.mainpage, name='mainpage'),
+(2)创建函数
+def mainpage(request):
+    return render(request, 'mainpage.html')
+(3)生成模板文件
+配置本机可以免密登陆到远程服务器
+(djenv) [root@room8pc16 ansicfg]# pip install ansible-cmdb
+(djenv) [root@room8pc16 ansicfg]# ansible all -m setup --tree out
+(djenv) [root@room8pc16 ansicfg]# ansible-cmdb out/ > ../webansi/templates/mainpage.html
+(4)在index.html中修改超链接，把“主机信息”的超链接改为{% url 'mainpage' %}
+
+
+
+
+
 
 
 
