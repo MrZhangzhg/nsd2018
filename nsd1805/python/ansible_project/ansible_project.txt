@@ -186,6 +186,43 @@ class ModArgs(models.Model):
 (djenv) [root@room8pc16 myansible]# python manage.py migrate
 (djenv) [root@room8pc16 myansible]# python manage.py createsuperuser
 
+16、查看数据库
+一个sqlite文件就是一个数据库
+(djenv) [root@room8pc16 myansible]# sqlite3 db.sqlite3
+sqlite> .help
+sqlite> .tables
+sqlite> .schema webansi_hostgroup
+sqlite> select * from webansi_host;
+
+17、将模型注册到后台管理界面
+# vim webansi/admin.py
+from django.contrib import admin
+from .models import HostGroup, Host, AnsiModule, ModArgs
+
+for item in [HostGroup, Host, AnsiModule, ModArgs]:
+    admin.site.register(item)
+
+18、定制后台管理界面
+from django.contrib import admin
+from .models import HostGroup, Host, AnsiModule, ModArgs
+
+class HostAdmin(admin.ModelAdmin):
+    list_display = ('hostname', 'ipaddr', 'group')
+    search_fields = ('hostname', 'ipaddr')
+    # 用在有外键的项目上，创建主机时，可以显示组的详细信息
+    raw_id_fields = ('group',)
+
+class HostGroupAdmin(admin.ModelAdmin):
+    search_fields = ('hostgroup', )
+
+admin.site.register(Host, HostAdmin)
+admin.site.register(HostGroup, HostGroupAdmin)
+
+for item in [AnsiModule, ModArgs]:
+    admin.site.register(item)
+
+
+
 
 
 
