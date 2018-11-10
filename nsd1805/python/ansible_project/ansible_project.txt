@@ -301,6 +301,40 @@ def mainpage(request):
 (djenv) [root@room8pc16 ansicfg]# ansible-cmdb out/ > ../webansi/templates/mainpage.html
 (4)在index.html中修改超链接，把“主机信息”的超链接改为{% url 'mainpage' %}
 
+23、编写添加主机页面
+(1)配置url
+    url(r'^addhosts/$', views.add_hosts, name='addhosts'),
+(2)创建函数
+def add_hosts(request):
+    hostgroup = HostGroup.objects.all()
+    return render(request, 'addhosts.html', {'hostgroup': hostgroup})
+(3)生成模板文件
+# webansi/templates/addhosts.html
+{% extends 'base.html' %}
+{% block title %}添加主机（组）{% endblock %}
+{% block content %}
+    <table class="table table-bordered table-hover table-striped h4">
+        <tr class="info">
+            <td>主机组</td>
+            <td>主机</td>
+        </tr>
+        {% for group in hostgroup %}
+            <tr>
+                <td>{{ group.hostgroup }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for host in group.host_set.all %}
+                            <li>{{ host.hostname }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+(4)在index.html中修改超链接，把“添加主机”的超链接改为{% url 'addhosts' %}
+
 
 
 

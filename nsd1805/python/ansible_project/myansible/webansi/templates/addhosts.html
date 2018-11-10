@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}添加主机（组）{% endblock %}
+{% block content %}
+    <table class="table table-bordered table-hover table-striped h4">
+        <tr class="info">
+            <td>主机组</td>
+            <td>主机</td>
+        </tr>
+        {% for group in hostgroup %}
+            <tr>
+                <td>{{ group.hostgroup }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for host in group.host_set.all %}
+                            <li>{{ host.hostname }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
