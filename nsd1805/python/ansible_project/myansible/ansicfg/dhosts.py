@@ -1,9 +1,10 @@
 #!/opt/djenv/bin/python
 
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import json
 
 engine = create_engine(
     'sqlite:////var/ftp/nsd2018/nsd1805/python/ansible_project/myansible/db.sqlite3',
@@ -31,4 +32,15 @@ class Host(Base):
         return "[%s: %s]" % (self.hostname, self.ipaddr)
 
 if __name__ == '__main__':
-    
+    session = Session()
+    qset = session.query(Host.ipaddr, HostGroup.hostgroup)\
+        .join(HostGroup, Host.group_id==HostGroup.id)
+    result = {}
+    for host, group in qset:
+        if group not in result:
+            result[group] = {}  # {"webservers": {}}
+            result[group]["hosts"] = []  # {"webservers": {"hosts": []}}
+        result[group]["hosts"].append(host)
+
+    print(json.dumps(result))
+
