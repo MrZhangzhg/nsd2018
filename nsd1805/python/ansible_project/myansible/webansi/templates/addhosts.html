@@ -1,7 +1,26 @@
 {% extends 'base.html' %}
 {% block title %}添加主机（组）{% endblock %}
 {% block content %}
-    <table class="table table-bordered table-hover table-striped h4">
+    <form class="form-inline" action="" method="post" role="form" style="margin-bottom: 10px">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>主机名：</label>
+            <input class="form-control" type="text" name="host">
+        </div>
+        <div class="form-group">
+            <label>ip地址：</label>
+            <input class="form-control" type="text" name="ipaddr">
+        </div>
+        <div class="form-group">
+            <label>主机组：</label>
+            <input class="form-control" type="text" name="group">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="提 交">
+        </div>
+    </form>
+
+    <table class="table table-bordered table-hover table-striped">
         <tr class="info">
             <td>主机组</td>
             <td>主机</td>

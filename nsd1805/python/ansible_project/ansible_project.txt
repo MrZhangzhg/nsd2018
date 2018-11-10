@@ -334,6 +334,38 @@ def add_hosts(request):
 {% endblock %}
 
 (4)在index.html中修改超链接，把“添加主机”的超链接改为{% url 'addhosts' %}
+(5)在addhosts.html增加表单
+在table的上方，加入以下内容：
+<form class="form-inline" action="" method="post" role="form" style="margin-bottom: 10px">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>主机名：</label>
+        <input class="form-control" type="text" name="host">
+    </div>
+    <div class="form-group">
+        <label>ip地址：</label>
+        <input class="form-control" type="text" name="ipaddr">
+    </div>
+    <div class="form-group">
+        <label>主机组：</label>
+        <input class="form-control" type="text" name="group">
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="提 交">
+    </div>
+</form>
+(6)修改函数，将表单提交的主机信息写入数据库
+def add_hosts(request):
+    if request.method == 'POST':
+        group = request.POST.get('group').strip()
+        host = request.POST.get('host').strip()
+        ipaddr = request.POST.get('ipaddr').strip()
+        if group:
+            g = HostGroup.objects.get_or_create(hostgroup=group)[0]
+            if host and ipaddr:
+                g.host_set.get_or_create(hostname=host, ipaddr=ipaddr)
+    hostgroup = HostGroup.objects.all()
+    return render(request, 'addhosts.html', {'hostgroup': hostgroup})
 
 
 
