@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>首页</title>
-</head>
-<body>
-这是首页
-</body>
-</html>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}首页{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>主机信息
+            </a>
+        </div>
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>添加主机
+            </a>
+        </div>
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>添加模块
+            </a>
+        </div>
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>执行任务
+            </a>
+        </div>
+    </div>
+{% endblock %}

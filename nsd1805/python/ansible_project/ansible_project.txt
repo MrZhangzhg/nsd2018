@@ -61,6 +61,103 @@ def index(request):
 </body>
 </html>
 
+10、引入bootstrap
+拷贝day18项目中的static到webansi目录
+# index.html
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .banner{
+            background-image: url("{% static 'imgs/banner.jpg' %}");
+            background-size: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="banner"></div>
+    <div class="main"></div>
+    <div class="footer text-center h4">
+        <a href="http://linux.tedu.cn" target="_blank">达内云计算学院</a> 客服电话：400-111-8989 邮箱：admin@tedu.cn
+    </div>
+</div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+11、将index.html复制，形成基础模板base.html
+12、将base.html中需要每个页面自定义的内容通过block定义
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .banner{
+            background-image: url("{% static 'imgs/banner.jpg' %}");
+            background-size: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="banner"></div>
+    <div class="main">{% block content %}{% endblock %}</div>
+    <div class="footer text-center h4">
+        <a href="http://linux.tedu.cn" target="_blank">达内云计算学院</a> 客服电话：400-111-8989 邮箱：admin@tedu.cn
+    </div>
+</div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+13、修改index.html，继承base.html
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}首页{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>主机信息
+            </a>
+        </div>
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>添加主机
+            </a>
+        </div>
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>添加模块
+            </a>
+        </div>
+        <div class="col-md-3 text-center h4">
+            <a href="#">
+                <img src="{% static 'imgs/linux.jpg' %}" width="150px"><br>执行任务
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+
 
 
 
