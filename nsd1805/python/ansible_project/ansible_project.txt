@@ -235,7 +235,10 @@ remote_user = root
 (djenv) [root@room8pc16 myansible]# pip install sqlalchemy
 # ansicfg/dhosts.py
 
-
+{
+    "webservers": {"hosts": ["192.168.4.1", "192.168.4.2"]}
+    "dbservers": {"hosts": ["192.168.4.3"}
+}
 
 
 
