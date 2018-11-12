@@ -431,11 +431,12 @@ def add_modules(request):
     url(r'^tasks/$', views.tasks, name='tasks'),
 (2)创建函数
 def tasks(request):
+    hosts = Host.objects.all()
     hostgroup = HostGroup.objects.all()
     all_modules = AnsiModule.objects.all()
-    context = {'hostgroup': hostgroup, 'all_modules': all_modules}
+    context = {'hosts': hosts, 'hostgroup': hostgroup, 'all_modules': all_modules}
     return render(request, 'tasks.html', context)
-(3)生成模板文件
+(3)生成模板文件tasks.html
 {% extends 'base.html' %}
 {% block title %}执行任务{% endblock %}
 {% block content %}
@@ -449,6 +450,104 @@ def tasks(request):
     </div>
 {% endblock %}
 (4)在index.html中修改超链接，把“执行任务”的超链接改为{% url 'tasks' %}
+(5)修改tasks.html，将数据显示出来
+{% extends 'base.html' %}
+{% block title %}执行任务{% endblock %}
+{% block content %}
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#host" data-toggle="tab">主机</a></li>
+        <li><a href="#group" data-toggle="tab">主机组</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active fade in" id="host">
+            <form action="" method="post" role="form">
+                <div class="form-group">
+                    <select name="host" class="form-control">
+                        {% for host in hosts %}
+                            <option value="{{ host.ipaddr }}">{{ host.hostname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <table class="table table-bordered table-hover table-striped h4">
+                        <tr class="info">
+                            <td>模块</td>
+                            <td>参数</td>
+                        </tr>
+                        {% for mod in all_modules %}
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input type="radio" name="mod" class="radio-inline" value="{{ mod.mod_name }}"> {{ mod.mod_name }}
+                                    </label>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        {% for arg in mod.modargs_set.all %}
+                                            <li>
+                                                <label>
+                                                    <input type="radio" name="arg" class="radio-inline" value="{{ arg.args_text }}"> {{ arg.args_text }}
+                                                </label>
+                                            </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="form-group text-center">
+                    <input class="btn btn-primary" type="submit" value="执 行">
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane active fade" id="group">
+            <form action="" method="post" role="form">
+                <div class="form-group">
+                    <select name="group" class="form-control">
+                        {% for hgroup in hostgroup %}
+                            <option value="{{ hgroup.hostgroup }}">{{ hgroup.hostgroup }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <table class="table table-bordered table-hover table-striped h4">
+                        <tr class="info">
+                            <td>模块</td>
+                            <td>参数</td>
+                        </tr>
+                        {% for mod in all_modules %}
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input type="radio" name="mod" class="radio-inline" value="{{ mod.mod_name }}"> {{ mod.mod_name }}
+                                    </label>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        {% for arg in mod.modargs_set.all %}
+                                            <li>
+                                                <label>
+                                                    <input type="radio" name="arg" class="radio-inline" value="{{ arg.args_text }}"> {{ arg.args_text }}
+                                                </label>
+                                            </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="form-group text-center">
+                    <input class="btn btn-primary" type="submit" value="执 行">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
 
 
 
