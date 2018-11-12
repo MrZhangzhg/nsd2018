@@ -8,6 +8,7 @@
     <div class="tab-content">
         <div class="tab-pane active fade in" id="host">
             <form action="" method="post" role="form">
+            {% csrf_token %}
                 <div class="form-group">
                     <select name="host" class="form-control">
                         {% for host in hosts %}
@@ -51,6 +52,7 @@
         </div>
         <div class="tab-pane active fade" id="group">
             <form action="" method="post" role="form">
+            {% csrf_token %}
                 <div class="form-group">
                     <select name="group" class="form-control">
                         {% for hgroup in hostgroup %}

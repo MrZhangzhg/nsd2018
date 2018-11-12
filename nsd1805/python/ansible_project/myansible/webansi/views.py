@@ -1,5 +1,13 @@
 from django.shortcuts import render
 from .models import HostGroup, AnsiModule, Host
+from collections import namedtuple
+import ansible.constants as C
+from ansible.executor.task_queue_manager import TaskQueueManager
+from ansible.inventory.manager import InventoryManager
+from ansible.parsing.dataloader import DataLoader
+from ansible.playbook.play import Play
+from ansible.vars.manager import VariableManager
+import shutil
 
 def index(request):
     return render(request, 'index.html')
@@ -29,7 +37,46 @@ def add_modules(request):
     all_modules = AnsiModule.objects.all()
     return render(request, 'addmodules.html', {'all_modules': all_modules})
 
+def exec_task(target, mod, args, inventory_path=['ansicfg/dhosts.py']):
+    Options = namedtuple('Options', ['connection', 'module_path', 'forks', 'become', 'become_method', 'become_user', 'check', 'diff'])
+    options = Options(connection='smart', module_path=['/to/mymodules'], forks=10, become=None, become_method=None, become_user=None, check=False, diff=False)
+    loader = DataLoader()
+    passwords = dict()
+    inventory = InventoryManager(loader=loader, sources=inventory_path)
+    variable_manager = VariableManager(loader=loader, inventory=inventory)
+    play_source =  dict(
+            name="Ansible Play",
+            hosts=target,
+            gather_facts='no',
+            tasks=[
+                dict(action=dict(module=mod, args=args), register='shell_out'),
+             ]
+        )
+    play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
+    tqm = None
+    try:
+        tqm = TaskQueueManager(
+                  inventory=inventory,
+                  variable_manager=variable_manager,
+                  loader=loader,
+                  options=options,
+                  passwords=passwords,
+              )
+        result = tqm.run(play)
+    finally:
+        if tqm is not None:
+            tqm.cleanup()
+        shutil.rmtree(C.DEFAULT_LOCAL_TMP, True)
+
 def tasks(request):
+    if request.method == 'POST':
+        target = request.POST.get('host')
+        if not target:
+            target = request.POST.get('group')
+        mod = request.POST.get('mod')
+        args = request.POST.get('arg')
+        exec_task(target, mod, args)
+
     hosts = Host.objects.all()
     hostgroup = HostGroup.objects.all()
     all_modules = AnsiModule.objects.all()
