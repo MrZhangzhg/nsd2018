@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import HostGroup
+from .models import HostGroup, AnsiModule
 
 def index(request):
     return render(request, 'index.html')
@@ -18,3 +18,8 @@ def add_hosts(request):
                 g.host_set.get_or_create(hostname=host, ipaddr=ipaddr)
     hostgroup = HostGroup.objects.all()
     return render(request, 'addhosts.html', {'hostgroup': hostgroup})
+
+def add_modules(request):
+    all_modules = AnsiModule.objects.all()
+    return render(request, 'addmodules.html', {'all_modules': all_modules})
+

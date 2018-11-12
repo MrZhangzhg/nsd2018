@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}添加模块{% endblock %}
+{% block content %}
+    <table class="table table-bordered table-hover table-striped h4">
+        <tr class="info">
+            <td>模块</td>
+            <td>参数</td>
+        </tr>
+        {% for mod in all_modules %}
+            <tr>
+                <td>{{ mod.mod_name }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for args in mod.modargs_set.all %}
+                            <li>{{ args.args_text }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
