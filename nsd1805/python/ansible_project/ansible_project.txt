@@ -600,6 +600,20 @@ def tasks(request):
 至此，全部已完成
 
 
+附：
+在添加主机页面，增加删除主机(组)的功能
+1、创建url
+    url(r'^delhost/(?P<host_id>\d+)/$', views.del_host, name='delhost'),
+2、编写函数
+def del_host(request, host_id):
+    host = Host.objects.get(id=host_id)
+    host.delete()
+    return redirect('addhosts')
+3、修改模板，在主机后面加上删除超链接
+<li>{{ host.hostname }} <a href="{% url 'delhost' host_id=host.id %}">删除</a></li>
+
+
+
 
 
 

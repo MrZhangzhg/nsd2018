@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import HostGroup, AnsiModule, Host
 from collections import namedtuple
 import ansible.constants as C
@@ -26,6 +26,11 @@ def add_hosts(request):
                 g.host_set.get_or_create(hostname=host, ipaddr=ipaddr)
     hostgroup = HostGroup.objects.all()
     return render(request, 'addhosts.html', {'hostgroup': hostgroup})
+
+def del_host(request, host_id):
+    host = Host.objects.get(id=host_id)
+    host.delete()
+    return redirect('addhosts')
 
 def add_modules(request):
     if request.method == 'POST':

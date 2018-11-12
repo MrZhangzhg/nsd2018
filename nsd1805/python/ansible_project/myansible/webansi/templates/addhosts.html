@@ -31,7 +31,7 @@
                 <td>
                     <ul class="list-unstyled">
                         {% for host in group.host_set.all %}
-                            <li>{{ host.hostname }}</li>
+                            <li>{{ host.hostname }} <a href="{% url 'delhost' host_id=host.id %}">删除</a></li>
                         {% endfor %}
                     </ul>
                 </td>
