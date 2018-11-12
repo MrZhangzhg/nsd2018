@@ -426,8 +426,29 @@ def add_modules(request):
     all_modules = AnsiModule.objects.all()
     return render(request, 'addmodules.html', {'all_modules': all_modules})
 
-
-
+25、实现执行任务功能
+(1)配置url
+    url(r'^tasks/$', views.tasks, name='tasks'),
+(2)创建函数
+def tasks(request):
+    hostgroup = HostGroup.objects.all()
+    all_modules = AnsiModule.objects.all()
+    context = {'hostgroup': hostgroup, 'all_modules': all_modules}
+    return render(request, 'tasks.html', context)
+(3)生成模板文件
+{% extends 'base.html' %}
+{% block title %}执行任务{% endblock %}
+{% block content %}
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#host" data-toggle="tab">主机</a></li>
+        <li><a href="#group" data-toggle="tab">主机组</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active fade in" id="host">host</div>
+        <div class="tab-pane active fade" id="group">group</div>
+    </div>
+{% endblock %}
+(4)在index.html中修改超链接，把“执行任务”的超链接改为{% url 'tasks' %}
 
 
 
