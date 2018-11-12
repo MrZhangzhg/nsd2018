@@ -20,6 +20,12 @@ def add_hosts(request):
     return render(request, 'addhosts.html', {'hostgroup': hostgroup})
 
 def add_modules(request):
+    if request.method == 'POST':
+        mod = request.POST.get('mod').strip()
+        args = request.POST.get('args').strip()
+        if mod and args:
+            m = AnsiModule.objects.get_or_create(mod_name=mod)[0]
+            m.modargs_set.get_or_create(args_text=args)
     all_modules = AnsiModule.objects.all()
     return render(request, 'addmodules.html', {'all_modules': all_modules})
 

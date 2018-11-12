@@ -399,6 +399,32 @@ def add_modules(request):
     </table>
 {% endblock %}
 (4)在index.html中修改超链接，把“添加主机”的超链接改为{% url 'addmodules' %}
+(5)在addmodules.html增加表单
+在table的上方，加入以下内容：
+<form class="form-inline" action="" method="post" role="form" style="margin-bottom: 10px">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>模块：</label>
+        <input class="form-control" type="text" name="mod">
+    </div>
+    <div class="form-group">
+        <label>参数：</label>
+        <input class="form-control" type="text" name="args">
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="提 交">
+    </div>
+</form>
+(6)修改函数，将表单提交的模块信息写入数据库
+def add_modules(request):
+    if request.method == 'POST':
+        mod = request.POST.get('mod').strip()
+        args = request.POST.get('args').strip()
+        if mod and args:
+            m = AnsiModule.objects.get_or_create(mod_name=mod)[0]
+            m.modargs_set.get_or_create(args_text=args)
+    all_modules = AnsiModule.objects.all()
+    return render(request, 'addmodules.html', {'all_modules': all_modules})
 
 
 
