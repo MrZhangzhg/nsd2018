@@ -1,0 +1,106 @@
+元组是容器、不可变、顺序访问
+>>> atuple = (10, 20, [1, 2])
+>>> atuple[-1]
+>>> atuple[-1].append(3)   # 因为元组的最后一项是列表，列表可变
+>>> a = (10)
+>>> len(a)    # 错误，因为a不是元组，是数字
+>>> type(a)
+>>> a = (10,)    # 单元素元组，必须有个逗号
+>>> type(a)
+>>> len(a)
+
+字典是容器、不可变、映射类型
+>>> dict()
+>>> dict(['ab'])
+>>> dict(['ab', 'cd'])   # {'a': 'b', 'c': 'd'}
+>>> dict([('name', 'bob'), ('age', 23)])
+{'name': 'bob', 'age': 23}
+>>> {}.fromkeys(['bob', 'tom', 'alice'], 7)
+{'bob': 7, 'tom': 7, 'alice': 7}
+
+字典赋值时，没有key新增，有key为修改
+字典的key必须是不可变对象，如数字、字符串、元组
+
+>>> adict = {'name': 'bob', 'age': 25, 'email': 'bob@tedu.cn'}
+>>> adict.get('name')   # 在字典中取出key为name的值，如果没有，默认是None
+>>> print(adict.get('bob'))
+>>> adict.get('qq', '123456')  # 如果找不到key是qq的项，返回123456
+>>> adict.keys()   # 返回所有的key
+>>> adict.values()   # 返回所有的value
+>>> adict.items()    # (key, value)
+>>> adict.pop('email')
+>>> adict.update({"phone": "13344556677"})
+
+1000000 X 10000000
+
+
+集合是由不重复的数据构成的，集合元素是不可变的。集合像是一个无值的字典。
+
+>>> time.localtime()  # 当前时间的九元组
+>>> time.time()   # 返回时间戳，掌握
+>>> time.sleep(3)   # 睡眠3秒，掌握
+>>> time.ctime()    # 默认返回当前时间
+>>> time.asctime()   # 默认返回当前时间
+>>> time.ctime(0)    # 1970-1-1 8:00:00
+>>> time.strftime('%Y-%m-%d %H:%M:%S')   # 返回指定格式的时间，掌握
+>>> time.strftime('%a')   # 星期几
+>>> time.strftime('%A')
+https://yiyibooks.cn/  -> Python 352 文档 -> 库参考
+
+>>> from datetime import datetime, timedelta
+>>> t = datetime.now()
+>>> t.year
+>>> t.month
+>>> t.day
+>>> datetime.ctime(t)
+>>> t + timedelta(days=100)   # 100天以后的时间
+>>> t - timedelta(days=100)   # 100天以前的时间
+
+>>> import os
+>>> os.remove('/tmp/mima')
+>>> os.getcwd()  # 相当于是pwd
+>>> os.mkdir('/tmp/demo')
+>>> os.makedirs('/tmp/demo/aaa/bbb')
+>>> os.listdir()   # ls
+>>> os.listdir('/tmp/demo')
+>>> os.chdir('/tmp/demo')   # cd /tmp/demo
+>>> os.mknod('hello.txt')   # touch hello.txt
+>>> os.symlink('/etc/hosts', '/tmp/demo/zhuji')   # 软链接
+>>> os.remove('hello.txt')
+>>> os.chmod('aaa', 0o777)   # Linux的权限是8进制数
+>>> os.path.split('/tmp/demo/abc.txt')
+>>> os.path.join('/tmp/demo', 'abc.txt')
+>>> os.path.isfile('/etc/hosts')  # 是文件吗？
+>>> os.path.isdir('/etc/hosts')   # 是目录吗？
+>>> os.path.exists('/etc/')    # 存在吗？
+
+普通的文件操作，只能把字符写入到文件，不能写数字、元组等对象
+pickle可以将任意的数据类型存储到文件中，还能无损地取出来
+>>> import pickle as p
+>>> with open('/tmp/abc.data', 'wb') as fobj:
+...   p.dump({'name': 'bob', 'age': 20}, fobj)
+>>> with open('/tmp/abc.data', 'rb') as fobj:
+...   adict = p.load(fobj)
+>>> adict
+{'name': 'bob', 'age': 20}
+>>> type(adict)
+<class 'dict'>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
