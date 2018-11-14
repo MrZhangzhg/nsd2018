@@ -24,6 +24,27 @@
 >>> set_info(user)  # 把user列表传给name，age没有得到值
 >>> set_info(*user)   # 调用时，*表示把user列表拆开
 
+偏函数：相当于是改造现有函数，将现有函数的一部分参数固定下来
+>>> def add(a, b, c, d, e):
+...     return a + b + c + d + e
+>>> add(10, 20, 30, 40, 5)
+>>> add(10, 20, 30, 40, 8)
+>>> add(10, 20, 30, 40, 20)
+>>> from functools import partial
+>>> newadd = partial(add, 10, 20, 30, 40)
+>>> newadd(8)
+>>> newadd(20)
+
+如果没有tkinter，需要重新编译python
+https://www.python.org/
+# yum install -y tcl-devel tk-devel sqlite-devel
+# tar xzf Python-3.6.1.tar.xz
+# cd Python
+# ./configure --prefix=/usr/local/
+# make
+# make install
+安装完成后，如果pycharm中无法导入，可以重启pycharm
+
 
 
 
