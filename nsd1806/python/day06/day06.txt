@@ -46,6 +46,20 @@ https://www.python.org/
 安装完成后，如果pycharm中无法导入，可以重启pycharm
 
 
+生成器：本质上是函数，但是普通函数即使有多个return，但是只能执行一个return。
+生成器可以通过yield返回多个值（中间值）
+>>> def mygen():
+...   a = 10 + 20
+...   yield a
+...   yield 'hello world'
+...   b = 'ni' + ' ' + 'hao'
+...   yield b
+>>> mg = mygen()
+>>> mg.__next__()
+>>> newg = mygen()
+>>> for item in newg:
+...   print(item)
+
 
 
 
