@@ -1,0 +1,34 @@
+>>> def set_info(name, age):
+...   print('%s is %s years old' % (name, age))
+>>> set_info('bob', 23)
+>>> set_info(23, 'bob')  # 没有语法错误，但是语义不对
+>>> set_info(age=23, 'bob')  # 语法错误，age=23这种形式必须在后面
+>>> set_info(23, name='bob')  # 错误，name得到了两个值
+>>> set_info('bob', age=23)   # 正确
+>>> set_info(age=23, name='bob')  # 正确
+>>> set_info('bob', 23, 30)   # 参数个数不匹配也有错误
+
+>>> def mytest(*args):    # *表示args是个元组
+...   print(args)
+>>> mytest()
+>>> mytest(10)
+>>> mytest(10, 'hello', 100)
+>>> def mytest2(**kwargs):   # **表示kwargs是个字典
+...   print(kwargs)
+>>> mytest2()
+>>> mytest2(name='zs', age=25)
+
+>>> def set_info(name, age):
+...   print('%s is %s years old' % (name, age))
+>>> user = ['alice', 18]
+>>> set_info(user)  # 把user列表传给name，age没有得到值
+>>> set_info(*user)   # 调用时，*表示把user列表拆开
+
+
+
+
+
+
+
+
+
