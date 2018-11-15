@@ -11,6 +11,7 @@ def greet():
     return "How are you?"
 
 if __name__ == '__main__':
-    hello = set_color(hello)
-    print(hello())
-    print(greet())
+    # hello = set_color(hello)
+    # print(hello())
+    print(greet)   # 此时调用set_color(greet)，返回color函数
+    print(greet())   # 此时调用的是color()

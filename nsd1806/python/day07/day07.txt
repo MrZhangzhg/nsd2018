@@ -1,0 +1,28 @@
+模块：一个以.py作为扩展名的文件就是一个模块文件，模块名与文件名一致，只是没有.py
+调用自己的模块：
+(1)运行程序时，要在自己的模块目录下运行，与调用系统模块一样
+[root@room8pc16 day07]# ls
+randpass.py
+[root@room8pc16 day07]# cat randpass.py
+from string import ascii_letters, digits
+from random import choice
+
+all_chs = ascii_letters + digits
+
+def randpass(n=8):
+    result = [choice(all_chs) for i in range(n)]
+    return ''.join(result)
+
+if __name__ == '__main__':
+    print(randpass())
+    print(randpass(10))
+
+[root@room8pc16 day07]# python3
+>>> import randpass
+>>> randpass.randpass()   # 调用randpass中的函数randpass
+>>> randpass.all_chs   # 调用randpass模块中的全局变量
+
+
+
+
+
