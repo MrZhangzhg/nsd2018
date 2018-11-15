@@ -90,6 +90,18 @@ bb09970c228cb6a6684d80d623cfcfa0  /tmp/mima
 >>> tar.close()
 
 
+递归列出目录中所有内容：
+>>> for path, folders, files in os.walk('/tmp/demo/security/'):
+...     for file in files:
+...         print(os.path.join(path, file))
+
+
+[root@room8pc16 tmp]# mkdir -p /tmp/demo/backup
+[root@room8pc16 tmp]# cp -r /etc/security/ demo/
+测试：将/tmp/demo/security备份到/tmp/demo/backup/
+
+
+
 
 
 
