@@ -22,6 +22,81 @@ if __name__ == '__main__':
 >>> randpass.randpass()   # 调用randpass中的函数randpass
 >>> randpass.all_chs   # 调用randpass模块中的全局变量
 
+当执行import语句进，python到sys.path定义的目录去搜索模块。用户自己创建的模块，可
+以保存到site-packages目录，或通过环境变量PYTHONPATH定义。
+[root@room8pc16 day07]# mkdir /opt/mymods
+[root@room8pc16 day07]# cp randpass.py /opt/mymods/
+[root@room8pc16 tmp]# export PYTHONPATH=/opt/mymods/
+[root@room8pc16 tmp]# python3
+>>> import randpass
+
+包：本质上就是一个目录，可以当成特殊的模块
+[root@room8pc16 day07]# ls
+aaa/
+[root@room8pc16 day07]# ls aaa/
+hi.py
+[root@room8pc16 day07]# cat aaa/hi.py
+hello = 'hello world!'
+[root@room8pc16 day07]# python3
+>>> import aaa.hi
+>>> aaa.hi.hello
+# 注意：在python2中，目录必须包含一个名为__init__.py的文件才能成为包
+
+
+单向加密：哈希、hash
+加密只能向一个方向进行，可以理解为相同的数据可以固定长度的乱码。原始数据相同，生成的
+乱码也一定相同，但是不能通过乱码回推出原始数据。
+常用算法有：md5、sha
+一般用来存储加密密码和文件完整性校验。
+[root@room8pc16 day07]# cp /etc/passwd /tmp/mima
+[root@room8pc16 day07]# md5sum /etc/passwd /tmp/mima
+48dbad21c8f0aea57b5f25982295e2c9  /etc/passwd
+48dbad21c8f0aea57b5f25982295e2c9  /tmp/mima
+[root@room8pc16 day07]# vim /tmp/mima   稍做修改
+[root@room8pc16 day07]# md5sum /etc/passwd /tmp/mima
+48dbad21c8f0aea57b5f25982295e2c9  /etc/passwd
+bb09970c228cb6a6684d80d623cfcfa0  /tmp/mima
+
+>>> import hashlib
+>>> with open('/etc/passwd', 'rb') as fobj:
+...   data = fobj.read()
+...
+>>> m = hashlib.md5(data)
+>>> m.hexdigest()
+
+上面的方法不具有通用性，如果文件很大，就不合适了。
+>>> m = hashlib.md5()
+>>> with open('/etc/passwd', 'rb') as fobj:
+...     while True:
+...         data = fobj.read(4096)
+...         if not data:
+...             break
+...         m.update(data)
+>>> m.hexdigest()
+
+
+>>> import os
+>>> import tarfile
+>>> tar = tarfile.open('/tmp/security.tar.gz', 'w:gz')
+>>> os.chdir('/etc')
+>>> tar.add('security')
+>>> tar.add('hosts')
+>>> tar.close()
+-----------------------------------
+>>> os.mkdir('/tmp/anquan')
+>>> os.chdir('/tmp/anquan')
+>>> tar = tarfile.open('/tmp/security.tar.gz', 'r:gz')
+>>> tar.extractall()
+>>> tar.close()
+
+
+
+
+
+
+
+
+
 
 
 
