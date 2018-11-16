@@ -1,0 +1,22 @@
+>>> import re
+>>> re.match('f..', 'food')   # 匹配到，返回匹配对象
+>>> print(re.match('f..', 'seafood'))   # 没有匹配到，返回None
+>>> re.search('f..', 'food')
+>>> re.search('f..', 'seafood')
+>>> m.group()    # 返回匹配内容
+>>> re.findall('f..', 'seafood is food')
+>>> for m in re.finditer('f..', 'seafood is food'):
+...   print(m.group())
+>>> re.split('\.|-', 'hello-world.tar.gz')  # 以点或-作为分隔符进行切割
+>>> print(re.sub('X', 'zzg', 'Hi X\nHello X'))   # 查找替换
+在匹配量很大的时候，先将模式进行编译，可以提升效率
+>>> patt = re.compile('f..')
+>>> m = patt.search('seafood')
+>>> m.group()
+>>> patt.findall('seafood is food')
+
+
+
+
+
+
