@@ -27,17 +27,18 @@ class TcpTimeServ:
                 break
 
             pid = os.fork()
-            if pid:
-                cli_sock.close()
-                while True:
-                    result = os.waitpid(-1, 1)   # 优先处理僵尸进程
-                    print(result)
-                    if result[0] == 0:
-                        break
-            else:
+            if not pid:
                 self.chat(cli_sock)
                 cli_sock.close()
                 exit()
+
+            cli_sock.close()
+            while True:
+                result = os.waitpid(-1, 1)  # 优先处理僵尸进程
+                print(result)
+                if result[0] == 0:
+                    break
+
 
         self.serv.close()
 
