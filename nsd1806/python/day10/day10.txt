@@ -60,7 +60,9 @@ salary_date DATE, basic INT, awards INT, PRIMARY KEY(auto_id),
  FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
 
 
-
+SQLALchemy
+1、安装
+# pip install sqlalchemy
 
 
 
