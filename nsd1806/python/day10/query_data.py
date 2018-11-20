@@ -110,7 +110,8 @@ session = Session()
 # session.add_all([zmg, zjh])
 # session.commit()
 #########################################################
-#
+# query括号中先写Employees.emp_name，join的括号中就要写Departments
+# query括号中先写Departments.dep_name，join的括号中就要写Employees
 query15 = session.query(Employees.emp_name, Departments.dep_name)\
     .join(Departments, Employees.dep_id==Departments.dep_id)
 print(query15.all())
