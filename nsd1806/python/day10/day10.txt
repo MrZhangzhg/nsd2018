@@ -63,6 +63,11 @@ salary_date DATE, basic INT, awards INT, PRIMARY KEY(auto_id),
 SQLALchemy
 1、安装
 # pip install sqlalchemy
+2、创建一个数据库
+MariaDB [nsd1806]> CREATE DATABASE tedu1806 DEFAULT CHARSET utf8;
+3、
+
+
 
 
 
