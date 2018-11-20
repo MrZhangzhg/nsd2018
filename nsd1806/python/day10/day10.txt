@@ -1,0 +1,74 @@
+1、在物理主机上安装mariadb-server
+2、安装额外的python模块方法
+(1)在官方站点http://pypi.python.org查找、下载，如下载的文件是PyMySQL-0.9.2.tar.gz
+# tar xzf PyMySQL-0.9.2.tar.gz
+# cd pymysql
+# python3 setup.py install
+(2)通过pip安装本地软件包
+# pip install PyMySQL-0.9.2.tar.gz
+(3)在线安装
+# pip install pymysql
+(4)使用国内镜像站点
+# mkdir ~/.pip
+# vim ~/.pip/pip.conf
+[global]
+index-url = http://pypi.douban.com/simple/
+[install]
+trusted-host=pypi.douban.com
+# pip install pymysql
+
+
+关系型数据库：
+1、数据库要避免数据冗余。
+2、数据冗余有可能造成数据的不一致。还可能导致更新异常。
+3、一般通过各种方法，把字段放到不同表中。
+
+编写一个小型公司的数据库，可以记录发工资
+字段：姓名、性别、工号、出生日期、联系方式、部门、工资日期、基本工资、
+奖金、工资总额
+
+数据库范式：
+第一范式(1NF):所谓第一范式（1NF）是指在关系模型中，对于添加的一个规范要求，
+所有的域都应该是原子性的，即数据库表的每一列都是不可分割的原子数据项
+根据1NF，上述字段联系方式可以继续分成：住址、电话号码、email
+第二范式（2NF）：第二范式（2NF）是在第一范式（1NF）的基础上建立起来的，
+即满足第二范式（2NF）必须先满足第一范式（1NF）。第二范式（2NF）要求数据库表中的
+每个实例或记录必须可以被唯一地区分。
+为了消除冗余，需要把字段拆分到多张表中
+员工表：工号、姓名、性别、出生日期、住址、电话号码、email、部门ID
+部门表：部门ID、部门名
+工资表：auto_id、工号、工资日期、基本工资、奖金、工资总额
+第三范式（3NF）：在2NF基础上，任何非主属性不依赖于其它非主属性（在2NF基础上消除传递依赖）
+工资表中的工资总额依赖基本工资和奖金，所以不应该出现在表中。需要的时候，临时计算
+根据这三范式，最终把所有的字段放到了三张表中，如下：
+员工表：工号、姓名、性别、出生日期、电话号码、email、部门ID
+部门表：部门ID、部门名
+工资表：auto_id、工号、工资日期、基本工资、奖金
+
+创建数据库和表：
+[root@room8pc16 day10]# mysql -uroot -ptedu.cn
+MariaDB [(none)]> CREATE DATABASE nsd1806 DEFAULT CHARSET utf8;
+MariaDB [(none)]> USE nsd1806;
+MariaDB [nsd1806]> CREATE TABLE departments(dep_id INT,
+dep_name VARCHAR(20) UNIQUE NOT NULL, PRIMARY KEY(dep_id));
+MariaDB [nsd1806]> CREATE TABLE employees(emp_id INT,
+emp_name VARCHAR(20), gender varchar(6), birth_date DATE,
+phone VARCHAR(11), email VARCHAR(50), dep_id INT,
+PRIMARY KEY(emp_id), FOREIGN KEY(dep_id) REFERENCES departments(dep_id));
+MariaDB [nsd1806]> CREATE TABLE salary(auto_id INT, emp_id INT,
+salary_date DATE, basic INT, awards INT, PRIMARY KEY(auto_id),
+ FOREIGN KEY(emp_id) REFERENCES employees(emp_id));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
