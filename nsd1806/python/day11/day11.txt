@@ -31,6 +31,76 @@ Host: www.baidu.com
 ...         fobj.write(data)
 [root@room8pc16 day11]# firefox /tmp/163.html
 
+通过修改请求头，模拟使用Firefox访问服务器
+# tail -f /var/log/httpd/access_log
+>>> url = 'http://127.0.0.1/'
+>>> header = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
+>>> req = request.Request(url, headers=header)
+>>> req = request.Request(url, headers=header)
+>>> html = request.urlopen(req)
+
+ASCII（American Standard Code for Information Interchange，美国信息交换标准代码）
+1100001  -> a
+1100010  -> b
+1100011  -> c
+
+ISO8859-1/Latin-1
+
+GB2312/GBK/GB18030
+BIG5
+
+ISO -> 国际标准化组织  Unicode编码
+utf8 -> 是变长的，对于欧美文字，用8位表示，汉字用24位表示
+utf16
+
+python3的字符有两种类型：str和bytes
+>>> a = '人'        -> str类型
+>>> a.encode('gbk')   # 转成bytes类型，使用gbk编码
+b'\xc8\xcb'
+>>> a.encode()        # 转成bytes类型，默认采用utf8编码
+b'\xe4\xba\xba'
+>>> aa = a.encode('gbk')
+>>> aa.decode()   # gbk编码不能通过utf8进行解码
+>>> aa.decode('gbk')   # 将bytes类型解码为str类型
+
+URL地址栏中只允许一部分ascii码，其他字符，如果出现在网址中，需要编码
+>>> from urllib import request
+>>> request.quote('你好')
+'%E4%BD%A0%E5%A5%BD'
+>>> url = 'http://www.baidu.com/s?wd=' + request.quote('你好')
+>>> import webbrowser
+>>> webbrowser.open_new_tab(url)   # 使用默认浏览器打开网址
+
+paramiko: 相当于是ssh客户端，可以远程执行命令，可以实现sftp
+1、安装
+# pip install paramiko
+2、为了实现相应的效果，创建三台虚拟机
+node1: 192.168.4.1
+node2: 192.168.4.2
+node3: 192.168.4.3
+3、paramiko的使用
+>>> import paramiko
+>>> ssh = paramiko.SSHClient()
+>>> ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())  # 回答yes
+>>> ssh.connect('192.168.4.1', username='root', password='123456')
+>>> ssh.exec_command('useradd zhangsan')
+>>> ssh.close()
+--------------------------------------------
+>>> ssh.connect('192.168.4.1', username='root', password='123456')
+>>> a = ssh.exec_command('id zhangsan; id lisi')
+>>> len(a)
+3
+执行命令后的返回值有三项，分别是输入、输出和错误的类文件对象。执行完命令后，关心的
+是输出和错误。
+>>> a[1].read()
+>>> a[2].read()
+
+
+
+
+
+
+
 
 
 
