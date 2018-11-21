@@ -1,0 +1,45 @@
+HTTP重要方法：
+GET:在地址栏中输入网址访问，采用get；点击页面上的一个链接，采用get；填写表单，提交
+也可以采用get
+POST: 一般来说是在表单提交隐私数据时采用。
+
+常见的HTTP状态码：
+200: OK
+404: Not Found
+403: Forbidden
+301: redirect 永久重定向
+501: Internal Error 内部错误
+
+通过telnet发送HTTP头部，请求页面
+[root@room8pc16 day11]# telnet www.baidu.com 80
+GET / HTTP/1.1
+Host: www.baidu.com
+[回车]
+
+>>> from urllib import request
+>>> html = request.urlopen('http://www.163.com/')
+>>> html.readline()
+>>> html.read(20)
+>>> html.readlines()
+
+>>> html = request.urlopen('http://www.163.com/')
+>>> with open('/tmp/163.html', 'wb') as fobj:
+...     while True:
+...         data = html.read(1024)
+...         if not data:
+...             break
+...         fobj.write(data)
+[root@room8pc16 day11]# firefox /tmp/163.html
+
+
+
+
+
+
+
+
+
+
+
+
+
