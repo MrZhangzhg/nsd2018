@@ -1,4 +1,8 @@
 import paramiko
+import sys
+import getpass
+import os
+import threading
 
 def rcmd(host, username='root', password=None, cmd=None):
     ssh = paramiko.SSHClient()
@@ -14,8 +18,18 @@ def rcmd(host, username='root', password=None, cmd=None):
     ssh.close()
 
 if __name__ == '__main__':
-    host = '192.168.4.1'
-    password = '123456'
-    cmd = 'id zhangsan; id wangwu'
-    rcmd(host, password=password, cmd=cmd)
-
+    if len(sys.argv) != 3:
+        print('Usage: %s ipfile "command"' % sys.argv[0])
+        exit(1)
+    ipfile = sys.argv[1]
+    if not os.path.isfile(ipfile):
+        print('No such file:', ipfile)
+        exit(2)
+    cmd = sys.argv[2]
+    password = getpass.getpass()
+    with open(ipfile) as fobj:
+        for line in fobj:
+            ip = line.strip()
+            t = threading.Thread(target=rcmd, args=(ip, 'root', password, cmd))
+            t.start()
+            # rcmd(ip, password=password, cmd=cmd)
