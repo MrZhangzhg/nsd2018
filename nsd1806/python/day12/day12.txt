@@ -60,7 +60,13 @@ requests将所有的状态码都起了一个友好的名字
 注册钉钉帐号
 在百度中搜“钉钉开放平台 机器人”
 https://open-doc.dingtalk.com/docs/doc.htm?treeId=257&articleId=105735&docType=1
+https://www.jianshu.com搜“python百例” -> 116-钉钉机器人
 
+
+zabbix
+https://www.zabbix.com/documentation/3.4/zh/manual
+如果只是获取zabbix版本，不需要认证。如果需要获取主机、模板、监控项等敏感信息则
+需要认证，认证通过用户名和密码生成通行令牌。
 
 
 
