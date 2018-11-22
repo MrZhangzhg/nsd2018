@@ -32,7 +32,34 @@ requests模块应用：
 >>> r.encoding = 'utf8'    # 修改编码
 >>> r.json()
 
+带有参数的requests请求：
+相当于在浏览器的地址栏中输入：http://www.baidu.com/s?wd=python
+>>> param = {'wd': 'python'}
+>>> r = requests.get('http://www.baidu.com/s', params=param)
+>>> with open('/tmp/bd_py.html', 'wb') as fobj:
+...     fobj.write(r.content)
 
+修改请求头，模拟Firefox访问服务器
+>>> header = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'}
+>>> r = requests.get('http://127.0.0.1/', headers=header)
+[root@room8pc16 ~]# tail -f /var/log/httpd/access_log
+
+服务器回应的状态码，通过r.status_code查看
+>>> r = requests.get('http://127.0.0.1/', headers=header)
+>>> r.status_code    # 200
+>>> r = requests.get('http://127.0.0.1/abc')   # 路径不存在
+>>> r.status_code    # 404
+>>> r = requests.get('http://127.0.0.1/ban')   # ban路径无权限
+>>> r.status_code    # 403
+
+requests将所有的状态码都起了一个友好的名字
+>>> requests.codes.ok
+>>> requests.codes.not_found
+>>> requests.codes.forbidden
+
+注册钉钉帐号
+在百度中搜“钉钉开放平台 机器人”
+https://open-doc.dingtalk.com/docs/doc.htm?treeId=257&articleId=105735&docType=1
 
 
 
