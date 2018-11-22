@@ -1,0 +1,49 @@
+通过“中国天气网”获取气温等信息
+1、实况天气获取:http://www.weather.com.cn/data/sk/城市代码.html
+2、城市信息获取:http://www.weather.com.cn/data/cityinfo/城市代码.html
+3、详细指数获取:http://www.weather.com.cn/data/zs/城市代码.html
+
+城市代码自行百度搜索
+北京：101010100
+http://www.weather.com.cn/data/sk/101010100.html  -> 返回json格式
+
+>>> import json
+>>> from urllib import request
+>>> html = request.urlopen('http://www.weather.com.cn/data/sk/101010100.html')
+>>> result = html.read()
+>>> json.loads(result)
+>>> w = json.loads(result)
+>>> w['weatherinfo']['SD']
+
+
+requests模块应用：
+>>> import requests
+>>> r = requests.get('https://upload-images.jianshu.io/upload_images/13235576-56b11823dde1e67d')
+>>> with open('/tmp/ttt.img', 'wb') as fobj:
+...    fobj.write(r.content)   # content返回bytes类型数据
+[root@room8pc16 day12]# eog /tmp/ttt.img
+
+>>> r = requests.get('http://127.0.0.1/')
+>>> r.text      # r.text返回str类型的数据
+
+>>> r = requests.get('http://www.weather.com.cn/data/sk/101010100.html')
+>>> r.json()    # r.json()将返回的json格式数据转成python数据类型
+>>> r.encoding   # 当前编码类型
+>>> r.encoding = 'utf8'    # 修改编码
+>>> r.json()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

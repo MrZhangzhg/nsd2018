@@ -10,7 +10,7 @@ def inet_mail(msg, subject, sender, receivers, server, username, password):
     message['Subject'] = Header(subject, 'utf8')
     smtp = smtplib.SMTP()
     smtp.connect(server, port=25)
-    # smtp.starttls()
+    # smtp.starttls()    # 如果服务器要求加密，打开注释
     smtp.login(username, password)
     smtp.sendmail(sender, receivers, message.as_string())
 
