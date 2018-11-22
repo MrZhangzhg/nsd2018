@@ -68,8 +68,46 @@ https://www.zabbix.com/documentation/3.4/zh/manual
 如果只是获取zabbix版本，不需要认证。如果需要获取主机、模板、监控项等敏感信息则
 需要认证，认证通过用户名和密码生成通行令牌。
 
+/usr/local/share/zabbix/alertscripts/dingalert.py
 
+×
+广告
+121-配置zabbix通过钉钉机器人报警
+96 凯茜的老爸
+2018.11.04 14:03 字数 131 阅读 214评论 0喜欢 2
 
+钉钉机器人的设置，参见《116-钉钉机器人》
+zabbix服务器监控到异常，可以通过各种方式发送报警消息。配置步骤如下：
+1、创建报警脚本
+
+[root@node2 ~]# vim /usr/local/share/zabbix/alertscripts/dingalert.py
+#!/usr/bin/env python
+# coding: utf8
+
+import json
+import requests
+import sys
+
+def send_msg(url, remiders, msg):
+    headers = {'Content-Type': 'application/json; charset=utf-8'}
+    data = {
+        "msgtype": "text",
+        "at": {
+            "atMobiles": remiders,
+            "isAtAll": False,
+        },
+        "text": {
+            "content": msg,
+        }
+    }
+    r = requests.post(url, data=json.dumps(data), headers=headers)
+    return r.text
+
+if __name__ == '__main__':
+    msg = sys.argv[1]
+    remiders = []
+    url = '钉钉机器人的URL'
+    print(send_msg(url, remiders, msg))
 
 
 
