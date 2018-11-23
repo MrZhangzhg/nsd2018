@@ -92,7 +92,14 @@ gitlab中重要的概念
 6、在jenkins中创建一个“自由风格”的项目
 参数化构建过程 -> git parameter
 
-
+shell脚本内容如下：
+deploy_dir=/var/www/html/deploy
+cp -r web_pro_$mytag $deploy_dir/packages/
+rm -rf $deploy_dir/packages/web_pro_$mytag/.git
+cd $deploy_dir/packages/
+tar czf web_pro_$mytag.tar.gz web_pro_$mytag
+md5sum web_pro_$mytag.tar.gz | awk '{print $1}' > web_pro_$mytag.tar.gz.md5
+rm -rf web_pro_$mytag
 
 
 
