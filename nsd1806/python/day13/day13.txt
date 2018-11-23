@@ -55,7 +55,20 @@ node3: eth0 -> 192.168.4.3
 [root@room8pc16 devops]# git log   # 查看
 [root@room8pc16 devops]# git tag
 程序员将本地代码推送到gitlab服务器
+[root@room8pc16 ~]# cd /tmp/devops/
+[root@room8pc16 devops]# git remote rename origin old-origin
+[root@room8pc16 devops]# git remote add origin http://192.168.4.1/nsd1806/devops.git
+[root@room8pc16 devops]# git push -u origin --all
+[root@room8pc16 devops]# git push -u origin --tags
 
+
+gitlab中重要的概念
+群组group：可以为一个团队创建一个群组
+项目project：一个团队可以开发多个项目
+成员member：为团队成员创建的账号
+
+创建名为nsd1806的group，再从组中创建名为devops的项目
+创建用户，将用户加入到项目，为其指定角色为主程序员
 
 
 
