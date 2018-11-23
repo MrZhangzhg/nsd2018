@@ -71,6 +71,30 @@ gitlab中重要的概念
 创建用户，将用户加入到项目，为其指定角色为主程序员
 
 
+配置jenkins访问gitlab
+实现以下目标：
+1、jenkins访问gitlab，将代码下载
+2、下载代码时，可以选择版本(tag)
+3、下载的代码默认保存在/var/lib/jenkins/workspace目录下，需要在它下面创建子目录
+4、下载的代码需要打tar包，保存到web服务器网站目录下，以供下载
+5、计算tar包的md5值，保存到文件中，以便下载时校验
+6、将软件最新版本写到live_version
+7、将前一个版本写last_version文件中
+步骤
+1、在jenkins服务器上安装git和apache
+[root@node3 ~]# yum install -y git httpd
+2、启动httpd
+3、创建/var/www/html/deploy用于保存live_verion和last_version
+4、创建/var/www/html/deploy/packages/用于保存tar包和md5值文件
+[root@node3 ~]# mkdir -pv /var/www/html/deploy/packages
+5、修改新建目录的属主属组
+[root@node3 ~]# chown -R jenkins.jenkins /var/www/html/deploy
+6、在jenkins中创建一个“自由风格”的项目
+参数化构建过程 -> git parameter
+
+
+
+
 
 
 
