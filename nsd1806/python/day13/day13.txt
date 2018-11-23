@@ -105,6 +105,16 @@ cd $deploy_dir
 echo $mytag > live_version
 
 
+在应用服务器上编写python工具，实现软件自动部署
+1、检查是否有新版本
+2、如果有新版本就下载新版本
+3、校验下载的程序包是否损坏
+4、如果没有损坏，部署
+5、更新本地live_version
+
+将物理主机作为应用服务器。下载的软件及live_version存到/var/www/download/中，
+下载的软件解压到/var/www/deploy中。部署时，创建链接文件指向/var/www/html/nsd1806
+# mkdir /var/www/{download,deploy}
 
 
 
