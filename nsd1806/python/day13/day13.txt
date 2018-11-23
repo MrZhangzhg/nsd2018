@@ -1,0 +1,53 @@
+解释型语言：php/python/shell
+编译型语言：C/java
+
+# vim hello.c
+#include <stdio.h>
+
+int main(void) {
+    printf("Hello World!\n");
+    return 0;
+}
+# 将C语言源码编译成二进制执行文件
+[root@room8pc16 day13]# gcc -o hello hello.c
+[root@room8pc16 day13]# ./hello
+
+
+jenkins
+1、准备虚拟机
+node3: eth0 -> 192.168.4.3
+       eth1 -> 连接方式使用缺省的NAT
+如果NAT选不了：打开控制台virt-manager -> 编辑 -> 连接详情 -> 虚拟网络
+找到default网络，点击下面的开始按钮将其激活
+2、配置IP地址
+# nmtui  -> 如果没有eth1，可以选择添加->Ethernet->名字写eth1，ip地址自动获得
+3、删除虚拟机中的网桥
+[root@node3 ~]# ifconfig virbr0 down
+[root@node3 ~]# brctl delbr virbr0
+4、激活网卡
+[root@node3 ~]# ifdown eth0; ifup eth0
+[root@node3 ~]# ifdown eth1; ifup eth1
+5、将jenkins软件拷贝到虚拟机中
+6、虚拟机配置好yum
+7、安装jenkins
+[root@node3 ~]# rpm -ihv jenkins-2.121.1-1.1.noarch.rpm
+[root@node3 ~]# systemctl start jenkins
+[root@node3 ~]# systemctl enable jenkins
+8、配置jenkins
+访问http://192.168.4.3:8080
+插件安装，“选择插件来安装” -> 只选git和git parameter即可
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
