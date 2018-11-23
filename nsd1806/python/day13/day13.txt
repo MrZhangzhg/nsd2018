@@ -120,6 +120,9 @@ echo $mytag > live_version
 
 
 
+[root@room8pc16 day13]# pip install wget
+>>> import wget
+>>> wget.download('http://192.168.4.3/deploy/packages/web_pro_1.0.tar.gz', '/tmp/web_pro_1.0.tar.gz')
 
 
 
