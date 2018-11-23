@@ -38,6 +38,26 @@ node3: eth0 -> 192.168.4.3
 插件安装，“选择插件来安装” -> 只选git和git parameter即可
 
 
+模拟程序员写程序，在本地通过git管理
+[root@room8pc16 day12]# git init /tmp/devops
+[root@room8pc16 day12]# cd /tmp/devops/
+[root@room8pc16 devops]# vim index.html
+<h1>web server 1.0</h1>
+[root@room8pc16 devops]# git add .   # 加到暂存区
+[root@room8pc16 devops]# git commit -m "web project 1.0"  # 加到版本库
+[root@room8pc16 devops]# git tag 1.0   # 打标记，1.0版本
+[root@room8pc16 devops]# vim index.html
+<h1>web server 1.0</h1>
+<h2 style="color: green">web server 2.0</h2>
+[root@room8pc16 devops]# git add .
+[root@room8pc16 devops]# git commit -m "web project 2.0"
+[root@room8pc16 devops]# git tag 2.0
+[root@room8pc16 devops]# git log   # 查看
+[root@room8pc16 devops]# git tag
+程序员将本地代码推送到gitlab服务器
+
+
+
 
 
 
