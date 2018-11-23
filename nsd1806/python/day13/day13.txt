@@ -100,7 +100,9 @@ cd $deploy_dir/packages/
 tar czf web_pro_$mytag.tar.gz web_pro_$mytag
 md5sum web_pro_$mytag.tar.gz | awk '{print $1}' > web_pro_$mytag.tar.gz.md5
 rm -rf web_pro_$mytag
-
+cd $deploy_dir
+[ -f live_version ] && cat live_version > last_version
+echo $mytag > live_version
 
 
 
