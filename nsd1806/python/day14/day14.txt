@@ -116,6 +116,21 @@ http://docs.ansible.com/  -> Ansible Documentation ->搜索python api
 25
 
 
+ansible-cmdb
+[root@room8pc16 day14]# pip3 install ansible-cmdb
+[root@room8pc16 day14]# mkdir /tmp/ansi_cmdb
+[root@room8pc16 myansible]# ansible all -m setup --tree /tmp/ansi_cmdb/out
+[root@room8pc16 myansible]# ansible-cmdb /tmp/ansi_cmdb/out/ > /tmp/ansi_cmdb/out.html
+[root@room8pc16 myansible]# firefox /tmp/ansi_cmdb/out.html
+问题的解决：
+1、mako
+[root@room8pc16 myansible]# pip3 install mako
+2、运行ansible-cmdb出错
+[root@room8pc16 myansible]# which ansible-cmdb
+[root@room8pc16 myansible]# vikm /usr/local/bin/ansible-cmdb
+将PY_BIN=$(which python) 修改为
+PY_BIN=$(which python3)
+
 
 
 
