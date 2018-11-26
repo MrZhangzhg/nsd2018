@@ -1,0 +1,30 @@
+---
+- name: configure web service
+  hosts: webservers
+  tasks:
+    - name: install apache pkgs
+      yum:
+        name: [httpd, php, php-mysql]
+        state: latest
+    - name: upload web files
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+    - name: manage web service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+- name: configure db service
+  hosts: dbservers
+  tasks:
+    - name: install db pkgs
+      yum:
+        name: mariadb-server
+        state: present
+    - name: manage db service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes

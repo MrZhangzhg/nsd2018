@@ -59,6 +59,46 @@ gpgcheck=0
 [root@room8pc16 myansible]# ansible-playbook --syntax-check sys_init.yml
 [root@room8pc16 myansible]# ansible-playbook sys_init.yml -k
 
+9、配置web/db服务器
+web: 装软件、上传网站、启动服务
+db: 装软件、启动服务
+[root@room8pc16 myansible]# vim lamp.yml
+---
+- name: configure web service
+  hosts: webservers
+  tasks:
+    - name: install apache pkgs
+      yum:
+        name: [httpd, php, php-mysql]
+        state: latest
+    - name: upload web files
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+    - name: manage web service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+- name: configure db service
+  hosts: dbservers
+  tasks:
+    - name: install db pkgs
+      yum:
+        name: mariadb-server
+        state: present
+    - name: manage db service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+[root@room8pc16 myansible]# vim files/index.html
+<h1>my web site</h1>
+[root@room8pc16 myansible]# ansible-playbook --syntax-check lamp.yml
+[root@room8pc16 myansible]# ansible-playbook lamp.yml
+
+
 
 
 
