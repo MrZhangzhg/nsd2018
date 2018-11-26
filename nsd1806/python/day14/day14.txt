@@ -98,6 +98,28 @@ db: 装软件、启动服务
 [root@room8pc16 myansible]# ansible-playbook --syntax-check lamp.yml
 [root@room8pc16 myansible]# ansible-playbook lamp.yml
 
+http://docs.ansible.com/  -> Ansible Documentation ->搜索python api
+
+命名的元组：
+传统的元组是序列对象，通过下标访问；命名元组扩展了传统的元组，为每个元素添加了额
+外的名称，仍可以按传统的方式访问。
+>>> from collections import namedtuple
+>>> point = namedtuple('point', ['x', 'y', 'z'])
+>>> a = point(10, 20, 25)
+>>> a[0]
+10
+>>> a[1:]
+(20, 25)
+>>> a.x
+10
+>>> a.z
+25
+
+
+
+
+
+
 
 
 
