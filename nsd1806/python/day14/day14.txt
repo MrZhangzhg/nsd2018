@@ -131,6 +131,37 @@ ansible-cmdb
 将PY_BIN=$(which python) 修改为
 PY_BIN=$(which python3)
 
+创建自定义模块
+1、创建自定义模块路径
+[root@room8pc16 myansible]# mkdir mymodules
+2、设置环境变量，当ansible搜索模块时，也会到自定义的路径下搜索
+[root@room8pc16 myansible]# export ANSIBLE_LIBRARY=./mymodules
+3、编写模块，用于实现本地文件拷贝
+# vim ./mymodules/mycopy.py
+#!/usr/bin/env python3
+# coding: utf8
+
+import shutil
+from ansible.module_utils.basic import AnsibleModule
+
+def main():
+    '函数名是main，必须的'
+    module = AnsibleModule(
+        argument_spec=dict(
+            yuan=dict(required=True, type='str'),
+            mubiao=dict(required=True, type='str')
+        )
+    )
+    shutil.copy(module.params['yuan'], module.params['mubiao'])
+    module.exit_json(changed=True)
+
+if __name__ == '__main__':
+    main()
+
+4、设置执行权限
+[root@room8pc16 myansible]# chmod +x mymodules/mycopy.py
+5、测试
+
 
 
 
