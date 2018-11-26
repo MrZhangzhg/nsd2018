@@ -127,7 +127,7 @@ ansible-cmdb
 [root@room8pc16 myansible]# pip3 install mako
 2、运行ansible-cmdb出错
 [root@room8pc16 myansible]# which ansible-cmdb
-[root@room8pc16 myansible]# vikm /usr/local/bin/ansible-cmdb
+[root@room8pc16 myansible]# vim /usr/local/bin/ansible-cmdb
 将PY_BIN=$(which python) 修改为
 PY_BIN=$(which python3)
 
