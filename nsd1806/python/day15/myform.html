@@ -3,8 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <title>my form</title>
+    <script>
+        function showme() {
+            alert('Hello World!')
+        }
+    </script>
 </head>
 <body>
+<textarea name="" id="" cols="60" rows="10"></textarea>
+
+
+<hr>
+<form action="">
+    <select name="teacher" id="teahcer2" multiple>
+        <option value="nb">牛犇</option>
+        <option value="wk">王凯</option>
+        <option value="dmy">丁明一</option>
+        <option value="plj">庞丽静</option>
+        <option value="lx">李欣</option>
+    </select>
+</form>
+
+<hr>
+<form action="">
+    <select name="teacher" id="teahcer">
+        <option value="nb">牛犇</option>
+        <option value="wk">王凯</option>
+        <option value="dmy">丁明一</option>
+        <option value="plj">庞丽静</option>
+        <option value="lx">李欣</option>
+    </select>
+</form>
+
+
+<hr>
+<form action="" method="post">
+    <input type="file">
+    <input type="submit" value="上传">
+</form>
+
+<hr>
+<input type="button" value="警告" onclick="showme()">
+
+<hr>
+<form action="">
+    <label>用户：</label><input type="text" placeholder="用户名"><br>
+    <label>密码：</label><input type="password" placeholder="密 码"><br>
+    <input type="submit" value="登 陆">
+    <input type="reset">
+</form>
+
+<hr>
+<form action="">
+    你最喜欢的科目是什么？<br>
+    <input type="checkbox" name="lesson" value="linux"><label>linux</label><br>
+    <label><input type="checkbox" name="lesson" value="network">network</label><br>
+    <input type="checkbox" name="lesson" id="pyth" value="python"><label for="pyth">python</label><br>
+    <input type="submit" value="提 交">
+</form>
+
+<hr>
+<form action="">
+    你最喜欢的科目是什么？<br>
+    <input type="radio" name="lesson" value="linux"><label>linux</label><br>
+    <label><input type="radio" name="lesson" value="network">network</label><br>
+    <input type="radio" name="lesson" id="py" value="python"><label for="py">python</label><br>
+    <input type="submit" value="提 交">
+</form>
+
+<hr>
 <form action="http://cn.bing.com/search" target="_blank">
     <input type="text" placeholder="关键字" name="q">
     <input type="submit" value="必应搜索">
