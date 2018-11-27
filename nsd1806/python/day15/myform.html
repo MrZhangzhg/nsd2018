@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>my form</title>
+</head>
+<body>
+<form action="http://cn.bing.com/search" target="_blank">
+    <input type="text" placeholder="关键字" name="q">
+    <input type="submit" value="必应搜索">
+</form>
+
+<hr>
+<form action="https://www.sogou.com/web" target="_blank">
+    <input type="text" placeholder="关键字" name="query">
+    <input type="submit" value="搜狗搜索">
+</form>
+
+<hr>
+<!--
+form的action是个网址，表示提交数据时，发给哪个网址处理
+action的网址，在后台可以对应一个函数，这个函数就可以接收form表单传来的数据了
+表单常用的方法有get和post，默认是get
+-->
+<form action="https://www.baidu.com/s" target="_blank">
+    <input type="text" placeholder="关键字" name="wd">
+    <input type="submit" value="百度搜索">
+</form>
+
+<hr>
+<form action="">
+    <label>用户：</label><input type="text" placeholder="用户名">
+    <label>密码：</label><input type="password" placeholder="密 码">
+    <input type="submit" value="登 陆">
+</form>
+</body>
+</html>

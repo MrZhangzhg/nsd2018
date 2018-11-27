@@ -35,6 +35,9 @@ h1-h6、p、div
 
 参考的教程：http://www.runoob.com
 
+创建一个5行3列的表格
+table>tr*5>td*3
+
 
 
 
