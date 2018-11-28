@@ -1,0 +1,33 @@
+html{
+    font-size: 20px;
+}
+#s1{
+    font-size: 120%;  /*默认大小的百分比*/
+    color: darkred;
+}
+#s2{
+    font-size: 1cm;
+    color: #CCCCCC;     /*rgb数值相同，都是灰色*/
+}
+#s3{
+    font-size: 5mm;
+    color: #fc8;       /*#ffcc88的简写*/
+}
+#s4{
+    font-size: 10pt;   /*10磅*/
+}
+#s5{
+    font-size: 10px;
+}
+#s6{
+    font-size: 30px;
+}
+#s7{
+    font-size: 30px;
+}
+#s8{
+    font-size: 2em;
+}
+#s9{
+    font-size: 2rem;
+}

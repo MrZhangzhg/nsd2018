@@ -1,0 +1,17 @@
+.container{
+    width: 800px;
+    margin: 0 auto;   /* 上下边距为0，左右自动适应，实现居中 */
+}
+.header{
+    height: 50px;
+    background: #CCCCCC;
+}
+.content{
+    height: 300px;
+    background: lightgreen;
+}
+.footer{
+    height: 50px;
+    background: #CCCCCC;
+}
+
