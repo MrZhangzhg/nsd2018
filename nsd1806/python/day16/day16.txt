@@ -1,0 +1,56 @@
+CSS:层叠样式表
+分类：
+1、内联方式
+<span style="color: green; background: orange">CSS</span>
+2、内部样式表
+<head>
+    <style>
+        body{
+            background: silver;
+            color: blue;
+        }
+        hr{
+            color: red;
+        }
+    </style>
+</head>
+3、外部样式表
+<head>
+    <link rel="stylesheet" href="mycss.css">
+</head>
+
+
+CSS样式表特性：
+1、继承性: 子标签可以继承父标签的样式
+2、层叠性：如果内容处在多个标签内部，所有标答的样式都将产生作用
+3、优先级：离内容最近的样式优先级最高
+
+
+选择器：
+1、 *表示所有的标签。一般来说，可以取消各种标签的默认样式，以便以后自己设置。也可以
+设置默认样式。
+2、元素选择器：名称没有任何额外的修饰，如body/p/h1
+3、类选择器：以点开头，如.myclass1
+(1)类：可以理解为分组，如果多个标签使用相同的样式，可以为他们设置相同的class
+(2)一个元素可以同时属于多个类
+<div class="important">important</div>
+<div class="warning">warning</div>
+<div class="warning important">important warning</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

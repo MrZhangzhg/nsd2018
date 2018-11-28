@@ -1,0 +1,31 @@
+*{
+    font-size: 15pt;
+}
+
+.myclass1{
+    font-size: 18pt;
+}
+
+.warning{
+    text-align: right;
+    color: red;
+}
+
+.important{
+    text-align: center;
+    font-weight: bold;
+}
+
+h1{
+    color: green;
+}
+body{
+    color: #520cab;
+    /*text-align: center;*/
+}
+p{
+    background: orange;
+    text-align: left;
+}
+
+
