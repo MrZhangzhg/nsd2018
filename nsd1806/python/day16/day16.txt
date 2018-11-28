@@ -36,13 +36,46 @@ CSS样式表特性：
 <div class="important">important</div>
 <div class="warning">warning</div>
 <div class="warning important">important warning</div>
-
-
-
-
-
-
-
+4、元素中的类
+<p>段落一：</p>
+<p class="myclass2">段落一：</p>
+<div class="myclass2">div2</div>
+----------------------------------------
+p.myclass2{     # class值为myclass2的p元素才生效
+    color: blue;
+}
+5、多个选择器，可以用逗号分开
+p, .myclass3{     # p标签和myclass3类
+    color: cadetblue;
+}
+6、用空格分开表该标签内部的选择器
+<p>这是<span class="inner">CSS</span>样式表</p>
+<p class="inner">这是一个测试</p>
+<div class="inner">这是一个div</div>
+<p>段落A：</p>
+<div>这是一个<span class="inner">CSS</span>样式表</div>
+-------------------------
+p .inner{    # p标签中的.inner class才生效
+    color: firebrick;
+}
+7、id选择器：就是给某一个元素加上一个唯一的标识，可以准确地为它设置样式
+<p id="pid">段落ABC：</p>
+-------------------------------
+#pid{         # id需要使用井号进行标识
+    color: brown;
+}
+8、伪类选择器。常用在为a元素设置访问前、鼠标悬停、访问后的样式
+<a href="http://www.tom.com">TOM</a>
+---------------------------------
+a:link{     # 未访问过的样式
+    color: purple;
+}
+a:hover{    # 鼠标悬停在超链接上的样式
+    font-size: 20pt;
+}
+a:visited{   # 链接访问过之后的样式
+    color: #999999;
+}
 
 
 

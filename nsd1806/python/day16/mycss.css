@@ -2,8 +2,35 @@
     font-size: 15pt;
 }
 
+a:link{
+    color: purple;
+}
+a:hover{
+    font-size: 20pt;
+}
+a:visited{
+    color: #999999;
+}
+
+
+#pid{
+    color: black;
+}
+
+p .inner{
+    color: firebrick;
+}
+
+p, .myclass3{
+    color: cadetblue;
+}
+
 .myclass1{
     font-size: 18pt;
+}
+
+p.myclass2{
+    color: blue;
 }
 
 .warning{
@@ -24,7 +51,7 @@ body{
     /*text-align: center;*/
 }
 p{
-    background: orange;
+    /*background: orange;*/
     text-align: left;
 }
 
