@@ -1,0 +1,13 @@
+bootstrap: twitter公司的一个开源前端框架
+中文网：https://v3.bootcss.com/
+bootstrap实际上就是一个样式表文件，该文件已经定义好了各种样式。在我们制作网页的时候
+可以直接使用这些样式，不用再自己编写了。
+另外bootstrap基于jquery
+
+
+使用：
+将nsd1805班ansible_project/myansible/webansi/static/拷贝过来
+# cp -r nsd2018/nsd1805/python/ansible_project/myansible/webansi/static/ .
+
+
+
