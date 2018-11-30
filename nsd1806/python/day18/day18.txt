@@ -145,6 +145,25 @@ from django.shortcuts import render, HttpResponse
 def index(request):
     return HttpResponse('<h1>Polls首页</h1>')
 (3)访问http://127.0.0.1/polls/
+(4)创建模板，用户访问主页的时候，用index.html响应
+(djenv) [root@room8pc16 mysite]# mkdir polls/templates
+# vim polls/templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投标首页</title>
+</head>
+<body>
+这是投票首页
+</body>
+</html>
+(5)修改index函数，将index.html网页返回给用户
+# vim polls/views.py
+def index(request):
+    return render(request, 'index.html')
+
+
 
 
 
