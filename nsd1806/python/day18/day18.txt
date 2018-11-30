@@ -99,6 +99,55 @@ INSTALLED_APPS = [
 11、创建应用，并将应用加入到项目中
 
 
+编辑应用
+1、创建投票应用
+当你从达内云计算毕业后，你期待第一份工作的工资是多少？
+5000
+5000~7000
+7000~8000
+8000~10000
+10000+
+2、投票应用需要在数据库中创建两张表
+问题表: 问题编号、内容
+选项表：选项编号、选项内容、问题编号、所得票数
+3、URL设计
+http://127.0.0.1/polls/            ->列出所有的问题
+http://127.0.0.1/polls/1/          ->列出1号问题的详细信息
+http://127.0.0.1/polss/1/result    ->显示1号问题的投票结果
+4、模板设计
+首页（列出所有问题的页面）：index.html
+问题详情页：detail.html
+投票结果页：result.html
+5、配置URLConf，将以http://127.0.0.1/polls/开头的网址都交给polls应用处理
+# vim mysite/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^polls/', include('polls.urls')),
+]
+6、在应用中创建urls.py
+# vim polls/urls.py
+from django.conf.urls import url
+urlpatterns = [
+]
+7、创建首页
+(1)在polls/urls.py中创建url和函数的声明
+from django.conf.urls import url
+from . import views
+urlpatterns = [
+    # 访问http://127.0.0.1/polls/，由views.index函数处理，这个URL的名字叫index
+    url(r'^$', views.index, name='index'),
+]
+(2)在views.py中创建函数
+from django.shortcuts import render, HttpResponse
+def index(request):
+    return HttpResponse('<h1>Polls首页</h1>')
+(3)访问http://127.0.0.1/polls/
+
+
+
 
 
 
