@@ -108,7 +108,7 @@ INSTALLED_APPS = [
 8000~10000
 10000+
 2、投票应用需要在数据库中创建两张表
-问题表: 问题编号、内容
+问题表: 问题编号、内容、发布时间
 选项表：选项编号、选项内容、问题编号、所得票数
 3、URL设计
 http://127.0.0.1/polls/            ->列出所有的问题
@@ -163,7 +163,31 @@ def index(request):
 def index(request):
     return render(request, 'index.html')
 
+8、创建模型（数据库）
+(1)编写模型代码
+# vim polls/models.py
+from django.db import models
 
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField()
+
+    def __str__(self):
+        return "<问题：%s>" % self.question_text
+
+class Choice(models.Model):
+    choice_text = models.CharField(max_length=200)
+    vote = models.IntegerField(default=0)
+    q = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "<%s: %s>" % (self.q, self.choice_text)
+(2)生成数据库表
+生成修改数据库的脚本文件
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+真正地操作数据库
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+MariaDB [dj1806]> show tables;   # 查看到新出现了两张表
 
 
 
