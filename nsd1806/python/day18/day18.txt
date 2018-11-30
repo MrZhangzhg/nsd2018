@@ -60,7 +60,43 @@ pymysql.install_as_MySQLdb()
 再次运行开发环境
 (djenv) [root@room8pc16 mysite]# python manage.py runserver 0:80
 
+9、创建相关的数据库表
+(djenv) [root@room8pc16 day18]# mysql -uroot -ptedu.cn
+MariaDB [(none)]> use dj1806;
+MariaDB [dj1806]> show tables;   # 只有一张表
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+MariaDB [dj1806]> show tables;    # 创建多张表
+MariaDB [dj1806]> select * from auth_user;   # 没有用户
+10、创建管理员帐号
+(djenv) [root@room8pc16 mysite]# python manage.py createsuperuser
+密码要求8位以上，满足复杂度要求，否则无法创建
+MariaDB [dj1806]> select * from auth_user \G;   # 已存在管理员帐号
+11、访问后台管理界面
+http://192.168.4.254/admin
 
+12、创建应用：一个项目有很多的功能，可以将这些功能编写成一个个的应用。每个应用都是
+可重用的。如果其他项目也需要有完全一样的功能，只要加载这个应用即可。
+(djenv) [root@room8pc16 mysite]# python manage.py startapp polls
+13、将应用安装到项目中
+创建应用后，应用不会自动成为项目的一员。需要修改配置文件
+# vim mysite/settings.py
+INSTALLED_APPS = [
+    ... ...
+    'polls',
+]
+
+练习：
+1、新建虚拟环境
+2、在虚拟环境中安装django和pymysql
+3、激活虚拟环境
+4、创建一个项目mysite
+5、如果使用的是mysql数据库，需要在mysql中再创建一个新的数据库
+6、编辑项目配置文件
+7、创建数据库
+8、创建管理员用户
+9、启动开发环境
+10、访问django和后台管理界面
+11、创建应用，并将应用加入到项目中
 
 
 
