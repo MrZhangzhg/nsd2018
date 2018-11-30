@@ -189,7 +189,32 @@ class Choice(models.Model):
 (djenv) [root@room8pc16 mysite]# python manage.py migrate
 MariaDB [dj1806]> show tables;   # 查看到新出现了两张表
 
+9、数据库分析
+(1)数据表
+MariaDB [dj1806]> show tables;
+polls_question      polls_choice
+通过第8步生成的表名： 应用名_类名
+(2)polls_question的字段
+MariaDB [dj1806]> desc polls_question;
+id: int  ->django自动生成的主键
+question_text: varchar(200)   # 类属性
+pub_date: datetime            # 类属性
+(3)polls_choice的字段
+MariaDB [dj1806]> desc polls_choice;
+id: int  ->django自动生成的主键
+choice_text: varchar(200)     # 类属性
+vote: int      # 类属性
+q_id: int      # django根据主外键约束，自动生成的外键字段
 
+10、修改数据库字段
+class Choice(models.Model):
+    ... ...
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    ... ...
+(djenv) [root@room8pc16 mysite]# python manage.py makemigrations
+(djenv) [root@room8pc16 mysite]# python manage.py migrate
+MariaDB [dj1806]> desc polls_choice;
+原来的q_id变成了question_id
 
 
 

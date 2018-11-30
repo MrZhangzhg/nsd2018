@@ -10,7 +10,7 @@ class Question(models.Model):
 class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     vote = models.IntegerField(default=0)
-    q = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __str__(self):
         return "<%s: %s>" % (self.q, self.choice_text)
