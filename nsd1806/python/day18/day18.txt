@@ -210,11 +210,25 @@ q_id: int      # django根据主外键约束，自动生成的外键字段
 class Choice(models.Model):
     ... ...
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    ... ...
+        def __str__(self):
+        return "<%s: %s>" % (self.question, self.choice_text)
+
 (djenv) [root@room8pc16 mysite]# python manage.py makemigrations
 (djenv) [root@room8pc16 mysite]# python manage.py migrate
 MariaDB [dj1806]> desc polls_choice;
 原来的q_id变成了question_id
+
+11、将模型注册到管理后台
+# vim polls/admin.py
+from django.contrib import admin
+from .models import Question, Choice
+
+admin.site.register(Question)
+admin.site.register(Choice)
+
+
+
+
 
 
 
