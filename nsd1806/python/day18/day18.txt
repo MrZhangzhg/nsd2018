@@ -226,6 +226,25 @@ from .models import Question, Choice
 admin.site.register(Question)
 admin.site.register(Choice)
 
+12、定制后台管理界面
+from django.contrib import admin
+from .models import Question, Choice
+
+# admin.site.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    # 后台显示哪些字段
+    list_display = ['question_text', 'pub_date']
+    # 可以根据发布时间过滤问题
+    list_filter = ['pub_date']
+    # 显示时间轴，点选时间，查看某年、某月、某日发布的问题
+    date_hierarchy = 'pub_date'
+    # 添加搜索框，根据问题内容进行搜索
+    search_fields = ['question_text']
+    # 根据发布时间进行降序排序，没有-号，默认是升序
+    ordering = ['-pub_date']
+
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice)
 
 
 
