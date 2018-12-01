@@ -123,7 +123,22 @@ def index(request):
 {{ questions }}
 </body>
 </html>
+3、模板语言的常用语法
+<body>
+<h1>这是投票首页</h1>
+{% for question in questions %}
+    <p>{{ question.question_text }} {{ question.pub_date }}</p>
+{% endfor %}
+<hr>
+{% for question in questions %}
+    {% if question.was_pub_recently %}
+        <p>{{ question.question_text }} {{ question.pub_date }}</p>
+    {% endif %}
+{% endfor %}
 
+<hr>
+{{ questions }}
+</body>
 
 
 
