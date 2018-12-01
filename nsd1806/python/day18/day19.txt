@@ -257,6 +257,11 @@ def vote(request, question_id):
     return redirect('result', question_id=question_id)
 
 
+http://yiyibooks.cn/   找到django1.11.6手册
+
+
+
+
 
 
 
