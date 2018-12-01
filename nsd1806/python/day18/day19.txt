@@ -15,6 +15,31 @@ django api
 >>> q1.save()
 5、创建Question，方法二
 >>> Question.objects.create(question_text='散伙饭去哪吃？', pub_date='2018-11-28')
+6、创建Choice
+(1)实例化的方式
+>>> c1 = Choice(choice_text="阿里", vote=0, question=q1)
+>>> c1.save()
+(2)能过objects管理器
+>>> Choice.objects.create(choice_text="达内", vote=0, question=q1)
+(3)通过问题创建选项
+问题实例都有一个 xxxx_set(本例中是choice_set)，这个xxx_set也是一个像objects
+一样的管理器，只不过是固定某一个问题实例的Choice管理器
+>>> q1.choice_set.all()
+>>> q1.choice_set.create(choice_text='网易', vote=0)
+7、修改问题
+>>> q1.question_text = "你期待哪家公司给你发offer？"
+>>> q1.save()
+8、查询所有的问题
+>>> Question.objects.all()
+9、使用get方法，注意，它必须返回一个结果，是一个实例。
+>>> q1 = Question.objects.get(id=1)
+>>> q1.question_text
+>>> q1.pub_date
+>>> q2 = Question.objects.get(question_text="散伙饭去哪吃？")
+>>> q2.question_text
+>>> q2.pub_date
+>>> Question.objects.get(id__gt=2)  # 查询id大于2的项目，报错，因为不只一项
+
 
 
 
