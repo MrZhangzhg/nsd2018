@@ -102,6 +102,30 @@ datetime.datetime(2018, 10, 30, 12, 0)
 False
 
 
+视图和模板
+1、编辑index视图，返回所有的问题给模板
+from django.shortcuts import render
+from .models import Question
+
+def index(request):
+    questions = Question.objects.order_by('-pub_date')
+    return render(request, 'index.html', {'questions': questions})
+2、修改模板，显示问题
+# vim polls/templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票首页</title>
+</head>
+<body>
+<h1>这是投票首页</h1>
+{{ questions }}
+</body>
+</html>
+
+
+
 
 
 

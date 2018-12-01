@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
+from .models import Question
 
 def index(request):
-    # return HttpResponse('<h1>Polls首页</h1>')
-    return render(request, 'index.html')
+    questions = Question.objects.order_by('-pub_date')
+    return render(request, 'index.html', {'questions': questions})
