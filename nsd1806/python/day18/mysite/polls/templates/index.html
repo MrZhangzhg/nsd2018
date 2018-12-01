@@ -7,6 +7,10 @@
 <body>
 <h1>这是投票首页</h1>
 {% for question in questions %}
+    <p><a href="/polls/{{ question.id }}" target="_blank">{{ question.question_text }}</a> {{ question.pub_date }}</p>
+{% endfor %}
+<hr>
+{% for question in questions %}
     <p>{{ question.question_text }} {{ question.pub_date }}</p>
 {% endfor %}
 <hr>
@@ -15,7 +19,6 @@
         <p>{{ question.question_text }} {{ question.pub_date }}</p>
     {% endif %}
 {% endfor %}
-
 <hr>
 {{ questions }}
 </body>
