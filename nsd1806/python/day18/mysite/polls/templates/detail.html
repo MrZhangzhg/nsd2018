@@ -6,10 +6,22 @@
 </head>
 <body>
 <h1>{{ question.question_text }}</h1>
-<ul>
+{#<form action="/polls/{{ question.id }}/vote/" method="post">#}
+<form action="{% url 'vote' question_id=question.id %}" method="post">
     {% for choice in question.choice_set.all %}
-        <li>{{ choice.choice_text }}</li>
+        <div>
+            <label>
+                <input type="radio" name="choice_id" value="{{ choice.id }}"> {{ choice.choice_text }}
+            </label>
+        </div>
     {% endfor %}
-</ul>
+    <input type="submit" value="提 交">
+</form>
+{#<h1>{{ question.question_text }}</h1>#}
+{#<ul>#}
+{#    {% for choice in question.choice_set.all %}#}
+{#        <li>{{ choice.choice_text }}</li>#}
+{#    {% endfor %}#}
+{#</ul>#}
 </body>
 </html>

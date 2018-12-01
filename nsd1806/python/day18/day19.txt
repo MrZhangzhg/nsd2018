@@ -216,6 +216,50 @@ def result(request, question_id):
 </body>
 </html>
 
+为投票详情编写表单
+1、修改详情页
+<body>
+<h1>{{ question.question_text }}</h1>
+<form action="/polls/{{ question.id }}/vote/" method="post">
+    {% for choice in question.choice_set.all %}
+        <div>
+            <label>
+                <input type="radio" name="choice_id" value="{{ choice.id }}"> {{ choice.choice_text }}
+            </label>
+        </div>
+    {% endfor %}
+    <input type="submit" value="提 交">
+</form>
+</body>
+2、为表单的action编写url
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
+    url(r'^(?P<question_id>\d+)/result/$', views.result, name='result'),
+    url(r'^(?P<question_id>\d+)/vote/$', views.vote, name='vote'),
+]
+3、表单的action可以改为以下样式
+<form action="{% url 'vote' question_id=question.id %}" method="post">
+4、编写投票函数
+from django.shortcuts import render, redirect
+
+def vote(request, question_id):
+    question = Question.objects.get(id=question_id)  # 获取问题
+    choice_id = request.POST.get('choice_id')     # 获取选项的ID
+    choice = question.choice_set.get(id=choice_id)  # 取获选项实例
+    choice.vote += 1   # 将选项票数加1
+    choice.save()
+    # redirect是重定向，相当于是打开新的网址
+    # 'result'是URL的名字，在urls.py中定义的
+    return redirect('result', question_id=question_id)
+
+
+
+
+
 
 
 
