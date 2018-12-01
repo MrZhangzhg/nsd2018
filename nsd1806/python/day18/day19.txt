@@ -1,0 +1,33 @@
+django api
+1、启动python shell
+[root@room8pc16 mysite]# source /opt/djenv/bin/activate
+(djenv) [root@room8pc16 mysite]# python manage.py shell
+2、导入模型
+>>> from polls.models import Question, Choice
+3、使用模型管理器
+每一个模型默认都有一个叫作objects的管理器，通过它，可以对模型实现增删改查
+返回Question、Choice所有对象的查询集，查询集中的每个项目是类的一个实例，
+该实例对应成数据库中的一行记录
+>>> Question.objects.all()
+>>> Choice.objects.all()
+4、创建Question，方法一
+>>> q1 = Question(question_text='你心仪的公司是哪家？', pub_date='2018-12-1')
+>>> q1.save()
+5、创建Question，方法二
+>>> Question.objects.create(question_text='散伙饭去哪吃？', pub_date='2018-11-28')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
