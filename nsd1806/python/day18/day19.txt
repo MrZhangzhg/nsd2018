@@ -39,10 +39,67 @@ django api
 >>> q2.question_text
 >>> q2.pub_date
 >>> Question.objects.get(id__gt=2)  # 查询id大于2的项目，报错，因为不只一项
+10、排序，返回查询集
+>>> Question.objects.order_by('pub_date')    # 升序
+>>> Question.objects.order_by('-pub_date')   # 降序
+>>> qset1 = Question.objects.order_by('-pub_date')
+>>> len(qset1)
+>>> q1 = qset1[0]
+>>> q1.question_text
+>>> q1.pub_date
+>>> q2 = qset1[len(qset1) - 1]
+>>> q2.pub_date
+11、filter过滤，返回查询集
+>>> qset2 = Question.objects.filter(pub_date__month=11)
+>>> q3 = qset2[0]
+>>> q3.question_text
+
+双下划线是属性，如字符串的属性有startswith，标准写法是
+>>> s = q3.question_text
+>>> s.startswith('当你')
+django中的写法是
+>>> Question.objects.filter(question_text__startswith='当你')
 
 
+12、为模型增加方法
+判断问题是不是7天内发布的
+发布时间 >= 当前时间 - 7天
+# vim polls/models.py
+from django.db import models
+from django.utils import timezone
+from datetime import timedelta
 
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField()
 
+    def was_pub_recently(self, days=7):
+        return self.pub_date >= timezone.now() - timedelta(days=days)
+
+    def __str__(self):
+        return "<问题：%s>" % self.question_text
+
+class Choice(models.Model):
+    choice_text = models.CharField(max_length=200)
+    vote = models.IntegerField(default=0)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "<%s: %s>" % (self.question, self.choice_text)
+
+13、重新导入Question，测试问题
+(djenv) [root@room8pc16 mysite]# python manage.py shell
+>>> from polls.models import Question, Choice
+>>> qset = Question.objects.all()
+>>> q1 = qset[0]
+>>> q1.was_pub_recently()
+>>> q1.pub_date
+>>> qset1 = Question.objects.filter(pub_date__month=10)
+>>> q2 = qset1[0]
+>>> q2.pub_date
+datetime.datetime(2018, 10, 30, 12, 0)
+>>> q2.was_pub_recently()
+False
 
 
 
