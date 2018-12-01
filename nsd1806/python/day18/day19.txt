@@ -140,7 +140,44 @@ def index(request):
 {{ questions }}
 </body>
 
-
+4、规划详情页
+(1)编辑urls.py
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
+]
+使用\d+匹配问题编号，然后把这个编号保存到一个名为question_id的变量中，交给
+views.detail函数，作为它的参数
+(2)创建函数
+def detail(request, question_id):
+    question = Question.objects.get(id=question_id)
+    return render(request, 'detail.html', {'question': question})
+(3)修改index.html视图
+将
+{% for question in questions %}
+    <p><a href="/polls/{{ question.id }}/" target="_blank">{{ question.question_text }}</a> {{ question.pub_date }}</p>
+{% endfor %}
+近一步修改为
+{% for question in questions %}
+    <p><a href="{% url 'detail' question_id=question.id %}" target="_blank">{{ question.question_text }}</a> {{ question.pub_date }}</p>
+{% endfor %}
+(4)创建视图
+# vim templates/detail.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票详情页</title>
+</head>
+<body>
+<h1>{{ question.question_text }}</h1>
+<ul>
+    {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
 
 
 
