@@ -179,6 +179,43 @@ def detail(request, question_id):
 </body>
 </html>
 
+5、规划结果页
+(1)编辑urls.py
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
+    url(r'^(?P<question_id>\d+)/result/$', views.result, name='result'),
+]
+(2)编写视图函数
+def result(request, question_id):
+    question = Question.objects.get(id=question_id)
+    return render(request, 'result.html', {'question': question})
+(3)创建模板文件
+# vim polls/templates/result.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票结果页</title>
+</head>
+<body>
+<h1>{{ question.question_text }}</h1>
+<table border="1px">
+    <tr>
+        <td>选项</td>
+        <td>票数</td>
+    </tr>
+    {% for choice in question.choice_set.all %}
+        <tr>
+            <td>{{ choice.choice_text }}</td>
+            <td>{{ choice.vote }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>
+
 
 
 
