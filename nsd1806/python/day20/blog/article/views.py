@@ -8,9 +8,14 @@ def index(request):
         title = request.POST.get('title')
         content = request.POST.get('content')
         if title.strip() and content.strip():
-            Article.objects.create(
+            # Article.objects.create(
+            #     title=title,
+            #     pub_date= timezone.now(),
+            #     text=content
+            # )
+            Article.objects.get_or_create(
                 title=title,
-                pub_date= timezone.now(),
+                pub_date=timezone.now(),
                 text=content
             )
 

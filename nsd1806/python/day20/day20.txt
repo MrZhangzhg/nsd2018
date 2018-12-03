@@ -154,6 +154,69 @@ def hello(request):
 </html>
 
 (4)修改视图函数，将通过web提交的表单内容，写入到数据库
+def index(request):
+    if request.method == 'POST':
+        # print(request.POST)
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        if title.strip() and content.strip():
+            Article.objects.create(
+                title=title,
+                pub_date= timezone.now(),
+                text=content
+            )
+
+    articles = Article.objects.order_by('-pub_date')
+    return render(request, 'index.html', {'articles': articles})
+(5)如果用户刷新浏览器，将会导致博客文章重新提交。为了防止数据库中出现大量的重复，
+可以将创建记录的代码，修改为以下格式
+
+
+模拟用户是否已登陆
+1、制作2个页面
+/article/home/    -> 显示登陆表单
+/article/protected/    -> 该页面只有用户登陆以后才能访问
+2、编写url
+/aritcle/home/    -> 显示登陆表单
+/article/protected/    -> 该页面只有用户登陆以后才能访问
+/article/login/    -> 判断用户登陆是否成功，成功就跳转到protected，否则回到home
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^hello/$', views.hello, name='hello'),
+    url(r'^home/$', views.home, name='home'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^protected/$', views.protected, name='protected'),
+]
+3、创建模板文件
+# home.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+</head>
+<body>
+<form action="{% url 'login' %}" method="post">
+    用户:<input type="text" name="username">
+    密码:<input type="password" name="password">
+    <input type="submit" value="登 陆">
+</form>
+</body>
+</html>
+
+# protected.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>受保护页面</title>
+</head>
+<body>
+如果登陆成功，才能看到此页面。
+</body>
+</html>
+
+
 
 
 

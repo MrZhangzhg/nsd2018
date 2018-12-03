@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+</head>
+<body>
+<form action="{% url 'login' %}" method="post">
+    用户:<input type="text" name="username">
+    密码:<input type="password" name="password">
+    <input type="submit" value="登 陆">
+</form>
+</body>
+</html>
