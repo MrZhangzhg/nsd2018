@@ -216,7 +216,25 @@ urlpatterns = [
 </body>
 </html>
 
+4、编写视图函数
+def home(request):
+    return render(request, 'home.html')
 
+def login(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+
+    if username == 'user1' and password == '123456':
+        request.session['IS_LOGINED'] = True
+        return redirect('protected')
+
+    return redirect('home')
+
+def protected(request):
+    is_logined = request.session.get('IS_LOGINED', False)
+    if is_logined:
+        return render(request, 'protected.html')
+    return redirect('home')
 
 
 

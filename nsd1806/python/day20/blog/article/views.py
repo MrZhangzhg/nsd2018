@@ -1,6 +1,25 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from .models import Article
 from django.utils import timezone
+
+def home(request):
+    return render(request, 'home.html')
+
+def login(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+
+    if username == 'user1' and password == '123456':
+        request.session['IS_LOGINED'] = True
+        return redirect('protected')
+
+    return redirect('home')
+
+def protected(request):
+    is_logined = request.session.get('IS_LOGINED', False)
+    if is_logined:
+        return render(request, 'protected.html')
+    return redirect('home')
 
 def index(request):
     if request.method == 'POST':
