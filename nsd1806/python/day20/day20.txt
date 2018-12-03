@@ -46,8 +46,42 @@ class Article(models.Model):
 (djenv) [root@room8pc16 blog]# sqlite3 db.sqlite3
 sqlite> .tables
 sqlite> .schema article_article
+8、授权URL以article开头的路径由article应用处理 blog/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
 
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^article/', include('article.urls')),
+]
+9、测试URL
+(1)编写article/urls.py
+from django.conf.urls import url
+from . import views
 
+urlpatterns = [
+    url(r'hello', views.hello, name='hello')
+]
+(2)编写视图函数
+from django.shortcuts import render, HttpResponse
+
+def hello(request):
+    return HttpResponse('<h1>Hello World!</h1>')
+(3)启动服务器
+(djenv) [root@room8pc16 blog]# python manage.py runserver 0:80
+(4)访问以下网址测试
+http://127.0.0.1/article/
+http://127.0.0.1/article/hello
+http://127.0.0.1/article/hello/
+http://127.0.0.1/article/ahello
+http://127.0.0.1/article/helloabc
+http://127.0.0.1/article/ahellobc
+http://127.0.0.1/article/hello/abc
+(5)将urls.py中的网址分别做以下修改，再测试
+    url(r'^hello', views.hello, name='hello'),
+    url(r'^hello/', views.hello, name='hello'),
+    url(r'^hello$', views.hello, name='hello'),
+    url(r'^hello/$', views.hello, name='hello'),
 
 
 
