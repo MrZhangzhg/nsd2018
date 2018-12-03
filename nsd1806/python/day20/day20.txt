@@ -135,6 +135,14 @@ def hello(request):
     <title>My Blog</title>
 </head>
 <body>
+<div>
+    <form action="" method="post">
+        <label>标题：</label><input type="text" name="title"><br>
+        <textarea name="content" cols="50" rows="10"></textarea><br>
+        <input type="submit" value="发 布">
+    </form>
+</div>
+<hr>
 {% for article in articles %}
     <div>
         <h3>{{ article.title }}</h3>
