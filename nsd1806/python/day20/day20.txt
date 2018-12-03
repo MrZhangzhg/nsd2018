@@ -153,6 +153,7 @@ def hello(request):
 </body>
 </html>
 
+(4)修改视图函数，将通过web提交的表单内容，写入到数据库
 
 
 
