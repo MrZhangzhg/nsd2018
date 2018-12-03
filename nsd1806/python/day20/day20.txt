@@ -350,6 +350,8 @@ def hello(request):
 {% endblock %}
 
 
+django2byexample -> http://www.conyli.cc/
+
 
 
 
