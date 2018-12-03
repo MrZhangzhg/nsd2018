@@ -42,4 +42,10 @@ def index(request):
     return render(request, 'index.html', {'articles': articles})
 
 def hello(request):
-    return HttpResponse('<h1>Hello World!</h1>')
+    context = {
+        'num': 100,
+        'users': ['尤家和', '王泽', '李邦浩', '杨孝玲'],
+        'class': 'nsd1806',
+        'info': {'email': 'admin@tedu.cn', 'phone': '400-800-9999'}
+    }
+    return render(request, 'hello.html', context)

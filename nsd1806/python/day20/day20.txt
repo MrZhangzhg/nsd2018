@@ -237,6 +237,118 @@ def protected(request):
     return redirect('home')
 
 
+使用模板，传递数据
+1、配置hello返回hello.html
+def hello(request):
+    context = {
+        'num': 100,
+        'users': ['尤家和', '王泽', '李邦浩', '杨孝玲'],
+        'class': 'nsd1806',
+        'info': {'email': 'admin@tedu.cn', 'phone': '400-800-9999'}
+    }
+    return render(request, 'hello.html', context)
+2、编写模板文件
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+</head>
+<body>
+{{ class.upper }}
+<hr>
+{{ info.email }}
+<hr>
+{{ users.0 }}
+<hr>
+{{ num }} / {{ users }} / {{ class }} / {{ info }}
+</body>
+</html>
+
+
+使用过滤
+1、将blog文章能够正常显示段落
+{{ article.text | linebreaks}}
+2、将blog文章只显示30个单词
+{{ article.text | linebreaks | truncatewords:30}}
+
+
+模板继承
+为了使得所有的页面保持一致，可以使用模板继承。
+1、先创建一个基础模板，有变化的部分用block声明
+# cp index.html base.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">这是头部</div>
+    <div class="main">
+        {% block content %}{% endblock %}
+    </div>
+    <div class="footer">
+        <a href="http://linux.tedu.cn">达内云计算学院</a>
+    </div>
+</div>
+</body>
+</html>
+2、在其他页面index.html/hello.html/home.html/protect.html继承模板
+# index.html
+{% extends 'base.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}
+<div>
+    <form action="" method="post">
+        <label>标题：</label><input type="text" name="title"><br>
+        <textarea name="content" cols="50" rows="10"></textarea><br>
+        <input type="submit" value="发 布">
+    </form>
+</div>
+<hr>
+{% for article in articles %}
+    <div>
+        <h3>{{ article.title }}</h3>
+        <h5>{{ article.pub_date }}</h5>
+        {{ article.text | linebreaks | truncatewords:30}}
+{#        {{ article.text | linebreaks}}#}
+    </div>
+{% endfor %}
+{% endblock %}
+
+# hello.html
+{% extends 'base.html' %}
+{% block title %}Hello Page{% endblock %}
+{% block content %}
+{% if num > 100 %}
+大于100
+{% elif num < 100 %}
+小于100
+{% else %}
+等于100
+{% endif %}
+<hr>
+{% for user in users %}
+    <p>{{ forloop.counter0 }} {{ user }}</p>
+{% endfor %}
+<hr>
+<hr>
+{% for user in users %}
+    <p>{{ forloop.counter }} {{ user }}</p>
+{% endfor %}
+<hr>
+{{ class.upper }}
+<hr>
+{{ info.email }}
+<hr>
+{{ users.0 }}
+<hr>
+{{ num }} / {{ users }} / {{ class }} / {{ info }}
+{% endblock %}
+
 
 
 

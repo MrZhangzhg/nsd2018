@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Hello Page{% endblock %}
+{% block content %}
+{% if num > 100 %}
+大于100
+{% elif num < 100 %}
+小于100
+{% else %}
+等于100
+{% endif %}
+<hr>
+{% for user in users %}
+    <p>{{ forloop.counter0 }} {{ user }}</p>
+{% endfor %}
+<hr>
+<hr>
+{% for user in users %}
+    <p>{{ forloop.counter }} {{ user }}</p>
+{% endfor %}
+<hr>
+{{ class.upper }}
+<hr>
+{{ info.email }}
+<hr>
+{{ users.0 }}
+<hr>
+{{ num }} / {{ users }} / {{ class }} / {{ info }}
+{% endblock %}
