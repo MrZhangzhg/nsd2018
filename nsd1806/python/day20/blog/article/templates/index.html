@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+</head>
+<body>
+{% for article in articles %}
+    <div>
+        <h3>{{ article.title }}</h3>
+        <h5>{{ article.pub_date }}</h5>
+        {{ article.text }}
+    </div>
+{% endfor %}
+</body>
+</html>

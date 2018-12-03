@@ -84,6 +84,74 @@ http://127.0.0.1/article/hello/abc
     url(r'^hello/$', views.hello, name='hello'),
 
 
+多级规划：
+比如，你正在为一所学校编写程序。程序涉及学生管理、教师管理、课程管理等。
+http://server_ip/teacher/
+http://server_ip/teacher/add/1/
+http://server_ip/teacher/delete/1/
+http://server_ip/teacher/update/1/
+http://server_ip/teacher/query/1/
+
+http://server_ip/student/
+http://server_ip/student/add/1/
+http://server_ip/student/delete/1/
+http://server_ip/student/update/1/
+http://server_ip/student/query/1/
+
+http://server_ip/course/
+http://server_ip/course/add/1/
+http://server_ip/course/delete/1/
+http://server_ip/course/update/1/
+http://server_ip/course/query/1/
+
+REST框架：
+http://www.runoob.com/w3cnote/restful-architecture.html
+
+
+10、博客首页显示全部文章，也能写新博客
+(1)urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^hello/$', views.hello, name='hello'),
+]
+(2)views.py
+from django.shortcuts import render, HttpResponse
+from .models import Article
+
+def index(request):
+    articles = Article.objects.order_by('-pub_date')
+    return render(request, 'index.html', {'articles': articles})
+
+def hello(request):
+    return HttpResponse('<h1>Hello World!</h1>')
+(3)article/templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+</head>
+<body>
+{% for article in articles %}
+    <div>
+        <h3>{{ article.title }}</h3>
+        <h5>{{ article.pub_date }}</h5>
+        {{ article.text }}
+    </div>
+{% endfor %}
+</body>
+</html>
+
+
+
+
+
+
+
+
 
 
 
