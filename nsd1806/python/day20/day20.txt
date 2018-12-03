@@ -1,0 +1,57 @@
+1、激活虚拟环境
+[root@room8pc16 mysite]# source /opt/djenv/bin/activate
+2、新建项目
+(djenv) [root@room8pc16 day20]# django-admin startproject blog
+(djenv) [root@room8pc16 day20]# cd blog/
+3、新建应用
+(djenv) [root@room8pc16 blog]# python manage.py startapp article
+4、修改配置 blog/settings
+ALLOWED_HOSTS = '*'
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'article',
+]
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False
+5、为博客文章创建模型 article/models.py
+from django.db import models
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    pub_date = models.DateTimeField()
+    text = models.TextField()
+
+    def __str__(self):
+        return self.title
+6、生成数据库
+(djenv) [root@room8pc16 blog]# python manage.py makemigrations
+(djenv) [root@room8pc16 blog]# python manage.py migrate
+(djenv) [root@room8pc16 blog]# python manage.py createsuperuser
+7、查看数据库
+(djenv) [root@room8pc16 blog]# sqlite3 db.sqlite3
+sqlite> .tables
+sqlite> .schema article_article
+
+
+
+
+
+
+
+
+
