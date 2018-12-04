@@ -201,13 +201,92 @@ def index(request):
     </div>
 </div>
 
+九、实现模板继承
+1、将index.html拷贝一份，改名为base.html
+2、将base.html中个性化的内容删除，使用block代替。需要更改的是title和main部分
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .banner{
+            background-image: url("{% static 'imgs/banner.png' %}");
+            background-size: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="banner"></div>
+    <div class="main h4">
+        {% block content %}{% endblock %}
+    </div>
+    <div class="footer h4 text-center">
+        <a href="http://linux.tedu.cn">达内云计算学院</a> 客服电话：400-111-8989 邮箱：admin@tedu.cn
+    </div>
+</div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+3、index.html中，把base.html已有部分删除，只通过block保留有变化的部分
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}首页{% endblock %}
+{% block content %}
+    <div class="row">
+            <div class="col-md-3 text-center">
+                <a href="#">
+                    <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>主机信息
+                </a>
+            </div>
+            <div class="col-md-3 text-center">
+                <a href="#">
+                    <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>添加主机
+                </a>
+            </div>
+            <div class="col-md-3 text-center">
+                <a href="#">
+                    <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>添加模块
+                </a>
+            </div>
+            <div class="col-md-3 text-center">
+                <a href="#">
+                    <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>执行任务
+                </a>
+            </div>
+        </div>
+{% endblock %}
+
+十、配置ansible
+1、创建三台虚拟机
+2、配置三台虚拟的IP地址、yum、免密登陆
 
 
 
-实现模板继承
 
 
+十一、制作webansi应用的首页
+1、编写url
+# webansi/urls.py
+urlpatterns = [
+    url(r'^$', views.home, name='polls_index'),
+]
+2、编写视图函数
+# websnsi/views.py
+from django.shortcuts import render
 
+def home(request):
+    return render(request, 'home.html')
+3、编写模板
+(1)安装ansible-cmdb
+# pip install ansible-cmdb
+(2)
 
 
 
