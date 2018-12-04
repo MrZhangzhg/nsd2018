@@ -349,7 +349,14 @@ def home(request):
 3、编写模板
 (1)安装ansible-cmdb
 # pip install ansible-cmdb
-(2)
+(2)收集被管理的服务器信息
+# cd ansicfg/
+# ansible all -m ping   # 测试动态主机清单文件和连通性
+# ansible all -m setup --tree out/
+(3)生成home.html
+# ansible-cmdb out/ > /var/ftp/nsd2018/nsd1806/python/ansible_project/myansible/webansi/templates/home.html
+(4)修改index.html，将“主机信息”的超链接指向home.html
+<a href="{% url 'polls_index' %}">
 
 
 
