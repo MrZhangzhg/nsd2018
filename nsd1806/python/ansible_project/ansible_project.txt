@@ -177,6 +177,29 @@ def index(request):
 >>> w.to_file('banner.png')
 # mv banner.png webansi/static/imgs/  # 把生成的图片拷贝到imgs中
 修改banner.html，将背景图换成刚生成的banner.png
+4、在index.html中，修改<div class="main">部分内容
+<div class="row">
+    <div class="col-md-3 text-center">
+        <a href="#">
+            <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>主机信息
+        </a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="#">
+            <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>添加主机
+        </a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="#">
+            <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>添加模块
+        </a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="#">
+            <img width="150px" src="{% static 'imgs/linux.jpg' %}"><br>执行任务
+        </a>
+    </div>
+</div>
 
 
 
