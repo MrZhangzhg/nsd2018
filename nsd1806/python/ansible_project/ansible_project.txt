@@ -1,0 +1,72 @@
+一、项目：通过web批量管理服务器
+1、管理远程服务器，通过ansible实现
+2、远程服务器写到数据库中
+3、ansible使用动态主机清单
+4、在web页中可以查看所有的远程服务器状态
+5、通过web创建主机和主机组
+6、通过web添加使用ansible模块
+7、通过web指定在哪些主机/主机组上执行相关的操作
+
+
+二、前期准备
+1、激活虚拟环境
+[root@room8pc16 ansible_project]# source /opt/djenv/bin/activate
+2、安装必须的软件包
+# pip install ansible
+# pip install pymysql sqlalchemy
+# pip install wordcloud matplotlib
+
+
+三、管理项目
+1、创建项目
+# django-admin startproject myansible
+2、创建应用
+# cd myansible/
+# python manage.py startapp webansi
+3、基础配置
+# myansible/settings.py
+ALLOWED_HOSTS = '*'
+INSTALLED_APPS = [
+    ... ...
+    'webansi',
+]
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = False
+
+四、规划URL
+http://server/  # 显示所有任务的超链接
+http://server/webansi/   # 显示远程服务器主机信息
+http://server/webansi/addhosts/   # 显示/添加主机(组)
+http://server/webansi/addmodules/   # 显示/添加模块、参数
+http://server/webansi/tasks       # 执行任务
+
+
+五、授权，以http://server/webansi/开头的网址交给webansi应用处理
+# myansible/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^webansi/', include('webansi.urls')),
+]
+
+六、设计模式
+# webansi/models.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
