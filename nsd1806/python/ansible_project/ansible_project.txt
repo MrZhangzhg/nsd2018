@@ -266,7 +266,25 @@ def index(request):
 十、配置ansible
 1、创建三台虚拟机
 2、配置三台虚拟的IP地址、yum、免密登陆
-
+3、在manage.py同级的目录下创建ansible的工作目录
+# mkdir ansicfg
+# vim ansicfg/ansible.cfg
+[default]
+inventory = dhosts.py
+remote_user = root
+4、创建动态主机清单脚本
+# touch ansicfg/dhosts.py
+# chmod +x ansicfg/dhosts.py
+dhosts.py执行后，要求的输出格式如下：
+{
+    "webservers": {
+        "hosts": ["192.168.4.1", "192.168.4.2"]
+    },
+    "dbservers": {
+        "hosts": ["192.168.4.3"]
+    }
+}
+# vim ansicfg/dhosts.py
 
 
 
