@@ -104,6 +104,50 @@ for item in [ HostGroup, Host, AnsiModule, ModuleArg]:
     admin.site.register(item)
 5、启动测试服务器，登陆后台查看
 
+七、制作首页
+1、编写url
+# myansible/urls.py
+from django.conf.urls import url, include
+from django.contrib import admin
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^admin/', admin.site.urls),
+    url(r'^webansi/', include('webansi.urls')),
+]
+2、创建views.py
+# myansible/views.py
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'index.html')
+3、创建模板
+# webansi/templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+这是首页
+</body>
+</html>
+
+八、引入bootstrap
+1、将day17的static复制到webansi目录下
+# cp -r ../../day17/static/ webansi/
+2、修改index.html
+
+
+
+
+
+实现模板继承
+
+
+
 
 
 
