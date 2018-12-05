@@ -460,8 +460,29 @@ def addmodules(request):
 {% endblock %}
 4、修改index.html的超链接
 <a href="{% url 'addmodules' %}">
-
-
+5、修改addmodules函数，取出模块信息，发给模板
+def addmodules(request):
+    mods = AnsiModule.objects.all()
+    return render(request, 'addmodules.html', {'mods': mods})
+6、修改addmodules.html模板文件，在form表单下加入表格
+<table class="table table-bordered table-striped table-hover">
+    <tr class="info">
+        <th>模块</th>
+        <th>参数</th>
+    </tr>
+    {% for mod in mods %}
+        <tr>
+            <td>{{ mod.module_name }}</td>
+            <td>
+                <ul class="list-unstyled">
+                    {% for arg in mod.modulearg_set.all %}
+                        <li>{{ arg.arg_text }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
 
 
 
