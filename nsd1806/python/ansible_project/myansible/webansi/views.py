@@ -31,3 +31,8 @@ def addmodules(request):
     mods = AnsiModule.objects.all()
     return render(request, 'addmodules.html', {'mods': mods})
 
+def tasks(request):
+    groups = HostGroup.objects.all()
+    mods = AnsiModule.objects.all()
+    context = {'groups': groups, 'mods': mods}
+    return render(request, 'tasks.html', context)

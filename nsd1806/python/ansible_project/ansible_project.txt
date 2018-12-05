@@ -496,6 +496,21 @@ def addmodules(request):
     mods = AnsiModule.objects.all()
     return render(request, 'addmodules.html', {'mods': mods})
 
+十四、编写执行任务页面
+1、URL
+    url(r'^tasks/$', views.tasks, name='tasks'),
+2、修改index.html的超链接
+<a href="{% url 'tasks' %}">
+3、编写tasks视图函数
+def tasks(request):
+    groups = HostGroup.objects.all()
+    mods = AnsiModule.objects.all()
+    context = {'groups': groups, 'mods': mods}
+    return render(request, 'tasks.html', context)
+4、编写tasks.html模板
+{% extends 'base.html' %}
+{% block title %}执行任务{% endblock %}
+
 
 
 
