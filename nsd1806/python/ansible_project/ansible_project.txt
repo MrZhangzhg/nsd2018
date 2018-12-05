@@ -585,6 +585,9 @@ def tasks(request):
 </table>
 
 
+十五、实现执行任务的功能
+1、将ansible课程内容中的ad_hoc程序拷贝过来，写到函数中
+2、在tasks函数中获取表单提交的数据，然后调用ansible执行函数
 
 
 
