@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}添加主机(组){% endblock %}
+{% block content %}
+    <form action="" method="post" class="form-inline">
+        <div class="form-group">
+            <label>主机名：</label>
+            <input class="form-control" type="text" name="host">
+        </div>
+        <div class="form-group">
+            <label>ip地址：</label>
+            <input class="form-control" type="text" name="ip">
+        </div>
+        <div class="form-group">
+            <label>主机组：</label>
+            <input class="form-control" type="text" name="group">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="提 交">
+        </div>
+    </form>
+{% endblock %}
