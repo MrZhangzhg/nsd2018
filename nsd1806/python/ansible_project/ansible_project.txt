@@ -483,8 +483,18 @@ def addmodules(request):
         </tr>
     {% endfor %}
 </table>
+7、修改addmodules函数，支持添加模块
+def addmodules(request):
+    if request.method == 'POST':
+        mod = request.POST.get('module')
+        arg = request.POST.get('arg')
+        if mod.strip():
+            ansi_mod = AnsiModule.objects.get_or_create(module_name=mod)[0]
+            if arg.strip():
+                ansi_mod.modulearg_set.get_or_create(arg_text=arg)
 
-
+    mods = AnsiModule.objects.all()
+    return render(request, 'addmodules.html', {'mods': mods})
 
 
 
