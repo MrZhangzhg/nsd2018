@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import HostGroup
+from .models import HostGroup, Host
 from .models import AnsiModule
 
 def home(request):
@@ -33,6 +33,7 @@ def addmodules(request):
 
 def tasks(request):
     groups = HostGroup.objects.all()
+    hosts = Host.objects.all()
     mods = AnsiModule.objects.all()
-    context = {'groups': groups, 'mods': mods}
+    context = {'groups': groups, 'mods': mods, 'hosts': hosts}
     return render(request, 'tasks.html', context)
