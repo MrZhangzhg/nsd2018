@@ -17,3 +17,8 @@ def addhosts(request):
 
     groups = HostGroup.objects.all()
     return render(request, 'addhosts.html', {'groups': groups})
+
+
+def addmodules(request):
+    return render(request, 'addmodules.html')
+

@@ -432,6 +432,45 @@ def addhosts(request):
 否则在提交表单时，将会出现CSRF错误。这一项是防止跨站攻击的。
 
 
+十三、创建“添加模块”页
+1、编写URL
+    url(r'^addmodules/$', views.addmodules, name='addmodules'),
+2、编写视图函数
+def addmodules(request):
+    return render(request, 'addmodules.html')
+3、编写addmodules.html模板
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}添加模块{% endblock %}
+{% block content %}
+    <form action="" method="post" class="form-inline" style="margin-bottom: 10px">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>模块：</label>
+            <input class="form-control" type="text" name="module">
+        </div>
+        <div class="form-group">
+            <label>参数：</label>
+            <input class="form-control" type="text" name="arg">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="提 交">
+        </div>
+    </form>
+{% endblock %}
+4、修改index.html的超链接
+<a href="{% url 'addmodules' %}">
+
+
+
+
+
+
+
+
+
+
+
 
 
 
