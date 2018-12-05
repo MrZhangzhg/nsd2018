@@ -31,11 +31,19 @@
         </tr>
         {% for mod in mods %}
             <tr>
-                <td>{{ mod.module_name }}</td>
+                <td>
+                    <label>
+                        <input name="module" value="{{ mod.module_name }}" type="radio"> {{ mod.module_name }}
+                    </label>
+                </td>
                 <td>
                     <ul class="list-unstyled">
                         {% for arg in mod.modulearg_set.all %}
-                            <li>{{ arg.arg_text }}</li>
+                            <li>
+                                <label>
+                                    <input name="param" value="{{ arg.arg_text }}" type="radio"> {{ arg.arg_text }}
+                                </label>
+                            </li>
                         {% endfor %}
                     </ul>
                 </td>
