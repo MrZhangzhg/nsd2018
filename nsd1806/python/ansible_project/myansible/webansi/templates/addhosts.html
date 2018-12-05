@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% block title %}添加主机(组){% endblock %}
 {% block content %}
-    <form action="" method="post" class="form-inline">
+    <form action="" method="post" class="form-inline" style="margin-bottom: 10px">
         <div class="form-group">
             <label>主机名：</label>
             <input class="form-control" type="text" name="host">
@@ -19,4 +19,22 @@
             <input class="btn btn-primary" type="submit" value="提 交">
         </div>
     </form>
+    <table class="table table-bordered table-striped table-hover">
+        <tr class="info">
+            <th>主机组</th>
+            <th>主机</th>
+        </tr>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.groupname }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for host in group.host_set.all %}
+                            <li>{{ host.hostname }}: {{ host.ipaddr }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

@@ -390,8 +390,29 @@ def addhosts(request):
         </div>
     </form>
 {% endblock %}
-
-
+5、修改addhosts函数，取出主机信息，发给模板
+def addhosts(request):
+    groups = HostGroup.objects.all()
+    return render(request, 'addhosts.html', {'groups': groups})
+6、修改addhosts.html模板，显示主机和组。在form表单下面增加一个表格
+<table class="table table-bordered table-striped table-hover">
+    <tr class="info">
+        <th>主机组</th>
+        <th>主机</th>
+    </tr>
+    {% for group in groups %}
+        <tr>
+            <td>{{ group.groupname }}</td>
+            <td>
+                <ul class="list-unstyled">
+                    {% for host in group.host_set.all %}
+                        <li>{{ host.hostname }}: {{ host.ipaddr }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
 
 
 
