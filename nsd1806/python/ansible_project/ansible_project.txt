@@ -413,9 +413,23 @@ def addhosts(request):
         </tr>
     {% endfor %}
 </table>
+7、修改addhosts函数，支持创建主机和主机组
+def addhosts(request):
+    if request.method == 'POST':
+        groupname = request.POST.get('group')
+        host = request.POST.get('host')
+        ip = request.POST.get('ip')
+        if groupname.strip():
+            # 取出主机组模型或创建主机组，返回值是(组实例，True/False)
+            group = HostGroup.objects.get_or_create(groupname=groupname)[0]
+            if host.strip() and ip.strip():
+                group.host_set.get_or_create(hostname=host, ipaddr=ip)
 
-
-
+    groups = HostGroup.objects.all()
+    return render(request, 'addhosts.html', {'groups': groups})
+8、修改addhosts.html模板，在form表单中加入以下内容
+{% csrf_token %}
+否则在提交表单时，将会出现CSRF错误。这一项是防止跨站攻击的。
 
 
 
